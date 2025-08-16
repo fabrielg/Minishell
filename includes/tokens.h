@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 00:31:16 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/08/16 02:08:48 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2025/08/16 17:03:08 by fabrielg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_redirect
 	int				fd;
 }	t_redirect;
 
-/* Structure for a simple command, argv[0] is the command name */
+/* Structure for a simple command, args[0] is the command name */
 typedef struct s_command
 {
 	char		**args;
