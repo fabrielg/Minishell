@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+         #
+#    By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/08/15 23:54:41 by gfrancoi         ###   ########.fr        #
+#    Updated: 2025/08/16 17:43:41 by fabrielg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re debug
 
 NAME		= minishell
 CUSTOM_NAME	= MiniChaise
@@ -55,3 +55,6 @@ fclean : clean
 	make fclean -C $(LIBFT_DIR)
 
 re : fclean all
+
+debug : CFLAGS += -DDEBUG_MODE=1
+debug : all

@@ -6,7 +6,7 @@
 /*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 02:06:44 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/08/16 17:28:35 by fabrielg         ###   ########.fr       */
+/*   Updated: 2025/08/16 17:40:13 by fabrielg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include <stdbool.h>
 # include <sys/types.h>
 # include "tokens.h"
+
+# ifndef DEBUG_MODE
+#  define DEBUG_MODE 0
+# endif
 
 /* Main structure containing all shell data */
 typedef struct s_minishell
@@ -50,7 +54,6 @@ typedef struct s_minishell
 	int			stdout_backup;			/* Backup of FD for redirections */
 	
 	/* Debugging/Development */
-	bool		debug_mode;				/* To display debug info */
 	char		*shell_name;			/* Shell name for error messages */
 }	t_minishell;
 
