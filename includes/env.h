@@ -6,7 +6,7 @@
 /*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 21:07:21 by fabrielg          #+#    #+#             */
-/*   Updated: 2025/08/17 23:00:15 by fabrielg         ###   ########.fr       */
+/*   Updated: 2025/08/17 23:03:11 by fabrielg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define ENV_H
 
 # include <stdlib.h>
+# include <stdbool.h>
 
 /* Structure for a dictionnary */
 typedef struct s_dic
 {
 	char	*key;
 	char	*value;
+	bool	quoted;
 }	t_dic;
 
 /* Structure for a multiple search tree (can be binary and linked) */

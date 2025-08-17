@@ -6,13 +6,27 @@
 /*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 21:18:55 by fabrielg          #+#    #+#             */
-/*   Updated: 2025/08/17 22:59:02 by fabrielg         ###   ########.fr       */
+/*   Updated: 2025/08/17 23:12:16 by fabrielg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/env.h"
 #include <stdio.h>
 #include "../libft/libft.h"
+
+static void	set_quoted(char *value, bool *out)
+{
+	if (!value)
+	{
+		*out = false;
+		return ;
+	}
+	// TODO: make a strchr using a char set instead of a simple char
+	if (!value[0] || ft_strchr(value, ' ') || ft_strchr(value, '='))
+		*out = true;
+	else
+		*out = false;
+}
 
 t_dic	*new_dic(char *key, char *value)
 {
@@ -23,6 +37,7 @@ t_dic	*new_dic(char *key, char *value)
 		return (NULL);
 	dic->key = key;
 	dic->value = value;
+	set_quoted(dic->value, &dic->quoted);
 	return (dic);
 }
 
