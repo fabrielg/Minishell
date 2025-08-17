@@ -6,7 +6,7 @@
 /*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 02:06:44 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/08/16 17:40:13 by fabrielg         ###   ########.fr       */
+/*   Updated: 2025/08/17 23:00:06 by fabrielg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdbool.h>
 # include <sys/types.h>
 # include "tokens.h"
+# include "env.h"
 
 # ifndef DEBUG_MODE
 #  define DEBUG_MODE 0
