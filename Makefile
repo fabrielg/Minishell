@@ -6,7 +6,7 @@
 #    By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/08/16 17:43:41 by fabrielg         ###   ########.fr        #
+#    Updated: 2025/08/17 23:00:42 by fabrielg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ LIBFT		= $(LIBFT_DIR)libft.a
 INCLUDES	= -I ./includes/
 
 # All files in src/
-FILES		= main
+FILES		=	main\
+				env
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES))
