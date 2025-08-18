@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <stdio.h>
-# include "../libft/libft.h"
+# include "libft.h"
 
 /* Structure for a dictionnary */
 typedef struct s_dic
