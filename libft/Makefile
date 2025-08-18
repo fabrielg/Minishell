@@ -79,6 +79,7 @@ SRCS = \
 	str/ft_strlen.c\
 	str/ft_strmapi.c\
 	str/ft_strncmp.c\
+	str/ft_strcmp.c\
 	str/ft_strnstr.c\
 	str/ft_strtol.c\
 	str/ft_strrchr.c\
@@ -108,7 +109,7 @@ $(NAME): $(OBJS)
 
 clean:
 	rm -fr $(OBJ_DIR)
-
+ 
 fclean: clean
 	rm $(NAME)
 
