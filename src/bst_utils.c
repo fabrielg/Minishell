@@ -43,3 +43,99 @@ int	mst_insertion(t_mst **tree, t_mst *node)
 		mst_insertion(&(*tree)->right, node);
 	return (0);
 }
+
+static t_mst	**mst_unlink_node(t_mst **tree, char *to_unlink)
+{
+	t_mst	*prev;
+	t_mst	*current;
+	t_mst	*next;
+
+	if (!tree && !(*tree))
+		return (NULL);
+	current = *tree;
+	prev = NULL;
+	next = current->next;
+	while (current)
+	{
+		if (ft_strcmp(current->dic->key, to_unlink) == 0)
+		{
+			if (prev == NULL)
+				*tree = next;
+			else
+				prev->next = next;
+			return (current);
+		}
+		prev = current;
+		current = current->next;
+		next = next->next;
+	}
+	return (NULL);
+}
+
+static int	mst_childcount(t_mst *node)
+{
+	int	count;
+
+	if (!node)
+		return (0);
+	count = 0;
+	if (node->left)
+		count++;
+	if (node->right)
+		count++;
+	return (count);
+}
+
+static void	mst_deletion_one_child(t_mst *to_delete)
+{
+	t_mst	*tmp;
+	t_mst	*left;
+	t_mst	*right;
+
+	tmp = to_delete;
+	left = to_delete->left;
+	right = to_delete->right;
+	if (right)
+	{	
+		to_delete = right;
+		left = to_delete->left;
+	}
+	else if (left)
+		to_delete = left;
+	mst_free(&tmp);
+}
+
+static void	mst_deletion_n_child(t_mst *to_delete)
+{
+	t_mst	*tmp;
+	t_mst	*successor;
+
+	tmp = to_delete;
+	successor = to_delete->right;
+	if (!to_delete->right)
+	{
+		to_delete = to_delete->left;
+		mst_free(&tmp);
+		return ;
+	}
+	while (successor->left)
+		successor = successor->left;
+	to_delete = successor;
+	successor->right = tmp->right;
+	successor->left = tmp->left;
+	mst_free(&tmp);
+}
+
+int	mst_deletion(t_mst **tree, char *to_delete)
+{
+	t_mst	*node;
+
+	node = mst_unlink_node(tree, to_delete);
+	if (!node)
+		return (1);
+	if (!node->left && !node->right)
+		mst_free(&node);
+	else if (!mst_childcount(node->left) 
+		&& !mst_childcount(node->right))
+		mst_deletion_one_child(node);
+}

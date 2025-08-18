@@ -42,6 +42,7 @@ void	mst_display(t_mst *mst);
 
 /*[FREE]______________________*/
 
+void	mst_free(t_mst **node);
 void	mst_clear(t_mst **root);
 
 /*[INIT]______________________*/
