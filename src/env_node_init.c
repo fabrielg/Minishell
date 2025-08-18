@@ -2,18 +2,21 @@
 #include <stdio.h>
 #include "../libft/libft.h"
 
-static void	set_quoted(char *value, bool *out)
+static void	set_quoted(char *value, unsigned char *out)
 {
+	const char	*char_quoted = " !\"#$&()*-;<>=?[]\\^`{}|~";
+
 	if (!value)
 	{
-		*out = false;
+		*out = 0;
 		return ;
 	}
-	// TODO: make a strchr using a char set instead of a simple char
-	if (!value[0] || ft_strchr(value, ' ') || ft_strchr(value, '='))
-		*out = true;
+	if (ft_strchr(value, '\''))
+		*out = 2;
+	else if (!value[0] || ft_strchrset(value, char_quoted))
+		*out = 1;
 	else
-		*out = false;
+		*out = 0;
 }
 
 t_dic	*new_dic(char *key, char *value)
