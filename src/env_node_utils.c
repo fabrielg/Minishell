@@ -1,7 +1,10 @@
 #include "../includes/env.h"
-#include <stdio.h>
-#include "../libft/libft.h"
 
+/**
+ * @brief Finds the last node in MST linked list.
+ * @param root First node of the list
+ * @return Last node or NULL if root is NULL
+ */
 t_mst	*mst_last(t_mst *root)
 {
 	t_mst	*node;
@@ -15,7 +18,31 @@ t_mst	*mst_last(t_mst *root)
 	return (node);
 }
 
+/**
+ * @brief Adds new node at the end of MST list.
+ * @param root Pointer to list head (modified if empty)
+ * @param new  Node to add at the end
+ */
+void	mst_add_back(t_mst **root, t_mst *new)
+{
+	t_mst	*node;
+	
+	if (!root)
+		return ;
+	if (!(*root))
+		*root = new;
+	else
+	{
+		node = mst_last(*root);
+		node->next = new;
+	}
+}
 
+/**
+ * @brief Splits environment variable into key-value dictionary.
+ * @param env_var String in format "KEY=VALUE"
+ * @return Dictionary with key/value or NULL on error
+ */
 t_dic	*split_env_var(char *env_var)
 {
 	char	*copy;
@@ -34,21 +61,11 @@ t_dic	*split_env_var(char *env_var)
 	return (new_dic(key, value));
 }
 
-void	mst_add_back(t_mst **root, t_mst *new)
-{
-	t_mst	*node;
-	
-	if (!root)
-		return ;
-	if (!(*root))
-		*root = new;
-	else
-	{
-		node = mst_last(*root);
-		node->next = new;
-	}
-}
-
+/**
+ * @brief Creates MST from environment variables array.
+ * @param env Array of environment strings (NULL terminated)
+ * @return Root of MST containing all env vars or NULL
+ */
 t_mst	*mst_alloc_env(char **env)
 {
 	size_t	i;

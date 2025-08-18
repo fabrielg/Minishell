@@ -1,7 +1,9 @@
 #include "../includes/env.h"
-#include <stdio.h>
-#include "../libft/libft.h"
 
+/**
+* @brief Displays all key-value pairs in MST list.
+* @param mst Root node of MST to display
+*/
 void	mst_display(t_mst *mst)
 {
 	t_mst	*tmp;
