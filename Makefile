@@ -22,8 +22,11 @@ LIBFT		= $(LIBFT_DIR)libft.a
 INCLUDES	= -I ./includes/
 
 # All files in src/
-FILES		=	main\
-				env
+FILES		=	main \
+				env_display \
+				env_free \
+				env_node_init \
+				env_node_utils
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES))

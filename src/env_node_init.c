@@ -16,7 +16,7 @@ static void	set_quoted(char *value, unsigned char *out)
 	}
 	if (ft_strchr(value, '\''))
 		*out = 2;
-	else if (!value[0] || ft_strchrset(value, char_quoted))
+	else if (!value[0] || ft_strchrset(value, (char*)char_quoted))
 		*out = 1;
 	else
 		*out = 0;
