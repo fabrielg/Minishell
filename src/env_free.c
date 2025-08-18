@@ -1,7 +1,9 @@
 #include "../includes/env.h"
-#include <stdio.h>
-#include "../libft/libft.h"
 
+/**
+ * @brief Frees dictionary and its key/value, sets pointer to NULL.
+ * @param dic Pointer to dictionary pointer
+ */
 static void	freekey(t_dic **dic)
 {
 	if (!dic || !(*dic))
@@ -12,6 +14,10 @@ static void	freekey(t_dic **dic)
 	*dic = NULL;
 }
 
+/**
+ * @brief Frees entire MST linked list and all dictionaries.
+ * @param root Pointer to root pointer (set to NULL after clearing)
+ */
 void	mst_clear(t_mst **root)
 {
 	t_mst	*node;

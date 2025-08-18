@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 21:07:21 by fabrielg          #+#    #+#             */
-/*   Updated: 2025/08/17 23:03:11 by fabrielg         ###   ########.fr       */
+/*   Updated: 2025/08/18 17:17:14 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # include <stdbool.h>
+# include <stdio.h>
+# include "../libft/libft.h"
 
 /* Structure for a dictionnary */
 typedef struct s_dic
@@ -34,13 +36,24 @@ struct s_mst
 	t_mst	*next;
 };
 
+/*[DISPLAY]___________________*/
+
+void	mst_display(t_mst *mst);
+
+/*[FREE]______________________*/
+
+void	mst_clear(t_mst **root);
+
+/*[INIT]______________________*/
+
 t_dic	*new_dic(char *key, char *value);
 t_mst	*new_mst(t_dic *dic);
+
+/*[UTILS]______________________*/
+
+t_mst	*mst_alloc_env(char **env);
 t_mst	*mst_last(t_mst *root);
 void	mst_add_back(t_mst **root, t_mst *new);
 t_dic	*split_env_var(char *env_var);
-t_mst	*mst_alloc_env(char **env);
-void	mst_display(t_mst *mst);
-void	mst_clear(t_mst **root);
 
 #endif
