@@ -21,6 +21,13 @@ int	main(int argc, char *argv[], char **envp)
 	mst_display(mst);
 	printf("\n\n\n");
 	print_tree(mst, 0);
+	printf("\n\n\n");
+	t_mst	*node;
+	node = mst_search(mst, "USER");
+	if (node && node->dic)
+		printf("%s=%s\n", node->dic->key, node->dic->value);
+	else
+		ft_putendl_fd("Not found !", 1);
 	mst_clear(&mst);
 	return (0);
 }
