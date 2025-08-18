@@ -19,7 +19,7 @@ CFLAGS		= -Wall -Wextra -Werror
 LIBFT_DIR	= ./libft/
 LIBFT		= $(LIBFT_DIR)libft.a
 
-INCLUDES	= -I ./includes/
+INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 
 # All files in src/
 FILES		=	main \
