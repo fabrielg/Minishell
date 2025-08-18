@@ -23,6 +23,7 @@ INCLUDES	= -I ./includes/
 
 # All files in src/
 FILES		=	main \
+				bst_utils \
 				env_display \
 				env_free \
 				env_node_init \
