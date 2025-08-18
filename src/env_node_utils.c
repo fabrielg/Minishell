@@ -70,6 +70,7 @@ t_mst	*mst_alloc_env(char **env)
 {
 	size_t	i;
 	t_mst	*root;
+	t_mst	*node;
 	t_dic	*current_var;
 
 	if (!env)
@@ -79,7 +80,9 @@ t_mst	*mst_alloc_env(char **env)
 	while (env[i])
 	{
 		current_var = split_env_var(env[i]);
-		mst_add_back(&root, new_mst(current_var));
+		node = new_mst(current_var);
+		mst_add_back(&root, node);
+		mst_insertion(&root, node);
 		i++;
 	}
 	return (root);

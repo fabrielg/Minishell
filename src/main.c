@@ -19,6 +19,8 @@ int	main(int argc, char *argv[], char **envp)
 	t_mst	*mst;
 	mst = mst_alloc_env(envp);
 	mst_display(mst);
+	printf("\n\n\n");
+	print_tree(mst, 0);
 	mst_clear(&mst);
 	return (0);
 }
