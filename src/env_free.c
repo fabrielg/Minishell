@@ -14,6 +14,13 @@ static void	freekey(t_dic **dic)
 	*dic = NULL;
 }
 
+void	mst_free(t_mst **node)
+{
+	freekey(&(*node)->dic);
+	free(node);
+	*node = NULL;
+}
+
 /**
  * @brief Frees entire MST linked list and all dictionaries.
  * @param root Pointer to root pointer (set to NULL after clearing)
@@ -28,9 +35,8 @@ void	mst_clear(t_mst **root)
 	node = *root;
 	while (node)
 	{
-		freekey(&node->dic);
 		next = node->next;
-		free(node);
+		mst_free(&node);
 		node = next;
 	}
 }
