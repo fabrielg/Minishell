@@ -35,7 +35,6 @@ void	mst_clear(t_mst **root)
 	node = *root;
 	while (node)
 	{
-		printf("delete : %s\n", node->dic->key);
 		next = node->next;
 		mst_free(&node);
 		node = next;
