@@ -41,6 +41,8 @@ int	mst_insertion(t_mst **tree, t_mst *node)
 {
 	int	res;
 
+	if (!node)
+		return (1);
 	if (!(*tree))
 	{
 		*tree = node;
