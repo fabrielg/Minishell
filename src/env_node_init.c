@@ -1,28 +1,6 @@
 #include "envp.h"
 
 /**
-* @brief Sets quote type needed for shell value escaping.
-* @param value String to analyze for special characters
-* @param out   Output: 0=no quotes, 1=quotes, 2=special quotes
-*/
-static void	set_quoted(char *value, unsigned char *out)
-{
-	const char	*char_quoted = " !\"#$&()*-;<>=?[]\\^`{}|~";
-
-	if (!value)
-	{
-		*out = 0;
-		return ;
-	}
-	if (ft_strchr(value, '\''))
-		*out = 2;
-	else if (!value[0] || ft_strchrset(value, (char*)char_quoted))
-		*out = 1;
-	else
-		*out = 0;
-}
-
-/**
  * @brief Creates a new dictionary entry with key-value pair.
  * @param key   Key string (stored by reference)
  * @param value Value string (stored by reference) 
@@ -37,7 +15,6 @@ t_dic	*new_dic(char *key, char *value)
 		return (NULL);
 	dic->key = key;
 	dic->value = value;
-	set_quoted(dic->value, &dic->quoted);
 	return (dic);
 }
 
