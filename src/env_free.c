@@ -17,7 +17,7 @@ static void	freekey(t_dic **dic)
 void	mst_free(t_mst **node)
 {
 	freekey(&(*node)->dic);
-	free(node);
+	free(*node);
 	*node = NULL;
 }
 
@@ -35,6 +35,7 @@ void	mst_clear(t_mst **root)
 	node = *root;
 	while (node)
 	{
+		printf("delete : %s\n", node->dic->key);
 		next = node->next;
 		mst_free(&node);
 		node = next;
