@@ -14,23 +14,24 @@
 
 NAME		= minishell
 CUSTOM_NAME	= MiniChaise
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= #-Wall -Wextra -Werror
 
 LIBFT_DIR	= ./libft/
 LIBFT		= $(LIBFT_DIR)libft.a
 
 INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 
+MAIN_FILE	= mst_test
+
 # All files in src/
-FILES		=	main \
-				bst_utils \
+FILES		=	bst_utils \
 				env_display \
 				env_free \
 				env_node_init \
 				env_node_utils
 
 SRC_DIR		= ./src/
-SRC_FILES	= $(addsuffix .c, $(FILES))
+SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))
 SRC			= $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 OBJ_DIR		= ./obj/

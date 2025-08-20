@@ -23,7 +23,7 @@ int	main(int argc, char *argv[], char **envp)
 	print_tree(mst, 0);
 	printf("\n\n\n");
 	t_mst	*node;
-	node = mst_search(mst, "USER");
+	node = mst_get_node(mst, "USER");
 	if (node && node->dic)
 		printf("%s=%s\n", node->dic->key, node->dic->value);
 	else

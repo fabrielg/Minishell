@@ -82,7 +82,7 @@ t_mst	*mst_alloc_env(char **env)
 		current_var = split_env_var(env[i]);
 		node = new_mst(current_var);
 		mst_add_back(&root, node);
-		mst_insertion(&root, node);
+		//mst_insertion(&root, node);
 		i++;
 	}
 	return (root);
