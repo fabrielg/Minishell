@@ -6,7 +6,7 @@
  * @param value Value string (stored by reference) 
  * @return New dictionary or NULL on malloc failure
  */
-t_dic	*new_dic(char *key, char *value)
+t_dic	*new_dic(char *key, char *value, bool freeable)
 {
 	t_dic	*dic;
 
@@ -15,6 +15,7 @@ t_dic	*new_dic(char *key, char *value)
 		return (NULL);
 	dic->key = key;
 	dic->value = value;
+	dic->freeable = freeable;
 	return (dic);
 }
 

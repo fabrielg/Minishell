@@ -8,7 +8,7 @@ static void	freekey(t_dic **dic)
 {
 	if (!dic || !(*dic))
 		return ;
-	if ((*dic)->key)
+	if ((*dic)->key && (*dic)->freeable)
 		free((*dic)->key);
 	free(*dic);
 	*dic = NULL;

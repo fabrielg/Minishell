@@ -58,7 +58,7 @@ t_dic	*split_env_var(char *env_var)
 	value[0] = 0;
 	value++;
 	key = copy;
-	return (new_dic(key, value));
+	return (new_dic(key, value, true));
 }
 
 /**
@@ -81,7 +81,6 @@ t_mst	*mst_alloc_env(char **env)
 	{
 		current_var = split_env_var(env[i]);
 		node = new_mst(current_var);
-		mst_add_back(&root, node);
 		mst_insertion(&root, node);
 		i++;
 	}
