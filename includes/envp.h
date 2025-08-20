@@ -23,6 +23,7 @@ typedef struct s_dic
 {
 	char	*key;
 	char	*value;
+	bool	freeable;
 }	t_dic;
 
 /* Structure for a multiple search tree (can be binary and linked) */
@@ -46,7 +47,7 @@ void	mst_clear(t_mst **root);
 
 /*[INIT]______________________*/
 
-t_dic	*new_dic(char *key, char *value);
+t_dic	*new_dic(char *key, char *value, bool freeable);
 t_mst	*new_mst(t_dic *dic);
 
 /*[UTILS]______________________*/
@@ -62,5 +63,6 @@ void	print_tree(t_mst *tree);
 t_mst	*mst_get_parent(t_mst *tree, char *child);
 t_mst	*mst_get_node(t_mst *tree, char *to_find);
 int		mst_insertion(t_mst **tree, t_mst *node);
+int		mst_deletion(t_mst **tree, char *to_delete);
 
 #endif

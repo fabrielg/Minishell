@@ -35,7 +35,7 @@ t_mst	*mst_get_node(t_mst *tree, char *to_find)
 	return (mst_search(tree, to_find, NULL, false));
 }
 
-int	mst_insertion(t_mst **tree, t_mst *node)
+static int	bst_insertion(t_mst **tree, t_mst *node)
 {
 	int	res;
 
@@ -44,15 +44,32 @@ int	mst_insertion(t_mst **tree, t_mst *node)
 	if (!(*tree))
 	{
 		*tree = node;
-		return (1);
+		return (0);
 	}
 	res = ft_strcmp((*tree)->dic->key, node->dic->key);
 	if (res == 0)
-		return (0);
+		return (1);
 	else if (res < 0)
-		mst_insertion(&(*tree)->left, node);
+		bst_insertion(&(*tree)->left, node);
 	else
-		mst_insertion(&(*tree)->right, node);
+		bst_insertion(&(*tree)->right, node);
+	return (0);
+}
+
+int	mst_insertion(t_mst **root, t_mst *node)
+{
+	t_mst	*tmp;
+	int		res;
+
+	if (!node)
+		return (1);
+	tmp = *root;
+	res = bst_insertion(root, node);
+	// TODO: fix: res is wrong when node is already in the root tree
+	if (!res)
+		mst_add_back(&tmp, node);
+	else
+		return (1);
 	return (0);
 }
 
@@ -62,13 +79,15 @@ static t_mst	*mst_unlink_node(t_mst **tree, char *to_unlink)
 	t_mst	*current;
 	t_mst	*next;
 
-	if (!tree && !(*tree))
+	// printf("DEBUG: %s\n", to_unlink);
+	if (!tree && !(*tree) || !to_unlink)
 		return (NULL);
 	current = *tree;
 	prev = NULL;
 	next = current->next;
 	while (current)
 	{
+		// printf("DEBUG 2: %s\n", current->dic->key);
 		if (ft_strcmp(current->dic->key, to_unlink) == 0)
 		{
 			if (prev == NULL)
@@ -79,8 +98,10 @@ static t_mst	*mst_unlink_node(t_mst **tree, char *to_unlink)
 		}
 		prev = current;
 		current = current->next;
-		next = next->next;
+		if (next)
+			next = next->next;
 	}
+	// printf("DEBUG 3: %s\n", to_unlink);
 	return (NULL);
 }
 
@@ -106,7 +127,7 @@ static void	mst_deletion_one_child(t_mst *to_delete, t_mst *parent)
 	bool	is_right;
 
 	is_right = false;
-	if (parent->right == to_delete)
+	if (parent && parent->right == to_delete)
 		is_right = true;
 	tmp = to_delete;
 	left = to_delete->left;
@@ -118,9 +139,9 @@ static void	mst_deletion_one_child(t_mst *to_delete, t_mst *parent)
 	}
 	else if (left)
 		to_delete = left;
-	if (is_right)
+	if (parent && is_right)
 		parent->right = to_delete;
-	else
+	else if (parent && !is_right)
 		parent->left = to_delete;
 	mst_free(&tmp);
 }
@@ -134,7 +155,7 @@ static void	mst_deletion_n_child(t_mst *to_delete, t_mst *parent)
 	tmp = to_delete;
 	successor = to_delete->right;
 	is_right = false;
-	if (parent->right == to_delete)
+	if (!parent && parent->right == to_delete)
 		is_right = true;
 	if (!to_delete->right)
 	{
@@ -147,27 +168,60 @@ static void	mst_deletion_n_child(t_mst *to_delete, t_mst *parent)
 	to_delete = successor;
 	successor->right = tmp->right;
 	successor->left = tmp->left;
-	if (is_right)
+	if (parent && is_right)
 		parent->right = to_delete;
-	else
+	else if (parent && !is_right)
 		parent->left = to_delete;
 	mst_free(&tmp);
+}
+
+static t_mst	*mst_get_successor(t_mst *tree)
+{
+	tree = tree->right;
+	while (tree != NULL && tree->left != NULL)
+		tree = tree->left;
+	return (tree);
+}
+
+static t_mst	*mst_del_node(t_mst *root, char *to_delete)
+{
+	int		res;
+	t_mst	*tmp;
+	t_mst	*succ;
+
+	if (!root)
+		return (NULL);
+	res = ft_strcmp(root->dic->key, to_delete);
+	if (res < 0)
+		root->left = mst_del_node(root->left, to_delete);
+	else if (res > 0)
+		root->right = mst_del_node(root->right, to_delete);
+	else {
+		if (!root->left) {
+			tmp = root->right;
+			mst_free(&root);
+			return (tmp);
+		}
+		if (!root->right) {
+			tmp = root->left;
+			mst_free(&root);
+			return (tmp);
+		}
+		succ = mst_get_successor(root);
+		root->dic = succ->dic;
+		root->right = mst_del_node(root->right, root->dic->key);
+	}
+	return (root);
 }
 
 int	mst_deletion(t_mst **tree, char *to_delete)
 {
 	t_mst	*node;
-	t_mst	*parent;
 
 	node = mst_unlink_node(tree, to_delete);
-	parent = mst_get_parent(*tree, node->dic->key);
 	if (!node)
 		return (1);
-	if (!node->left && !node->right)
-		mst_free(&node);
-	else if (!mst_childcount(node->left) 
-		&& !mst_childcount(node->right))
-		mst_deletion_one_child(node, parent);
-	else
-		mst_deletion_n_child(node, parent);
+	if (mst_del_node(*tree, to_delete))
+		return (0);
+	return (1);
 }
