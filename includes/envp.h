@@ -58,7 +58,7 @@ t_dic	*split_env_var(char *env_var);
 
 /*[BST UTILS]______________________*/
 
-void	print_tree(t_mst *tree, int depth);
+void	print_tree(t_mst *tree);
 t_mst	*mst_get_parent(t_mst *tree, char *child);
 t_mst	*mst_get_node(t_mst *tree, char *to_find);
 int		mst_insertion(t_mst **tree, t_mst *node);
