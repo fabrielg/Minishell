@@ -21,9 +21,8 @@
 /* Structure for a dictionnary */
 typedef struct s_dic
 {
-	char			*key;
-	char			*value;
-	unsigned char	quoted;
+	char	*key;
+	char	*value;
 }	t_dic;
 
 /* Structure for a multiple search tree (can be binary and linked) */
