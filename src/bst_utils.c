@@ -56,7 +56,7 @@ int	mst_insertion(t_mst **tree, t_mst *node)
 	return (0);
 }
 
-static t_mst	**mst_unlink_node(t_mst **tree, char *to_unlink)
+static t_mst	*mst_unlink_node(t_mst **tree, char *to_unlink)
 {
 	t_mst	*prev;
 	t_mst	*current;
