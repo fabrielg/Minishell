@@ -6,7 +6,7 @@
  * @param value Value string (stored by reference) 
  * @return New dictionary or NULL on malloc failure
  */
-t_dic	*new_dic(char *key, char *value, bool freeable)
+t_dic	*new_dic(char *key, char *value)
 {
 	t_dic	*dic;
 
@@ -15,7 +15,6 @@ t_dic	*new_dic(char *key, char *value, bool freeable)
 		return (NULL);
 	dic->key = key;
 	dic->value = value;
-	dic->freeable = freeable;
 	return (dic);
 }
 
@@ -33,4 +32,30 @@ t_mst	*new_mst(t_dic *dic)
 		return (NULL);
 	new->dic = dic;
 	return (new);
+}
+
+/**
+ * @brief Creates MST from environment variables array.
+ * @param env Array of environment strings (NULL terminated)
+ * @return Root of MST containing all env vars or NULL
+ */
+t_mst	*mst_alloc_env(char **env)
+{
+	size_t	i;
+	t_mst	*root;
+	t_mst	*node;
+	t_dic	*current_var;
+
+	if (!env)
+		return (NULL);
+	root = NULL;
+	i = 0;
+	while (env[i])
+	{
+		current_var = split_env_var(env[i]);
+		node = new_mst(current_var);
+		mst_insertion(&root, node);
+		i++;
+	}
+	return (root);
 }

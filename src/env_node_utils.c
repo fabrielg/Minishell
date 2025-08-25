@@ -58,31 +58,5 @@ t_dic	*split_env_var(char *env_var)
 	value[0] = 0;
 	value++;
 	key = copy;
-	return (new_dic(key, value, true));
-}
-
-/**
- * @brief Creates MST from environment variables array.
- * @param env Array of environment strings (NULL terminated)
- * @return Root of MST containing all env vars or NULL
- */
-t_mst	*mst_alloc_env(char **env)
-{
-	size_t	i;
-	t_mst	*root;
-	t_mst	*node;
-	t_dic	*current_var;
-
-	if (!env)
-		return (NULL);
-	root = NULL;
-	i = 0;
-	while (env[i])
-	{
-		current_var = split_env_var(env[i]);
-		node = new_mst(current_var);
-		mst_insertion(&root, node);
-		i++;
-	}
-	return (root);
+	return (new_dic(key, value));
 }
