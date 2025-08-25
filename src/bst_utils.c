@@ -37,39 +37,53 @@ t_mst	*mst_get_node(t_mst *tree, char *to_find)
 
 static int	bst_insertion(t_mst **tree, t_mst *node)
 {
-	int	res;
+	int		res;
+	t_mst	**tmp;
 
 	if (!node)
 		return (1);
-	if (!(*tree))
+	tmp = tree;
+	if (!(*tmp))
 	{
-		*tree = node;
+		*tmp = node;
 		return (0);
 	}
-	res = ft_strcmp((*tree)->dic->key, node->dic->key);
+	res = ft_strcmp((*tmp)->dic->key, node->dic->key);
 	if (res == 0)
 		return (1);
 	else if (res < 0)
-		bst_insertion(&(*tree)->left, node);
+		bst_insertion(&(*tmp)->left, node);
 	else
-		bst_insertion(&(*tree)->right, node);
+		bst_insertion(&(*tmp)->right, node);
 	return (0);
+}
+
+static void	mst_update_value(t_mst *node, t_dic *new_dic)
+{
+	if (!node || !new_dic)
+		return ;
+	if (node->dic)
+		freekey(&node->dic);
+	node->dic = new_dic;
 }
 
 int	mst_insertion(t_mst **root, t_mst *node)
 {
-	t_mst	*tmp;
-	int		res;
+	t_mst	*existing;
 
-	if (!node)
+	if (!node || !node->dic)
 		return (1);
-	tmp = *root;
-	res = bst_insertion(root, node);
-	// TODO: fix: res is wrong when node is already in the root tree
-	if (!res)
-		mst_add_back(&tmp, node);
+	existing = mst_get_node(*root, node->dic->key);
+	if (existing)
+	{
+		mst_update_value(existing, node->dic);
+		free(node);
+	}
 	else
-		return (1);
+	{
+		mst_add_back(root, node);
+		bst_insertion(root, node);
+	}
 	return (0);
 }
 

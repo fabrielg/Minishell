@@ -4,11 +4,11 @@
  * @brief Frees dictionary and its key/value, sets pointer to NULL.
  * @param dic Pointer to dictionary pointer
  */
-static void	freekey(t_dic **dic)
+void	freekey(t_dic **dic)
 {
 	if (!dic || !(*dic))
 		return ;
-	if ((*dic)->key && (*dic)->freeable)
+	if ((*dic)->key)
 		free((*dic)->key);
 	free(*dic);
 	*dic = NULL;

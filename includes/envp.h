@@ -23,7 +23,6 @@ typedef struct s_dic
 {
 	char	*key;
 	char	*value;
-	bool	freeable;
 }	t_dic;
 
 /* Structure for a multiple search tree (can be binary and linked) */
@@ -44,10 +43,11 @@ void	mst_display(t_mst *mst);
 
 void	mst_free(t_mst **node);
 void	mst_clear(t_mst **root);
+void	freekey(t_dic **dic);
 
 /*[INIT]______________________*/
 
-t_dic	*new_dic(char *key, char *value, bool freeable);
+t_dic	*new_dic(char *key, char *value);
 t_mst	*new_mst(t_dic *dic);
 
 /*[UTILS]______________________*/
