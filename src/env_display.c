@@ -11,7 +11,7 @@ void	mst_display(t_mst *mst)
 	tmp = mst;
 	while (tmp)
 	{
-		ft_printf("%s=%s\n", tmp->dic->key, tmp->dic->value);
+		printf("%s=%s\n", tmp->dic->key, tmp->dic->value);
 		tmp = tmp->next;
 	}
 }
