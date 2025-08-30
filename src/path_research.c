@@ -1,11 +1,6 @@
-
-#include "../includes/minishell.h"
+#include "minishell.h"
 #include <stdio.h>
-#include "../libft/libft.h"
-
-//STAT permet de comparer si c'est un dossier ou fichier (verif si fail).
-//ACCESS permet de verifier si il y a une cmd dans un path
-
+#include "libft.h"
 
 /**
  * Builds a full path by concatenating a directory and a command.
@@ -29,7 +24,7 @@ char	*create_path(char *cmd, char *path)
 	while (++i < path_len)
 		new[i] = path[i];
 	new[i] = '/';
-	while (++i < cmd_len + path_len + 1) 
+	while (++i < cmd_len + path_len + 1)
 		new[i] = cmd[i - path_len - 1];
 	new[i] = '\0';
 	return (new);
