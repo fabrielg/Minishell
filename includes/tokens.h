@@ -14,6 +14,8 @@
 # define TOKENS_H
 
 # include <stdbool.h>
+# include "libft.h"
+# include <stdlib.h>
 
 typedef struct s_token	t_token;
 
@@ -109,5 +111,31 @@ struct s_token
 	t_token_type	type;
 	t_token_data	data;
 };
+
+/* Functions utils for TOKEN_WORD */
+t_token	*token_create_word(char *text, bool quoted, bool expandable);
+void	token_destroy_word(t_word *word);
+
+/* Functions utils for TOKEN_REDIRECT */
+t_token	*token_create_redir(t_redirect_type type, t_word *file, int fd);
+void	token_destroy_redir(t_redirect *redir);
+void	token_clear_redir(t_redirect **redir, int rdc);
+
+/* Functions utils for TOKEN_COMMAND */
+t_token	*token_create_command(char **args, int ac, t_redirect **redir, int rdc);
+void	token_destroy_command(t_command *command);
+void	token_clear_commands(t_command **commands, int command_count);
+
+/* Functions utils for TOKEN_SUBSHELL */
+t_token	*token_create_subshell(t_token *content, t_redirect **redir, int rdc);
+void	token_destroy_subshell(t_subshell *subshell);
+
+/* Functions utils for TOKEN_PIPELINE */
+t_token	*token_create_pipeline(t_token **commands, int command_count);
+void	token_destroy_pipeline(t_pipeline *pipeline);
+
+/* Functions utils for TOKEN_LOGICAL_EXPRESSION */
+t_token	*token_create_logic_exp(t_logical_op op, t_token *left, t_token *right);
+void	token_destroy_logic_exp(t_logical_expression *logic_exp);
 
 #endif
