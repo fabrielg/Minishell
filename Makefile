@@ -6,7 +6,7 @@
 #    By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/08/16 17:43:41 by fabrielg         ###   ########.fr        #
+#    Updated: 2025/08/17 23:00:42 by fabrielg         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,20 @@ CFLAGS		= -Wall -Wextra -Werror
 LIBFT_DIR	= ./libft/
 LIBFT		= $(LIBFT_DIR)libft.a
 
-INCLUDES	= -I ./includes/
+INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
+
+MAIN_FILE	= main
 
 # All files in src/
-FILES		= main
+FILES		=	env/bst_utils \
+				env/env_display \
+				env/env_free \
+				env/env_node_init \
+				env/env_node_utils \
+				env/path_research
 
 SRC_DIR		= ./src/
-SRC_FILES	= $(addsuffix .c, $(FILES))
+SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))
 SRC			= $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 OBJ_DIR		= ./obj/
@@ -41,6 +48,7 @@ $(LIBFT) :
 	make -C $(LIBFT_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(dir $@)
 	cc $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR) : 
