@@ -112,6 +112,8 @@ struct s_token
 	t_token_data	data;
 };
 
+t_token	*token_create(t_token_type type, void *content);
+
 /* Functions utils for TOKEN_WORD */
 t_token	*token_create_word(char *text, bool quoted, bool expandable);
 void	token_destroy_word(t_word *word);

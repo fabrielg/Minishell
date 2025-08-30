@@ -1,119 +1,51 @@
 #include "tokens.h"
-#include "libft.h"
-#include <stdlib.h>
 
-t_token	*token_create_word(char *text, bool quoted, bool expandable)
+t_token	*token_create(t_token_type type, void *content)
 {
-	t_token	*token;
-	t_word	*word;
+	t_token_data	data;
+	t_token			*token;
 
-	token = (t_token *) malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	word = (t_word *) malloc(sizeof(t_word));
-	if (!word)
-		return (free(token), NULL);
-	word->text = ft_strdup(text);
-	if (!word->text)
-		return (free(token), free(word), NULL);
-	word->quoted = quoted;
-	word->expandable = expandable;
-	token->type = TOKEN_WORD;
-	token->data.word = word;
+	data = (t_token_data) content;
+	token = NULL;
+	if (type == TOKEN_WORD)
+		token = token_create_word(data.word->text, data.word->quoted,
+				data.word->quoted);
+	else if (type == TOKEN_REDIRECT)
+		token = token_create_redir(data.redirect->type, data.redirect->file,
+				data.redirect->fd);
+	else if (type == TOKEN_COMMAND)
+		token = token_create_command(data.command->args,
+				data.command->arg_count, data.command->redirects,
+				data.command->redirect_count);
+	else if (type == TOKEN_SUBSHELL)
+		token = token_create_subshell(data.subshell->content,
+				data.subshell->redirects, data.subshell->redirect_count);
+	else if (type == TOKEN_PIPELINE)
+		token = token_create_pipeline(data.pipeline->commands,
+				data.pipeline->command_count);
+	else if (type == TOKEN_LOGICAL_EXPRESSION)
+		token = token_create_logic_exp(data.logical_expr->op,
+				data.logical_expr->left, data.logical_expr->right);
 	return (token);
 }
 
-t_token	*token_create_redir(t_redirect_type type, t_word *file, int fd)
+void	token_destroy(t_token *token)
 {
-	t_token		*token;
-	t_redirect	*redir;
-
-	token = (t_token *) malloc(sizeof(t_token));
 	if (!token)
-		return (NULL);
-	redir = (t_redirect *) malloc(sizeof(t_redirect));
-	if (!redir)
-		return (free(token), NULL);
-	redir->type = type;
-	redir->file = file;
-	redir->fd = fd;
-	token->type = TOKEN_REDIRECT;
-	token->data.redirect = redir;
-	return (token);
-}
-
-t_token	*token_create_command(char **args, int argc, t_redirect **redirects, int rdc)
-{
-	t_token		*token;
-	t_command	*command;
-
-	token = (t_token *) malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	command = (t_command *) malloc(sizeof(t_command));
-	if (!command)
-		return (free(token), NULL);
-	command->args = args;
-	command->arg_count = argc;
-	command->redirects = redirects;
-	command->redirect_count = rdc;
-	token->type = TOKEN_COMMAND;
-	token->data.command = command;
-	return (token);
-}
-
-t_token	*token_create_subshell(t_token *content, t_redirect **redir, int rdc)
-{
-	t_token		*token;
-	t_subshell	*subshell;
-
-	token = (t_token *) malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	subshell = (t_subshell *) malloc(sizeof(t_subshell));
-	if (!subshell)
-		return (free(token), NULL);
-	subshell->content = content;
-	subshell->redirects = redir;
-	subshell->redirect_count = rdc;
-	token->type = TOKEN_SUBSHELL;
-	token->data.subshell = subshell;
-	return (token);
-}
-
-t_token	*token_create_pipeline(t_token **commands, int command_count)
-{
-	t_token		*token;
-	t_pipeline	*pipeline;
-
-	token = (t_token *) malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	pipeline = (t_pipeline *) malloc(sizeof(t_pipeline));
-	if (!pipeline)
-		return (free(token), NULL);
-	pipeline->commands = commands;
-	pipeline->command_count = command_count;
-	token->type = TOKEN_PIPELINE;
-	token->data.pipeline = pipeline;
-	return (token);
-}
-
-t_token	*token_create_logical_exp(t_logical_op op, t_token *left, t_token *right)
-{
-	t_token					*token;
-	t_logical_expression	*logical_exp;
-
-	token = (t_token *) malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	logical_exp = (t_logical_expression *) malloc(sizeof(t_logical_expression));
-	if (!logical_exp)
-		return (free(token), NULL);
-	logical_exp->op = op;
-	logical_exp->left = left;
-	logical_exp->right = right;
-	token->type = TOKEN_LOGICAL_EXPRESSION;
-	token->data.logical_expr = logical_exp;
-	return (token);
+		return ;
+	if (token->type == TOKEN_WORD)
+		token_destroy_word(token->data.word);
+	else if (token->type == TOKEN_REDIRECT)
+		token_destroy_redir(token->data.redirect);
+	else if (token->type == TOKEN_COMMAND)
+		token_destroy_command(token->data.command);
+	else if (token->type == TOKEN_SUBSHELL)
+		token_destroy_subshell(token->data.subshell);
+	else if (token->type == TOKEN_PIPELINE)
+		token_destroy_pipeline(token->data.pipeline);
+	else if (token->type == TOKEN_LOGICAL_EXPRESSION)
+		token_destroy_logic_exp(token->data.logical_expr);
+	else
+		return ;
+	free(token);
 }
