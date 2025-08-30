@@ -24,11 +24,11 @@ INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 MAIN_FILE	= main
 
 # All files in src/
-FILES		=	bst_utils \
-				env_display \
-				env_free \
-				env_node_init \
-				env_node_utils
+FILES		=	env/bst_utils \
+				env/env_display \
+				env/env_free \
+				env/env_node_init \
+				env/env_node_utils
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))
@@ -47,6 +47,7 @@ $(LIBFT) :
 	make -C $(LIBFT_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(dir $@)
 	cc $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR) : 
