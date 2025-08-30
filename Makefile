@@ -28,7 +28,8 @@ FILES		=	env/bst_utils \
 				env/env_display \
 				env/env_free \
 				env/env_node_init \
-				env/env_node_utils
+				env/env_node_utils \
+				env/path_research
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))
