@@ -39,7 +39,7 @@ void	token_destroy_command(t_command *command)
 {
 	if (!command)
 		return ;
-	ft_free_map(command->args, command->arg_count);
+	ft_free_map((void **) command->args, command->arg_count);
 	token_clear_redir(command->redirects, command->redirect_count);
 	free(command);
 }

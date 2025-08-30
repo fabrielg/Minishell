@@ -22,6 +22,6 @@ void	token_destroy_pipeline(t_pipeline *pipeline)
 {
 	if (!pipeline)
 		return ;
-	token_clear_commands(pipeline->commands, pipeline->command_count);
+	token_clear(pipeline->commands, pipeline->command_count);
 	free(pipeline);
 }

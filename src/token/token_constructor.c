@@ -2,31 +2,46 @@
 
 t_token	*token_create(t_token_type type, void *content)
 {
-	t_token_data	data;
+	t_token_data	*data;
 	t_token			*token;
 
-	data = (t_token_data) content;
+	data = (t_token_data *) content;
 	token = NULL;
 	if (type == TOKEN_WORD)
-		token = token_create_word(data.word->text, data.word->quoted,
-				data.word->quoted);
+		token = token_create_word(data->word->text, data->word->quoted,
+				data->word->quoted);
 	else if (type == TOKEN_REDIRECT)
-		token = token_create_redir(data.redirect->type, data.redirect->file,
-				data.redirect->fd);
+		token = token_create_redir(data->redirect->type, data->redirect->file,
+				data->redirect->fd);
 	else if (type == TOKEN_COMMAND)
-		token = token_create_command(data.command->args,
-				data.command->arg_count, data.command->redirects,
-				data.command->redirect_count);
+		token = token_create_command(data->command->args,
+				data->command->arg_count, data->command->redirects,
+				data->command->redirect_count);
 	else if (type == TOKEN_SUBSHELL)
-		token = token_create_subshell(data.subshell->content,
-				data.subshell->redirects, data.subshell->redirect_count);
+		token = token_create_subshell(data->subshell->content,
+				data->subshell->redirects, data->subshell->redirect_count);
 	else if (type == TOKEN_PIPELINE)
-		token = token_create_pipeline(data.pipeline->commands,
-				data.pipeline->command_count);
+		token = token_create_pipeline(data->pipeline->commands,
+				data->pipeline->command_count);
 	else if (type == TOKEN_LOGICAL_EXPRESSION)
-		token = token_create_logic_exp(data.logical_expr->op,
-				data.logical_expr->left, data.logical_expr->right);
+		token = token_create_logic_exp(data->logical_expr->op,
+				data->logical_expr->left, data->logical_expr->right);
 	return (token);
+}
+
+void	token_clear(t_token **tokens, int token_count)
+{
+	int	i;
+
+	if (!tokens)
+		return ;
+	i = 0;
+	while (i < token_count)
+	{
+		token_destroy(tokens[i]);
+		i++;
+	}
+	free(tokens);
 }
 
 void	token_destroy(t_token *token)

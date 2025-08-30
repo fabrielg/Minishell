@@ -29,7 +29,14 @@ FILES		=	env/bst_utils \
 				env/env_free \
 				env/env_node_init \
 				env/env_node_utils \
-				env/path_research
+				env/path_research \
+				token/token_command_utils \
+				token/token_constructor \
+				token/token_logic_exp_utils \
+				token/token_pipeline_utils \
+				token/token_redir_utils \
+				token/token_subshell_utils \
+				token/token_word_utils
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))
