@@ -20,7 +20,7 @@ int	main(int argc, char *argv[], char **envp)
 	mst = mst_alloc_env(envp);
 	mst_display(mst);
 	printf("\n\n\n");
-	print_tree(mst);
+	bst_display(mst);
 	printf("\n\n\n");
 	t_mst	*node;
 	node = mst_get_node(mst, "USER");

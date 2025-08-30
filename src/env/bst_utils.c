@@ -1,14 +1,5 @@
 #include "envp.h"
 
-void	print_tree(t_mst *tree)
-{
-	if (!tree)
-		return;
-	print_tree(tree->right);
-	ft_printf("%s=%s\n", tree->dic->key, tree->dic->value);
-	print_tree(tree->left);
-}
-
 static t_mst	*mst_search(t_mst *tree, char *to_find, t_mst *parent, bool get_parent)
 {
 	int	res;
