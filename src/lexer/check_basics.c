@@ -23,7 +23,22 @@ void	ft_putbits(char bits)
 	write(1, "\n", 1);
 }
 
-void check_quotes(char *cmd_line, int *i, char	*byte)
+int	check_parenthesis(char c, int *par_count, unsigned char	byte)
+{
+	if (byte)
+		return (1);
+	if (c == '(')
+		(*par_count)++;
+	else if (c == ')')
+	{
+		if (!(*par_count))
+			return (0);
+		(*par_count)--;
+	}
+	return (1);
+}
+
+void set_quotes(char *cmd_line, int *i, unsigned char	*byte)
 {
 	if (cmd_line[*i] == '\\' && !(*byte & SNG_QUOTED))
 	{
@@ -39,17 +54,22 @@ void check_quotes(char *cmd_line, int *i, char	*byte)
 int	check_basics(char *cmd_line)
 {
 	int				i;
+	int				par_count;
 	unsigned char	byte;
 
 	i = -1;
 	byte = 0b0;
+	par_count = 0;
 	while (cmd_line[++i])
 	{
-		check_quotes(cmd_line, &i, &byte);
+		set_quotes(cmd_line, &i, &byte);
+		if (!check_parenthesis(cmd_line[i], &par_count, byte))
+			return (printf("ERROR\n"), LXG_ERROR);
 		printf("%c\n", cmd_line[i]);
 	}
 	ft_putbits(byte);
-	if (byte)
+	printf("par_count : %i\n", par_count);
+	if (byte || par_count)
 		return (printf("ERROR\n"), LXG_ERROR);
 	return (printf("OK\n"), 1);
-}	
+}
