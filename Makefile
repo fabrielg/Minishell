@@ -14,14 +14,14 @@
 
 NAME		= minishell
 CUSTOM_NAME	= MiniChaise
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= #-Wall -Wextra -Werror
 
 LIBFT_DIR	= ./libft/
 LIBFT		= $(LIBFT_DIR)libft.a
 
 INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 
-MAIN_FILE	= main
+MAIN_FILE	=	lexer_main
 
 # All files in src/
 FILES		=	env/bst_utils \
@@ -29,7 +29,8 @@ FILES		=	env/bst_utils \
 				env/env_free \
 				env/env_node_init \
 				env/env_node_utils \
-				env/path_research
+				env/path_research \
+				lexer/check_basics
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))
@@ -42,7 +43,7 @@ all : $(NAME)
 	@echo "\e[1;92m$(CUSTOM_NAME) compiled successfully!\e[0m"
 
 $(NAME) : $(LIBFT) $(OBJ_DIR) $(OBJ)
-	cc $(CFLAGS) $(INCLUDES) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME)
+	cc $(CFLAGS) $(INCLUDES) $(OBJ) -L$(LIBFT_DIR) -lft -lreadline -lncurses -o $(NAME)
 
 $(LIBFT) :
 	make -C $(LIBFT_DIR)

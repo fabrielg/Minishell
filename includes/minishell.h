@@ -17,6 +17,10 @@
 # include <sys/types.h>
 # include "tokens.h"
 # include "envp.h"
+# include "libft.h"
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
 
 # ifndef DEBUG_MODE
 #  define DEBUG_MODE 0

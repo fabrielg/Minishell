@@ -13,10 +13,7 @@
 #ifndef ENVP_H
 # define ENVP_H
 
-# include <stdlib.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include "libft.h"
+# include "minishell.h"
 
 /* Structure for a dictionnary */
 typedef struct s_dic
