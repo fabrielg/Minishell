@@ -112,34 +112,36 @@ struct s_token
 	t_token_data	data;
 };
 
-t_token	*token_create(t_token_type type, void *content);
-void	token_destroy(t_token *token);
-void	token_clear(t_token **tokens, int token_count);
+t_token			*token_create(t_token_type type, t_token_data *data);
+void			token_destroy(t_token *token);
+void			token_clear(t_token **tokens, int token_count);
 
 /* Functions utils for TOKEN_WORD */
-t_token	*token_create_word(char *text, bool quoted, bool expandable);
-void	token_destroy_word(t_word *word);
+t_token			*token_create_word(t_word *word);
+t_token_data	token_parse_word(char *content);
+void			token_destroy_word(t_word *word);
 
 /* Functions utils for TOKEN_REDIRECT */
-t_token	*token_create_redir(t_redirect_type type, t_word *file, int fd);
-void	token_destroy_redir(t_redirect *redir);
-void	token_clear_redir(t_redirect **redir, int rdc);
+t_token			*token_create_redir(t_redirect *redir);
+t_token_data	token_parse_redir(char *content);
+void			token_destroy_redir(t_redirect *redir);
+void			token_clear_redir(t_redirect **redir, int rdc);
 
 /* Functions utils for TOKEN_COMMAND */
-t_token	*token_create_command(char **args, int ac, t_redirect **redir, int rdc);
-void	token_destroy_command(t_command *command);
-void	token_clear_commands(t_command **commands, int command_count);
+t_token			*token_create_command(char **args, int ac, t_redirect **redir, int rdc);
+void			token_destroy_command(t_command *command);
+void			token_clear_commands(t_command **commands, int command_count);
 
 /* Functions utils for TOKEN_SUBSHELL */
-t_token	*token_create_subshell(t_token *content, t_redirect **redir, int rdc);
-void	token_destroy_subshell(t_subshell *subshell);
+t_token			*token_create_subshell(t_token *content, t_redirect **redir, int rdc);
+void			token_destroy_subshell(t_subshell *subshell);
 
 /* Functions utils for TOKEN_PIPELINE */
-t_token	*token_create_pipeline(t_token **commands, int command_count);
-void	token_destroy_pipeline(t_pipeline *pipeline);
+t_token			*token_create_pipeline(t_token **commands, int command_count);
+void			token_destroy_pipeline(t_pipeline *pipeline);
 
 /* Functions utils for TOKEN_LOGICAL_EXPRESSION */
-t_token	*token_create_logic_exp(t_logical_op op, t_token *left, t_token *right);
-void	token_destroy_logic_exp(t_logical_expression *logic_exp);
+t_token			*token_create_logic_exp(t_logical_op op, t_token *left, t_token *right);
+void			token_destroy_logic_exp(t_logical_expression *logic_exp);
 
 #endif

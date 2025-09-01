@@ -1,18 +1,14 @@
 #include "tokens.h"
 
-t_token	*token_create(t_token_type type, void *content)
+t_token	*token_create(t_token_type type, t_token_data *data)
 {
-	t_token_data	*data;
 	t_token			*token;
 
-	data = (t_token_data *) content;
 	token = NULL;
 	if (type == TOKEN_WORD)
-		token = token_create_word(data->word->text, data->word->quoted,
-				data->word->quoted);
+		token = token_create_word(data->word);
 	else if (type == TOKEN_REDIRECT)
-		token = token_create_redir(data->redirect->type, data->redirect->file,
-				data->redirect->fd);
+		token = token_create_redir(data->redirect);
 	else if (type == TOKEN_COMMAND)
 		token = token_create_command(data->command->args,
 				data->command->arg_count, data->command->redirects,

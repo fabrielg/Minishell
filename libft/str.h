@@ -29,6 +29,7 @@ size_t	ft_strlen(const char *s);
 size_t	ft_strlen_char(char const *str, char stop);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strnotchr(const char *s, int c);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 long	ft_strtol(const char *str, char **endptr, int base);

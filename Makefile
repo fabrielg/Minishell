@@ -21,7 +21,7 @@ LIBFT		= $(LIBFT_DIR)libft.a
 
 INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 
-MAIN_FILE	= main
+MAIN_FILE	= token_tester
 
 # All files in src/
 FILES		=	env/bst_utils \
