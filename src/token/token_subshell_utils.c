@@ -23,7 +23,7 @@ void	token_destroy_subshell(t_subshell *subshell)
 {
 	if (!subshell)
 		return ;
-	// TODO: free subshell->content
+	token_destroy(subshell->content);
 	token_clear_redir(subshell->redirects, subshell->redirect_count);
 	free(subshell);
 }

@@ -23,7 +23,7 @@ void	token_destroy_logic_exp(t_logical_expression *logic_exp)
 {
 	if (!logic_exp)
 		return ;
-	// TODO: free logic_exp->left
-	// TODO: free logic_exp->right
+	token_destroy(logic_exp->left);
+	token_destroy(logic_exp->right);
 	free(logic_exp);
 }
