@@ -40,8 +40,11 @@ void	token_clear(t_token **tokens, int token_count)
 	free(tokens);
 }
 
-void	token_destroy(t_token *token)
+void	token_destroy(void *content)
 {
+	t_token	*token;
+
+	token = (t_token *) content;
 	if (!token)
 		return ;
 	if (token->type == TOKEN_WORD)
