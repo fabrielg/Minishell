@@ -41,13 +41,10 @@ t_token_data	token_parse_redir(char *content)
 	if (!symbol || symbol[0] == 0)
 		return (free(redir), data);
 	redir->type = get_redir_type(&symbol);
-	printf("symbol before: [%s]\n", symbol);
 	symbol = ft_strnotchr(symbol + 1, ' ');
-	printf("symbol after: [%s]\n", symbol);
 	file = token_parse_word(symbol);
 	if (!file.word)
 		return (free(redir), data);
-	printf("file found: [%s]\n", file.word->text);
 	redir->file = file.word;
 	data.redirect = redir;
 	return (data);
