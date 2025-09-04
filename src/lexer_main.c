@@ -20,10 +20,8 @@ int main(int argc, char *argv[])
 			break;
 		if (*line)
 			add_history(line);
-		check_basics(line);
-		// printf("Input: %s\n", line);
+		lex_line(line);
 		free(line);
 	}
-	// check_basics(s);
 	return (0);
 }
