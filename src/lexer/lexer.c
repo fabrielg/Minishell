@@ -23,7 +23,7 @@ int	lex_line(char *cmd_line)
 	int				par_count;
 	unsigned char	byte;
 
-	if (!cmd_line)
+	if (!cmd_line || cmd_line[0] == '\0')
 		return (STX_ERROR);
 	i = -1;
 	byte = 0b0000;
