@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_map.c                                      :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 01:46:25 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/05/07 11:12:53 by gfrancoi         ###   ########.fr       */
+/*   Created: 2024/11/14 17:15:13 by gfrancoi          #+#    #+#             */
+/*   Updated: 2024/11/19 12:17:11 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_free_map(void **map, int size)
+char	*ft_strndup(const char *s, size_t size)
 {
-	int	i;
+	size_t	i;
+	size_t	length;
+	char	*dup;
 
-	if (!map)
-		return (0);
+	length = ft_strlen(s);
+	if (size > length)
+		size = length;
+	dup = malloc(sizeof(char) * (size + 1));
+	if (!dup)
+		return (NULL);
 	i = 0;
-	while (map[i] && (i < size || size < 0))
-		free(map[i++]);
-	free(map);
-	return (1);
+	while (i < size)
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	dup[i] = 0;
+	return (dup);
 }
