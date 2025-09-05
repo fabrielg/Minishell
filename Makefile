@@ -29,7 +29,9 @@ FILES		=	env/bst_utils \
 				env/env_free \
 				env/env_node_init \
 				env/env_node_utils \
-				env/path_research
+				env/path_research \
+				lexer/lexer_utils \
+				lexer/lexer
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))
@@ -42,7 +44,7 @@ all : $(NAME)
 	@echo "\e[1;92m$(CUSTOM_NAME) compiled successfully!\e[0m"
 
 $(NAME) : $(LIBFT) $(OBJ_DIR) $(OBJ)
-	cc $(CFLAGS) $(INCLUDES) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME)
+	cc $(CFLAGS) $(INCLUDES) $(OBJ) -L$(LIBFT_DIR) -lft -lreadline -lncurses -o $(NAME)
 
 $(LIBFT) :
 	make -C $(LIBFT_DIR)
