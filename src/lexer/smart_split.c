@@ -59,7 +59,6 @@ char	**smart_split(const char *line)
 	int		x;
 
 	words = count_words(line);
-	printf("words: %d\n", words);
 	res = calloc(words + 1, sizeof(char *));
 	if (!res)
 		return (NULL);
