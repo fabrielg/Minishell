@@ -70,7 +70,7 @@ int	check_parenthesis(char c, int *par_count, unsigned char byte)
 /**
  * @brief Toggles quote state in the byte bitmask.
  */
-void	toggle_quotes(char c, int *i, unsigned char *byte)
+void	toggle_quotes(char c, unsigned char *byte)
 {
 	if (c == '"' && !(*byte & SNG_QUOTED))
 		*byte ^= DBL_QUOTED;

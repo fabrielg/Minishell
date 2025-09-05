@@ -16,7 +16,7 @@
 
 int		check_operators(char *cmd_line, int *i, unsigned char	*byte);
 int		check_parenthesis(char c, int *par_count, unsigned char byte);
-void	toggle_quotes(char c, int *i, unsigned char *byte);
+void	toggle_quotes(char c, unsigned char *byte);
 int		validate_stx(int par_count, unsigned char byte);
 
 //lexer__________________________
