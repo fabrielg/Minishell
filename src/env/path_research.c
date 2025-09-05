@@ -1,6 +1,4 @@
 #include "minishell.h"
-#include <stdio.h>
-#include "libft.h"
 
 /**
  * Builds a full path by concatenating a directory and a command.
