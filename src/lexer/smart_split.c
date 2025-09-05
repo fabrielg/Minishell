@@ -70,7 +70,10 @@ char	**smart_split(const char *line)
 			i++;
 		if (!line[i])
 			break ;
-		res[x++] = extract_word(line, &i);
+		res[x] = extract_word(line, &i);
+		if (!res[x])
+			return (ft_free_map((void **) res, x), NULL);
+		x++;
 	}
 	return (res);
 }
