@@ -77,3 +77,96 @@ char	**smart_split(const char *line)
 	}
 	return (res);
 }
+
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdio.h>
+
+/**
+ * @brief Duplicate a substring [start, end).
+ */
+static char *substr(const char *s, int start, int end)
+{
+    char *out = malloc(end - start + 1);
+    if (!out) return NULL;
+    memcpy(out, s + start, end - start);
+    out[end - start] = '\0';
+    return out;
+}
+
+/**
+ * @brief Check if a char can start an operator.
+ */
+static int is_operator_char(char c)
+{
+    return (c == '|' || c == '&' || c == '<' || c == '>');
+}
+
+/**
+ * @brief Check if substring starting at i is an operator and return its len.
+ */
+static int operator_len(const char *s, int i)
+{
+    if ((s[i] == '|' && s[i+1] == '|') ||
+        (s[i] == '&' && s[i+1] == '&') ||
+        (s[i] == '<' && s[i+1] == '<') ||
+        (s[i] == '>' && s[i+1] == '>'))
+        return 2;
+    return 1;
+}
+
+char **smart_split_v2(const char *line)
+{
+    char **tokens = NULL;
+    int capacity = 8, count = 0;
+    int i = 0, start = -1;
+    unsigned char state = 0;
+
+    tokens = malloc(sizeof(char *) * capacity);
+    if (!tokens) return NULL;
+
+    while (line[i])
+    {
+        toggle_quotes(line[i], &state);
+
+        if (!(state & IN_QUOTES))
+        {
+            if ((line[i] == ' ' || line[i] == '\t'))
+            {
+                if (start != -1) {
+                    tokens[count++] = substr(line, start, i);
+                    start = -1;
+                }
+            }
+            else if (is_operator_char(line[i]))
+            {
+                if (start != -1) {
+                    tokens[count++] = substr(line, start, i);
+                    start = -1;
+                }
+                int oplen = operator_len(line, i);
+                tokens[count++] = substr(line, i, i + oplen);
+                i += oplen - 1;
+            }
+            else if (start == -1)
+                start = i;
+        }
+        else
+        {
+            if (start == -1)
+                start = i;
+        }
+        if (count >= capacity - 1)
+        {
+            capacity *= 2;
+            tokens = realloc(tokens, sizeof(char *) * capacity);
+        }
+        i++;
+    }
+    if (start != -1)
+        tokens[count++] = substr(line, start, i);
+
+    tokens[count] = NULL;
+    return tokens;
+}
