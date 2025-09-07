@@ -25,7 +25,7 @@ t_token_data	token_parse_word(char *content)
 		return (data);
 	word->expandable = false;
 	word->quoted = false;
-	if (ft_strchrset(content, "'\"") == 0)
+	if (ft_strchrset(content, "'\""))
 		word->quoted = true;
 	word->text = ft_strdup(content);
 	if (!word->text)

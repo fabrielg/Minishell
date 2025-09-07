@@ -14,39 +14,44 @@ t_token	*token_create_redir(t_redirect *redir)
 	return (token);
 }
 
-static t_redirect_type	get_redir_type(char **symbol)
-{
-	if ((*symbol)[0] == '<' && (*symbol)[1] == '<')
-		return (++(*symbol), REDIRECT_HEREDOC);
-	else if ((*symbol)[0] == '<')
-		return (REDIRECT_INPUT);
-	else if ((*symbol)[0] == '>' && (*symbol)[1] == '>')
-		return (++(*symbol), REDIRECT_APPEND);
-	return (REDIRECT_OUTPUT);
-}
+// static t_redirect_type	get_redir_type(char **symbol)
+// {
+// 	if ((*symbol)[0] == '<' && (*symbol)[1] == '<')
+// 		return (++(*symbol), REDIRECT_HEREDOC);
+// 	else if ((*symbol)[0] == '<')
+// 		return (REDIRECT_INPUT);
+// 	else if ((*symbol)[0] == '>' && (*symbol)[1] == '>')
+// 		return (++(*symbol), REDIRECT_APPEND);
+// 	return (REDIRECT_OUTPUT);
+// }
 
-t_token_data	token_parse_redir(char *content)
+t_token_data	token_parse_redir(char **contents, int *i)
 {
+	t_redirect 		*r;
 	t_token_data	data;
-	t_redirect		*redir;
-	char			*symbol;
 	t_token_data	file;
 
 	data.redirect = NULL;
-	redir = (t_redirect *) malloc(sizeof(t_redirect));
-	if (!redir)
+	r = malloc(sizeof(t_redirect));
+	if (!r)
 		return (data);
-	redir->fd = -1;
-	symbol = ft_strchrset(content, "<>");
-	if (!symbol || symbol[0] == 0)
-		return (free(redir), data);
-	redir->type = get_redir_type(&symbol);
-	symbol = ft_strnotchr(symbol + 1, ' ');
-	file = token_parse_word(symbol);
-	if (!file.word)
-		return (free(redir), data);
-	redir->file = file.word;
-	data.redirect = redir;
+	r->fd = -1;
+	if (!ft_strcmp(contents[*i], "<"))
+		r->type = REDIRECT_INPUT;
+	else if (!ft_strcmp(contents[*i], ">"))
+		r->type = REDIRECT_OUTPUT;
+	else if (!ft_strcmp(contents[*i], ">>"))
+		r->type = REDIRECT_APPEND;
+	else
+		r->type = REDIRECT_HEREDOC;
+	if (contents[(*i) + 1])
+	{
+		file = token_parse_word(contents[++(*i)]);
+		r->file = file.word;
+	}
+	else
+		r->file = NULL;
+	data.redirect = r;
 	return (data);
 }
 

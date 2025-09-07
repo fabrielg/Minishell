@@ -115,6 +115,7 @@ struct s_token
 t_token			*token_create(t_token_type type, t_token_data *data);
 void			token_destroy(void *content);
 void			token_clear(t_token **tokens, int token_count);
+t_list2			*parse_contents(char **contents);
 
 /* Functions utils for TOKEN_WORD */
 t_token			*token_create_word(t_word *word);
@@ -123,7 +124,7 @@ void			token_destroy_word(t_word *word);
 
 /* Functions utils for TOKEN_REDIRECT */
 t_token			*token_create_redir(t_redirect *redir);
-t_token_data	token_parse_redir(char *content);
+t_token_data	token_parse_redir(char **contents, int *i);
 void			token_destroy_redir(t_redirect *redir);
 void			token_clear_redir(t_redirect **redir, int rdc);
 

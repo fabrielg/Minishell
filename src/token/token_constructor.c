@@ -63,3 +63,44 @@ void	token_destroy(void *content)
 		return ;
 	free(token);
 }
+
+static t_token_type	detect_type(char *s)
+{
+	if (!ft_strcmp(s, "|"))
+		return (TOKEN_PIPELINE);
+	if (!ft_strcmp(s, "&&") || !ft_strcmp(s, "||"))
+		return (TOKEN_LOGICAL_EXPRESSION);
+	if (!ft_strcmp(s, "(") || !ft_strcmp(s, ")"))
+		return (TOKEN_SUBSHELL);
+	if (!ft_strcmp(s, "<") || !ft_strcmp(s, ">")
+		|| !ft_strcmp(s, "<<") || !ft_strcmp(s, ">>"))
+		return (TOKEN_REDIRECT);
+	return (TOKEN_WORD);
+}
+
+t_list2	*parse_contents(char **contents)
+{
+	t_list2			*tokens;
+	t_token_data	data;
+	int				i;
+	t_token_type	type;
+
+	tokens = NULL;
+	i = 0;
+	while (contents[i])
+	{
+		type = detect_type(contents[i]);
+		if (type == TOKEN_WORD)
+		{
+			data = token_parse_word(contents[i]);
+			ft_lstadd_back2(&tokens, ft_lstnew2(token_create(type, &data)));
+		}
+		else if (type == TOKEN_REDIRECT)
+		{
+			data = token_parse_redir(contents, &i);
+			ft_lstadd_back2(&tokens, ft_lstnew2(token_create_redir(data.redirect)));
+		}
+		i++;
+	}
+	return (tokens);
+}
