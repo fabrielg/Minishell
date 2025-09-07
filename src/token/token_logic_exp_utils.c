@@ -1,6 +1,6 @@
 #include "tokens.h"
 
-t_token	*token_create_logic_exp(t_logical_op op, t_token *left, t_token *right)
+/*t_token	*token_create_logic_exp(t_logical_op op, t_token *left, t_token *right)
 {
 	t_token					*token;
 	t_logical_expression	*logic_exp;
@@ -26,4 +26,4 @@ void	token_destroy_logic_exp(t_logical_expression *logic_exp)
 	token_destroy(logic_exp->left);
 	token_destroy(logic_exp->right);
 	free(logic_exp);
-}
+}*/

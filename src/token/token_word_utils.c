@@ -10,28 +10,25 @@ t_token	*token_create_word(t_word *word)
 	if (!token)
 		return (NULL);
 	token->type = TOKEN_WORD;
-	token->data.word = word;
+	token->data = word;
 	return (token);
 }
 
-t_token_data	token_parse_word(char *content)
+t_word	*token_parse_word(char *content)
 {
-	t_token_data	data;
-	t_word			*word;
+	t_word	*word;
 
-	data.word = NULL;
 	word = (t_word *) malloc(sizeof(t_word));
 	if (!word)
-		return (data);
+		return (NULL);
 	word->expandable = false;
 	word->quoted = false;
 	if (ft_strchrset(content, "'\""))
 		word->quoted = true;
 	word->text = ft_strdup(content);
 	if (!word->text)
-		return (free(word), data);
-	data.word = word;
-	return (data);
+		return (free(word), NULL);
+	return (word);
 }
 
 void	token_destroy_word(t_word *word)

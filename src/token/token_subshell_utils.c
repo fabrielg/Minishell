@@ -1,6 +1,6 @@
 #include "tokens.h"
 
-t_token	*token_create_subshell(t_token *content, t_redirect **redir, int rdc)
+/*t_token	*token_create_subshell(t_token *content, t_redirect **redir, int rdc)
 {
 	t_token		*token;
 	t_subshell	*subshell;
@@ -26,4 +26,4 @@ void	token_destroy_subshell(t_subshell *subshell)
 	token_destroy(subshell->content);
 	token_clear_redir(subshell->redirects, subshell->redirect_count);
 	free(subshell);
-}
+}*/

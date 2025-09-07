@@ -58,9 +58,9 @@ int	main(int argc, char *argv[], char **envp)
 		t_token_type	type = tok->type;
 		printf("type:	%s\n", get_tokentype_name(type));
 		if (type == TOKEN_WORD)
-			printf("text:[%s] \t\tquoted:[%d]\t\texpandlable:[%d]\n", tok->data.word->text, tok->data.word->quoted, tok->data.word->expandable);
+			printf("text:[%s] \t\tquoted:[%d]\t\texpandlable:[%d]\n", ((t_word *)(tok->data))->text, ((t_word *)(tok->data))->quoted, ((t_word *)(tok->data))->expandable);
 		else if (type == TOKEN_REDIRECT)
-			printf("type:[%d]\t\tfile:[%s]\t\tfd:[%d]\n", tok->data.redirect->type, tok->data.redirect->file->text, tok->data.redirect->fd);
+			printf("type:[%d]\t\tfile:[%s]\t\tfd:[%d]\n", ((t_redirect *)(tok->data))->type, ((t_redirect *)(tok->data))->file->text, ((t_redirect *)(tok->data))->fd);
 		printf("\n");
 		tmp = tmp->next;
 	}

@@ -10,7 +10,7 @@ t_token	*token_create_redir(t_redirect *redir)
 	if (!token)
 		return (NULL);
 	token->type = TOKEN_REDIRECT;
-	token->data.redirect = redir;
+	token->data = redir;
 	return (token);
 }
 
@@ -25,16 +25,13 @@ t_token	*token_create_redir(t_redirect *redir)
 // 	return (REDIRECT_OUTPUT);
 // }
 
-t_token_data	token_parse_redir(char **contents, int *i)
+t_redirect	*token_parse_redir(char **contents, int *i)
 {
-	t_redirect 		*r;
-	t_token_data	data;
-	t_token_data	file;
+	t_redirect	*r;
 
-	data.redirect = NULL;
 	r = malloc(sizeof(t_redirect));
 	if (!r)
-		return (data);
+		return (NULL);
 	r->fd = -1;
 	if (!ft_strcmp(contents[*i], "<"))
 		r->type = REDIRECT_INPUT;
@@ -45,14 +42,10 @@ t_token_data	token_parse_redir(char **contents, int *i)
 	else
 		r->type = REDIRECT_HEREDOC;
 	if (contents[(*i) + 1])
-	{
-		file = token_parse_word(contents[++(*i)]);
-		r->file = file.word;
-	}
+		r->file = token_parse_word(contents[++(*i)]);
 	else
 		r->file = NULL;
-	data.redirect = r;
-	return (data);
+	return (r);
 }
 
 void	token_clear_redir(t_redirect **redir, int rdc)

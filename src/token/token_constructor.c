@@ -1,15 +1,15 @@
 #include "tokens.h"
 
-t_token	*token_create(t_token_type type, t_token_data *data)
+t_token	*token_create(t_token_type type, void *data)
 {
-	t_token			*token;
+	t_token	*token;
 
 	token = NULL;
 	if (type == TOKEN_WORD)
-		token = token_create_word(data->word);
+		token = token_create_word((t_word *) data);
 	else if (type == TOKEN_REDIRECT)
-		token = token_create_redir(data->redirect);
-	else if (type == TOKEN_COMMAND)
+		token = token_create_redir((t_redirect *) data);
+	/*else if (type == TOKEN_COMMAND)
 		token = token_create_command(data->command->args,
 				data->command->arg_count, data->command->redirects,
 				data->command->redirect_count);
@@ -21,7 +21,7 @@ t_token	*token_create(t_token_type type, t_token_data *data)
 				data->pipeline->command_count);
 	else if (type == TOKEN_LOGICAL_EXPRESSION)
 		token = token_create_logic_exp(data->logical_expr->op,
-				data->logical_expr->left, data->logical_expr->right);
+				data->logical_expr->left, data->logical_expr->right);*/
 	return (token);
 }
 
@@ -48,17 +48,9 @@ void	token_destroy(void *content)
 	if (!token)
 		return ;
 	if (token->type == TOKEN_WORD)
-		token_destroy_word(token->data.word);
+		token_destroy_word(token->data);
 	else if (token->type == TOKEN_REDIRECT)
-		token_destroy_redir(token->data.redirect);
-	else if (token->type == TOKEN_COMMAND)
-		token_destroy_command(token->data.command);
-	else if (token->type == TOKEN_SUBSHELL)
-		token_destroy_subshell(token->data.subshell);
-	else if (token->type == TOKEN_PIPELINE)
-		token_destroy_pipeline(token->data.pipeline);
-	else if (token->type == TOKEN_LOGICAL_EXPRESSION)
-		token_destroy_logic_exp(token->data.logical_expr);
+		token_destroy_redir(token->data);
 	else
 		return ;
 	free(token);
@@ -81,7 +73,7 @@ static t_token_type	detect_type(char *s)
 t_list2	*parse_contents(char **contents)
 {
 	t_list2			*tokens;
-	t_token_data	data;
+	void			*data;
 	int				i;
 	t_token_type	type;
 
@@ -93,12 +85,12 @@ t_list2	*parse_contents(char **contents)
 		if (type == TOKEN_WORD)
 		{
 			data = token_parse_word(contents[i]);
-			ft_lstadd_back2(&tokens, ft_lstnew2(token_create(type, &data)));
+			ft_lstadd_back2(&tokens, ft_lstnew2(token_create(type, data)));
 		}
 		else if (type == TOKEN_REDIRECT)
 		{
 			data = token_parse_redir(contents, &i);
-			ft_lstadd_back2(&tokens, ft_lstnew2(token_create_redir(data.redirect)));
+			ft_lstadd_back2(&tokens, ft_lstnew2(token_create_redir(data)));
 		}
 		i++;
 	}

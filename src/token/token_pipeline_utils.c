@@ -1,6 +1,6 @@
 #include "tokens.h"
 
-t_token	*token_create_pipeline(t_token **commands, int command_count)
+/*t_token	*token_create_pipeline(t_token **commands, int command_count)
 {
 	t_token		*token;
 	t_pipeline	*pipeline;
@@ -24,4 +24,4 @@ void	token_destroy_pipeline(t_pipeline *pipeline)
 		return ;
 	token_clear(pipeline->commands, pipeline->command_count);
 	free(pipeline);
-}
+}*/

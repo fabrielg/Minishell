@@ -1,6 +1,6 @@
 #include "tokens.h"
 
-t_token	*token_create_command(char **args, int ac, t_redirect **redir, int rdc)
+/*t_token	*token_create_command(char **args, int ac, t_redirect **redir, int rdc)
 {
 	t_token		*token;
 	t_command	*command;
@@ -42,4 +42,4 @@ void	token_destroy_command(t_command *command)
 	ft_free_map((void **) command->args, command->arg_count);
 	token_clear_redir(command->redirects, command->redirect_count);
 	free(command);
-}
+}*/
