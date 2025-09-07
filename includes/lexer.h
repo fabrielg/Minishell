@@ -18,12 +18,20 @@ int		check_operators(char *cmd_line, int *i, unsigned char	*byte);
 int		check_parenthesis(char c, int *par_count, unsigned char byte);
 void	toggle_quotes(char c, unsigned char *byte);
 int		validate_stx(int par_count, unsigned char byte);
-char	**smart_split(const char *line);
-char	**smart_split_v2(const char *line);
 
 //lexer__________________________
 
 int		lex_line(char *cmd_line);
 int		print_stx_error(int err_code, char *err_msg, int size);
+
+//smart_split_utils______________
+
+char	*substr(const char *s, int start, int end);
+int		is_operator_char(char c);
+int		operator_len(const char *s, int i);
+
+//smart_split____________________
+
+char	**smart_split(const char *line);
 
 #endif

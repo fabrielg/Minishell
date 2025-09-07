@@ -26,7 +26,7 @@ int	main(int argc, char *argv[], char **envp)
 	ft_lstadd_back(&tokens, ft_lstnew(token));
 	ft_lstclear(&tokens, token_destroy);
 	// token_destroy(token);*/
-	char	**contents = smart_split_v2("(     cat    \"  input.txt\"&&echo    \"done\")||grep   \"error\"   <log.txt>>   result.log|wc   -l");
+	char	**contents = smart_split("(cat    \"  input.txt\"&&echo    \"   'done  '  \")||grep   \"error\"   <log.txt>>   result.log|wc   -l");
 	if (!contents)
 		return (0);
 	for (int i = 0; contents[i]; i++)

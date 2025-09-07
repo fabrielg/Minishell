@@ -32,6 +32,7 @@ FILES		=	env/bst_utils \
 				env/path_research \
 				lexer/lexer_utils \
 				lexer/lexer \
+				lexer/smart_split_utils \
 				lexer/smart_split \
 				token/token_command_utils \
 				token/token_constructor \

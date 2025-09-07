@@ -1,172 +1,86 @@
 #include "lexer.h"
+#include <string.h>
 
-static int	count_words(const char *line)
+typedef struct s_split_ctx
 {
-	unsigned char	byte;
-	int				count;
-	int				i;
-	bool			in_word;
+	const char	*line;
+	char		**tokens;
+	int			capacity;
+	int			count;
+	int			start;
+}	t_split_ctx;
 
-	count = 0;
-	byte = 0;
-	i = 0;
-	in_word = false;
-	while (line && line[i])
-	{
-		toggle_quotes(line[i], &byte);
-		if (!(byte & IN_QUOTES) && (line[i] == ' ' || line[i] == '\t'))
-		{
-			if (in_word)
-				count++;
-			in_word = false;
-		}
-		else
-			in_word = true;
-		i++;
-	}
-	if (in_word)
-		count++;
-	return (count);
+static int	ensure_capacity(t_split_ctx *ctx)
+{
+	if (ctx->count < ctx->capacity - 1)
+		return (1);
+	ctx->capacity *= 2;
+	ctx->tokens = realloc(ctx->tokens, sizeof(char *) * ctx->capacity);
+	return (ctx->tokens != NULL);
 }
 
-static char	*extract_word(const char *line, int *i)
+static void	flush_token(t_split_ctx *ctx, int end)
 {
-	unsigned char	byte;
-	int				start;
-	int				j;
+	if (ctx->start == -1)
+		return ;
+	ctx->tokens[ctx->count++] = substr(ctx->line, ctx->start, end);
+	ctx->start = -1;
+	ensure_capacity(ctx);
+}
 
-	if (!line)
-		return (NULL);
-	byte = 0;
-	j = *i;
-	start = j;
-	while (line[j])
+static void	flush_operator(t_split_ctx *ctx, int *i)
+{
+	int	oplen;
+
+	oplen = operator_len(ctx->line, *i);
+	ctx->tokens[ctx->count++] = substr(ctx->line, *i, *i + oplen);
+	ensure_capacity(ctx);
+	*i += oplen - 1;
+}
+
+static void	process_char(t_split_ctx *ctx, unsigned char *state, int *i)
+{
+	char	c;
+	
+	c = ctx->line[*i];
+	toggle_quotes(c, state);
+	if (!(*state & IN_QUOTES))
 	{
-		toggle_quotes(line[j], &byte);
-		if (!(byte & IN_QUOTES) && (line[j] == ' ' || line[j] == '\t'))
-			break ;
-		j++;
+		if (c == ' ' || c == '\t')
+			flush_token(ctx, *i);
+		else if (is_operator_char(c))
+		{
+			flush_token(ctx, *i);
+			flush_operator(ctx, i);
+		}
+		else if (ctx->start == -1)
+			ctx->start = *i;
 	}
-	*i = j;
-	return (ft_strndup(line + start, j - start));
+	else if (ctx->start == -1)
+		ctx->start = *i;
 }
 
 char	**smart_split(const char *line)
 {
-	char	**res;
-	int		words;
-	int		i;
-	int		x;
+	t_split_ctx		ctx;
+	unsigned char	state;
+	int				i;
 
-	words = count_words(line);
-	res = calloc(words + 1, sizeof(char *));
-	if (!res)
+	ctx.line = line;
+	ctx.capacity = 8;
+	ctx.count = 0;
+	ctx.start = -1;
+	ctx.tokens = malloc(sizeof(char *) * ctx.capacity);
+	if (!ctx.tokens)
 		return (NULL);
+	state = 0;
 	i = 0;
-	x = 0;
 	while (line[i])
 	{
-		while (line[i] == ' ' || line[i] == '\t')
-			i++;
-		if (!line[i])
-			break ;
-		res[x] = extract_word(line, &i);
-		if (!res[x])
-			return (ft_free_map((void **) res, x), NULL);
-		x++;
+		process_char(&ctx, &state, &i);
+		i++;
 	}
-	return (res);
-}
-
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <stdio.h>
-
-/**
- * @brief Duplicate a substring [start, end).
- */
-static char *substr(const char *s, int start, int end)
-{
-    char *out = malloc(end - start + 1);
-    if (!out) return NULL;
-    memcpy(out, s + start, end - start);
-    out[end - start] = '\0';
-    return out;
-}
-
-/**
- * @brief Check if a char can start an operator.
- */
-static int is_operator_char(char c)
-{
-    return (c == '|' || c == '&' || c == '<' || c == '>');
-}
-
-/**
- * @brief Check if substring starting at i is an operator and return its len.
- */
-static int operator_len(const char *s, int i)
-{
-    if ((s[i] == '|' && s[i+1] == '|') ||
-        (s[i] == '&' && s[i+1] == '&') ||
-        (s[i] == '<' && s[i+1] == '<') ||
-        (s[i] == '>' && s[i+1] == '>'))
-        return 2;
-    return 1;
-}
-
-char **smart_split_v2(const char *line)
-{
-    char **tokens = NULL;
-    int capacity = 8, count = 0;
-    int i = 0, start = -1;
-    unsigned char state = 0;
-
-    tokens = malloc(sizeof(char *) * capacity);
-    if (!tokens) return NULL;
-
-    while (line[i])
-    {
-        toggle_quotes(line[i], &state);
-
-        if (!(state & IN_QUOTES))
-        {
-            if ((line[i] == ' ' || line[i] == '\t'))
-            {
-                if (start != -1) {
-                    tokens[count++] = substr(line, start, i);
-                    start = -1;
-                }
-            }
-            else if (is_operator_char(line[i]))
-            {
-                if (start != -1) {
-                    tokens[count++] = substr(line, start, i);
-                    start = -1;
-                }
-                int oplen = operator_len(line, i);
-                tokens[count++] = substr(line, i, i + oplen);
-                i += oplen - 1;
-            }
-            else if (start == -1)
-                start = i;
-        }
-        else
-        {
-            if (start == -1)
-                start = i;
-        }
-        if (count >= capacity - 1)
-        {
-            capacity *= 2;
-            tokens = realloc(tokens, sizeof(char *) * capacity);
-        }
-        i++;
-    }
-    if (start != -1)
-        tokens[count++] = substr(line, start, i);
-
-    tokens[count] = NULL;
-    return tokens;
+	flush_token(&ctx, i);
+	ctx.tokens[ctx.count] = NULL;
+	return (ctx.tokens);
 }
