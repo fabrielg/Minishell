@@ -217,5 +217,7 @@ t_list2	*group_commands(t_list2 *tokens)
 	}
 	if (current)
 		ft_lstadd_back2(&result, ft_lstnew2(token_create_command(current)));
+	ft_lstclear2(&tokens, token_destroy);
+	tokens = result;
 	return (result);
 }

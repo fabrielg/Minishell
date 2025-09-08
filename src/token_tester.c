@@ -34,8 +34,8 @@ int	main(int argc, char *argv[], char **envp)
 
 	t_list2	*tokens = tokenize(contents);
 	ft_free_map((void **) contents, -1);
-	t_list2 *tokens2 = group_commands(tokens);
-	t_list2	*tmp = tokens2;
+	tokens = group_commands(tokens);
+	t_list2	*tmp = tokens;
 	while (tmp)
 	{
 		t_token			*tok = (t_token *) tmp->content;
@@ -50,6 +50,5 @@ int	main(int argc, char *argv[], char **envp)
 		tmp = tmp->next;
 	}
 	ft_lstclear2(&tokens, token_destroy);
-	ft_lstclear2(&tokens2, token_destroy);
 	return (0);
 }
