@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+         #
+#    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/08/17 23:00:42 by fabrielg         ###   ########.fr        #
+#    Updated: 2025/09/08 21:59:48 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,14 +14,14 @@
 
 NAME		= minishell
 CUSTOM_NAME	= MiniChaise
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -g3 #-Wall -Wextra -Werror
 
 LIBFT_DIR	= ./libft/
 LIBFT		= $(LIBFT_DIR)libft.a
 
 INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 
-MAIN_FILE	= main
+MAIN_FILE	= main_exec
 
 # All files in src/
 FILES		=	env/bst_utils \
@@ -31,7 +31,17 @@ FILES		=	env/bst_utils \
 				env/env_node_utils \
 				env/path_research \
 				lexer/lexer_utils \
-				lexer/lexer
+				lexer/lexer \
+				exec/execute_cmd \
+				exec/redirect_cmd \
+				builtins/cd \
+				builtins/echo \
+				builtins/env \
+				builtins/exit \
+				builtins/export \
+				builtins/pwd \
+				builtins/unset
+
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))
@@ -53,7 +63,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)
 	cc $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJ_DIR) : 
+$(OBJ_DIR) :
 	mkdir -p $(OBJ_DIR)
 
 clean :
