@@ -50,17 +50,16 @@ int	main(int argc, char *argv[], char **envp)
 		printf("content %i = [%s]\n", i, contents[i]);
 	t_list2	*tokens;
 
-	tokens = parse_contents(contents);
+	tokens = tokenize(contents);
 	t_list2	*tmp = tokens;
 	while (tmp)
 	{
 		t_token			*tok = (t_token *) tmp->content;
 		t_token_type	type = tok->type;
-		printf("type:	%s\n", get_tokentype_name(type));
-		if (type == TOKEN_WORD)
-			printf("text:[%s] \t\tquoted:[%d]\t\texpandlable:[%d]\n", ((t_word *)(tok->data))->text, ((t_word *)(tok->data))->quoted, ((t_word *)(tok->data))->expandable);
-		else if (type == TOKEN_REDIRECT)
-			printf("type:[%d]\t\tfile:[%s]\t\tfd:[%d]\n", ((t_redirect *)(tok->data))->type, ((t_redirect *)(tok->data))->file->text, ((t_redirect *)(tok->data))->fd);
+		if (type == TOKEN_REDIRECT)
+			printf("%s (type:[%d] file:[%s] fd:[%d])\n", get_tokentype_name(type), ((t_redirect *)(tok->data))->type, ((t_redirect *)(tok->data))->file->text, ((t_redirect *)(tok->data))->fd);
+		else
+			printf("%s (text:[%s] quoted:[%d] expandlable:[%d])\n", get_tokentype_name(type), ((t_word *)(tok->data))->text, ((t_word *)(tok->data))->quoted, ((t_word *)(tok->data))->expandable);
 		printf("\n");
 		tmp = tmp->next;
 	}

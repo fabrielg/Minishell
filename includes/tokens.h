@@ -115,7 +115,7 @@ struct s_token
 t_token			*token_create(t_token_type type, void *data);
 void			token_destroy(void *content);
 void			token_clear(t_token **tokens, int token_count);
-t_list2			*parse_contents(char **contents);
+t_list2			*tokenize(char **contents);
 
 /* Functions utils for TOKEN_WORD */
 t_token			*token_create_word(t_word *word);
