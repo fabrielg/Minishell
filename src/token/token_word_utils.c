@@ -1,20 +1,6 @@
 #include "tokens.h"
 
-t_token	*token_create_word(t_word *word)
-{
-	t_token	*token;
-
-	if (!word)
-		return (NULL);
-	token = (t_token *) malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->type = TOKEN_WORD;
-	token->data = word;
-	return (token);
-}
-
-t_word	*token_parse_word(char *content)
+t_word	*parse_word(char *content)
 {
 	t_word	*word;
 
@@ -29,6 +15,25 @@ t_word	*token_parse_word(char *content)
 	if (!word->text)
 		return (free(word), NULL);
 	return (word);
+}
+
+t_token	*token_new_word(const char *s)
+{
+	t_token	*token;
+	t_word	*w;
+
+	w = parse_word((char *)s);
+	if (!w)
+		return (NULL);
+	token = malloc(sizeof(t_token));
+	if (!token)
+	{
+		token_destroy_word(w);
+		return (NULL);
+	}
+	token->type = TOKEN_WORD;
+	token->data = w;
+	return (token);
 }
 
 void	token_destroy_word(void *data)

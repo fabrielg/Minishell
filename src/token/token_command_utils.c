@@ -12,6 +12,18 @@ t_token	*token_create_command(t_command *cmd)
 	return (token);
 }
 
+t_command	*command_create(void)
+{
+	t_command	*cmd;
+
+	cmd = malloc(sizeof(t_command));
+	if (!cmd)
+		return (NULL);
+	cmd->args = NULL;
+	cmd->redirects = NULL;
+	return (cmd);
+}
+
 void	token_display_command(t_command *cmd)
 {
     t_list2	*tmp;

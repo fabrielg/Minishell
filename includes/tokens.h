@@ -110,40 +110,31 @@ struct s_token
 	void			*data;
 };
 
-t_token			*token_create(t_token_type type, void *data);
+/* Functions utils for tokens */
+t_token			*token_new_op(const char *s, t_token_type type);
 void			token_destroy(void *content);
-void			token_clear(t_token **tokens, int token_count);
+t_token_type	detect_type(char *s);
+
+/* Functions utils for parsing */
 t_list2			*tokenize(char **contents);
 t_list2			*group_commands(t_list2 *tokens);
 
 /* Functions utils for TOKEN_WORD */
-t_token			*token_create_word(t_word *word);
-t_word			*token_parse_word(char *content);
+t_word			*parse_word(char *content);
+t_token			*token_new_word(const char *s);
 void			token_destroy_word(void *data);
 void			token_display_word(t_word *word);
 
 /* Functions utils for TOKEN_REDIRECT */
-t_token			*token_create_redir(t_redirect *redir);
-t_redirect		*token_parse_redir(char **contents, int *i);
+t_redirect		*parse_redir(char **contents, int *i);
+t_token			*token_new_redir(char **contents, int *i);
 void			token_destroy_redir(void *data);
-void			token_clear_redir(t_redirect **redir, int rdc);
 void			token_display_redirect(t_redirect *redir);
 
 /* Functions utils for TOKEN_COMMAND */
+t_command		*command_create(void);
 t_token			*token_create_command(t_command *cmd);
 void			token_display_command(t_command *cmd);
 void			token_destroy_command(void *data);
-
-/* Functions utils for TOKEN_SUBSHELL */
-// t_token			*token_create_subshell(t_token *content, t_redirect **redir, int rdc);
-// void			token_destroy_subshell(t_subshell *subshell);
-
-/* Functions utils for TOKEN_PIPELINE */
-// t_token			*token_create_pipeline(t_token **commands, int command_count);
-// void			token_destroy_pipeline(t_pipeline *pipeline);
-
-/* Functions utils for TOKEN_LOGICAL_EXPRESSION */
-// t_token			*token_create_logic_exp(t_logical_op op, t_token *left, t_token *right);
-// void			token_destroy_logic_exp(t_logical_expression *logic_exp);
 
 #endif

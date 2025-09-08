@@ -1,31 +1,6 @@
 #include "tokens.h"
 
-t_token	*token_create_redir(t_redirect *redir)
-{
-	t_token		*token;
-
-	if (!redir)
-		return (NULL);
-	token = (t_token *) malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->type = TOKEN_REDIRECT;
-	token->data = redir;
-	return (token);
-}
-
-// static t_redirect_type	get_redir_type(char **symbol)
-// {
-// 	if ((*symbol)[0] == '<' && (*symbol)[1] == '<')
-// 		return (++(*symbol), REDIRECT_HEREDOC);
-// 	else if ((*symbol)[0] == '<')
-// 		return (REDIRECT_INPUT);
-// 	else if ((*symbol)[0] == '>' && (*symbol)[1] == '>')
-// 		return (++(*symbol), REDIRECT_APPEND);
-// 	return (REDIRECT_OUTPUT);
-// }
-
-t_redirect	*token_parse_redir(char **contents, int *i)
+t_redirect	*parse_redir(char **contents, int *i)
 {
 	t_redirect	*r;
 
@@ -42,25 +17,29 @@ t_redirect	*token_parse_redir(char **contents, int *i)
 	else
 		r->type = REDIRECT_HEREDOC;
 	if (contents[(*i) + 1])
-		r->file = token_parse_word(contents[++(*i)]);
+		r->file = parse_word(contents[++(*i)]);
 	else
 		r->file = NULL;
 	return (r);
 }
 
-void	token_clear_redir(t_redirect **redir, int rdc)
+t_token	*token_new_redir(char **contents, int *i)
 {
-	int	i;
+	t_token		*token;
+	t_redirect	*r;
 
-	if (!redir)
-		return ;
-	i = 0;
-	while (i < rdc)
+	r = parse_redir(contents, i);
+	if (!r)
+		return (NULL);
+	token = malloc(sizeof(t_token));
+	if (!token)
 	{
-		token_destroy_redir(redir[i]);
-		i++;
+		token_destroy_redir(r);
+		return (NULL);
 	}
-	free(redir);
+	token->type = TOKEN_REDIRECT;
+	token->data = r;
+	return (token);
 }
 
 void	token_destroy_redir(void *data)
