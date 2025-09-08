@@ -34,12 +34,13 @@ FILES		=	env/bst_utils \
 				lexer/lexer \
 				lexer/smart_split_utils \
 				lexer/smart_split \
-				token/group_commands \
+				parser/group_commands \
+				parser/parser \
+				parser/tokenizer \
 				token/token_command_utils \
 				token/token_constructor \
 				token/token_redir_utils \
-				token/token_word_utils \
-				token/tokenizer
+				token/token_word_utils
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))

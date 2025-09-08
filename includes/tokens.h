@@ -115,10 +115,6 @@ t_token			*token_new_op(const char *s, t_token_type type);
 void			token_destroy(void *content);
 t_token_type	detect_type(char *s);
 
-/* Functions utils for parsing */
-t_list2			*tokenize(char **contents);
-t_list2			*group_commands(t_list2 *tokens);
-
 /* Functions utils for TOKEN_WORD */
 t_word			*parse_word(char *content);
 t_token			*token_new_word(const char *s);
