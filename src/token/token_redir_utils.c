@@ -63,10 +63,33 @@ void	token_clear_redir(t_redirect **redir, int rdc)
 	free(redir);
 }
 
-void	token_destroy_redir(t_redirect *redir)
+void	token_destroy_redir(void *data)
 {
+	t_redirect	*redir;
+
+	redir = (t_redirect *) data;
 	if (!redir)
 		return ;
 	token_destroy_word(redir->file);
 	free(redir);
+}
+
+void	token_display_redirect(t_redirect *redir)
+{
+	const char	*type_str;
+
+	if (!redir)
+		return ;
+	type_str = "UNKNOWN";
+	if (redir->type == REDIRECT_INPUT)
+		type_str = "INPUT <";
+	else if (redir->type == REDIRECT_OUTPUT)
+		type_str = "OUTPUT >";
+	else if (redir->type == REDIRECT_HEREDOC)
+		type_str = "HEREDOC <<";
+	else if (redir->type == REDIRECT_APPEND)
+		type_str = "APPEND >>";
+	printf("Redirect: %s, fd=%d, file=", type_str, redir->fd);
+	token_display_word(redir->file);
+	printf("\n");
 }

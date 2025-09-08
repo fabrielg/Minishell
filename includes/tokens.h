@@ -65,10 +65,8 @@ typedef struct s_redirect
 /* Structure for a simple command, args[0] is the command name */
 typedef struct s_command
 {
-	char		**args;
-	t_redirect	**redirects;
-	int			arg_count;
-	int			redirect_count;
+	t_list2	*args;
+	t_list2	*redirects;
 }	t_command;
 
 /* Structure for a subshell (commands between parentheses) */
@@ -115,23 +113,26 @@ struct s_token
 t_token			*token_create(t_token_type type, void *data);
 void			token_destroy(void *content);
 void			token_clear(t_token **tokens, int token_count);
-t_list2			*parse_contents(char **contents);
+t_list2			*tokenize(char **contents);
+t_list2			*group_commands(t_list2 *tokens);
 
 /* Functions utils for TOKEN_WORD */
 t_token			*token_create_word(t_word *word);
 t_word			*token_parse_word(char *content);
-void			token_destroy_word(t_word *word);
+void			token_destroy_word(void *data);
+void			token_display_word(t_word *word);
 
 /* Functions utils for TOKEN_REDIRECT */
 t_token			*token_create_redir(t_redirect *redir);
 t_redirect		*token_parse_redir(char **contents, int *i);
-void			token_destroy_redir(t_redirect *redir);
+void			token_destroy_redir(void *data);
 void			token_clear_redir(t_redirect **redir, int rdc);
+void			token_display_redirect(t_redirect *redir);
 
 /* Functions utils for TOKEN_COMMAND */
-// t_token			*token_create_command(char **args, int ac, t_redirect **redir, int rdc);
-// void			token_destroy_command(t_command *command);
-// void			token_clear_commands(t_command **commands, int command_count);
+t_token			*token_create_command(t_command *cmd);
+void			token_display_command(t_command *cmd);
+void			token_destroy_command(void *data);
 
 /* Functions utils for TOKEN_SUBSHELL */
 // t_token			*token_create_subshell(t_token *content, t_redirect **redir, int rdc);
