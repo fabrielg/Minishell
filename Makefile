@@ -34,6 +34,7 @@ FILES		=	env/bst_utils \
 				lexer/lexer \
 				lexer/smart_split_utils \
 				lexer/smart_split \
+				token/group_commands \
 				token/token_command_utils \
 				token/token_constructor \
 				token/token_redir_utils \

@@ -1,84 +1,57 @@
 #include "tokens.h"
 
+static int	add_token_safe(t_list2 **tokens, t_token *token)
+{
+	if (!token)
+		return (ft_lstclear2(tokens, token_destroy), 0);
+	ft_lstadd_back2(tokens, ft_lstnew2(token));
+	return (1);
+}
+
+static int	handle_word(t_list2 **tokens, char *content)
+{
+	t_token	*token;
+
+	token = token_new_word(content);
+	return (add_token_safe(tokens, token));
+}
+
+static int	handle_redirect(t_list2 **tokens, char **contents, int *i)
+{
+	t_token	*token;
+
+	token = token_new_redir(contents, i);
+	return (add_token_safe(tokens, token));
+}
+
+static int	handle_operator(t_list2 **tokens, char *content, t_token_type type)
+{
+	t_token	*token;
+
+	token = token_new_op(content, type);
+	return (add_token_safe(tokens, token));
+}
+
 t_list2	*tokenize(char **contents)
 {
-	t_list2			*tokens = NULL;
-	t_token			*token;
+	t_list2			*tokens;
 	t_token_type	type;
 	int				i;
 
+	tokens = NULL;
 	i = 0;
 	while (contents[i])
 	{
 		type = detect_type(contents[i]);
-		if (type == TOKEN_WORD)
-		{
-			token = token_new_word(contents[i]);
-			if (!token)
-				return (ft_lstclear2(&tokens, token_destroy), NULL);
-			ft_lstadd_back2(&tokens, ft_lstnew2(token));
-		}
-		else if (type == TOKEN_REDIRECT)
-		{
-			token = token_new_redir(contents, &i);
-			if (!token)
-				return (ft_lstclear2(&tokens, token_destroy), NULL);
-			ft_lstadd_back2(&tokens, ft_lstnew2(token));
-		}
-		else
-		{
-			token = token_new_op(contents[i], type);
-			if (!token)
-				return (ft_lstclear2(&tokens, token_destroy), NULL);
-			ft_lstadd_back2(&tokens, ft_lstnew2(token));
-		}
+		if (type == TOKEN_WORD && !handle_word(&tokens, contents[i]))
+			return (NULL);
+		else if (type == TOKEN_REDIRECT
+			&& !handle_redirect(&tokens, contents, &i))
+			return (NULL);
+		else if (type != TOKEN_WORD && type != TOKEN_REDIRECT
+			&& !handle_operator(&tokens, contents[i], type))
+			return (NULL);
 		i++;
 	}
 	return (tokens);
-}
-
-t_list2	*group_commands(t_list2 *tokens)
-{
-	t_list2		*result;
-	t_list2		*tmp;
-	t_command	*current;
-	t_token		*tok;
-
-	result = NULL;
-	current = NULL;
-	tmp = tokens;
-	while (tmp)
-	{
-		tok = (t_token *)tmp->content;
-		if (tok->type == TOKEN_WORD)
-		{
-			if (!current)
-				current = command_create();
-			ft_lstadd_back2(&current->args, ft_lstnew2(tok->data));
-			tok->data = NULL;
-		}
-		else if (tok->type == TOKEN_REDIRECT)
-		{
-			if (!current)
-				current = command_create();
-			ft_lstadd_back2(&current->redirects, ft_lstnew2(tok->data));
-			tok->data = NULL;
-		}
-		else
-		{
-			if (current)
-			{
-				ft_lstadd_back2(&result, ft_lstnew2(token_create_command(current)));
-				current = NULL;
-			}
-			ft_lstadd_back2(&result, ft_lstnew2(tok));
-			tmp->content = NULL;
-		}
-		tmp = tmp->next;
-	}
-	if (current)
-		ft_lstadd_back2(&result, ft_lstnew2(token_create_command(current)));
-	ft_lstclear2(&tokens, token_destroy);
-	tokens = result;
-	return (result);
 }

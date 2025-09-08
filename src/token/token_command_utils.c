@@ -26,30 +26,30 @@ t_command	*command_create(void)
 
 void	token_display_command(t_command *cmd)
 {
-    t_list2	*tmp;
+	t_list2	*tmp;
 	int		i;
 
-    if (!cmd)
-        return ;
-    printf("=== TOKEN_COMMAND ===\n");
-    printf("Arguments:\n");
+	if (!cmd)
+		return ;
+	printf("=== TOKEN_COMMAND ===\n");
+	printf("Arguments:\n");
 	tmp = cmd->args;
-    i = 0;
-    while (tmp)
-    {
-        printf("  [%d] ", i++);
-        token_display_word((t_word *)tmp->content);
-        printf("\n");
-        tmp = tmp->next;
-    }
-    printf("Redirections:\n");
-    tmp = cmd->redirects;
-    while (tmp)
-    {
-        token_display_redirect((t_redirect *)tmp->content);
-        tmp = tmp->next;
-    }
-    printf("====================\n");
+	i = 0;
+	while (tmp)
+	{
+		printf("  [%d] ", i++);
+		token_display_word((t_word *)tmp->content);
+		printf("\n");
+		tmp = tmp->next;
+	}
+	printf("Redirections:\n");
+	tmp = cmd->redirects;
+	while (tmp)
+	{
+		token_display_redirect((t_redirect *)tmp->content);
+		tmp = tmp->next;
+	}
+	printf("====================\n");
 }
 
 void	token_destroy_command(void *data)
