@@ -9,11 +9,9 @@ t_token	*token_create(t_token_type type, void *data)
 		token = token_create_word((t_word *) data);
 	else if (type == TOKEN_REDIRECT)
 		token = token_create_redir((t_redirect *) data);
-	/*else if (type == TOKEN_COMMAND)
-		token = token_create_command(data->command->args,
-				data->command->arg_count, data->command->redirects,
-				data->command->redirect_count);
-	else if (type == TOKEN_SUBSHELL)
+	else if (type == TOKEN_COMMAND)
+		token = token_create_command((t_command *) data);
+	/*else if (type == TOKEN_SUBSHELL)
 		token = token_create_subshell(data->subshell->content,
 				data->subshell->redirects, data->subshell->redirect_count);
 	else if (type == TOKEN_PIPELINE)
@@ -51,6 +49,8 @@ void	token_destroy(void *content)
 		token_destroy_word(token->data);
 	else if (token->type == TOKEN_REDIRECT)
 		token_destroy_redir(token->data);
+	else if (token->type == TOKEN_COMMAND)
+		token_destroy_command(token->data);
 	else
 		token_destroy_word(token->data);
 	free(token);
@@ -162,4 +162,60 @@ t_list2	*tokenize(char **contents)
 		i++;
 	}
 	return (tokens);
+}
+
+static t_command	*command_create(void)
+{
+	t_command	*cmd;
+
+	cmd = malloc(sizeof(t_command));
+	if (!cmd)
+		return (NULL);
+	cmd->args = NULL;
+	cmd->redirects = NULL;
+	return (cmd);
+}
+
+t_list2	*group_commands(t_list2 *tokens)
+{
+	t_list2		*result;
+	t_list2		*tmp;
+	t_command	*current;
+	t_token		*tok;
+
+	result = NULL;
+	current = NULL;
+	tmp = tokens;
+	while (tmp)
+	{
+		tok = (t_token *)tmp->content;
+		if (tok->type == TOKEN_WORD)
+		{
+			if (!current)
+				current = command_create();
+			ft_lstadd_back2(&current->args, ft_lstnew2(tok->data));
+			tok->data = NULL;
+		}
+		else if (tok->type == TOKEN_REDIRECT)
+		{
+			if (!current)
+				current = command_create();
+			ft_lstadd_back2(&current->redirects, ft_lstnew2(tok->data));
+			tok->data = NULL;
+		}
+		else
+		{
+			if (current)
+			{
+				ft_lstadd_back2(&result, ft_lstnew2(token_create_command(current)));
+				current = NULL;
+			}
+			ft_lstadd_back2(&result, ft_lstnew2(tok));
+			tmp->content = NULL;
+		}
+		tmp = tmp->next;
+	}
+	if (current)
+		ft_lstadd_back2(&result, ft_lstnew2(token_create_command(current)));
+	return (result);
 }

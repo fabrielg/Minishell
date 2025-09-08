@@ -1,22 +1,5 @@
 #include "minishell.h"
 
-static char	*get_tokentype_name(t_token_type type)
-{
-	if (type == TOKEN_WORD)
-		return "TOKEN_WORD";
-	else if (type == TOKEN_REDIRECT)
-		return "TOKEN_REDIRECT";
-	else if (type == TOKEN_COMMAND)
-		return "TOKEN_COMMAND";
-	else if (type == TOKEN_SUBSHELL)
-		return "TOKEN_SUBSHELL";
-	else if (type == TOKEN_PIPELINE)
-		return "TOKEN_PIPELINE";
-	else if (type == TOKEN_LOGICAL_EXPRESSION)
-		return "TOKEN_LOGICAL_EXPRESSION";
-	return (NULL);
-}
-
 int	main(int argc, char *argv[], char **envp)
 {
 	(void)argc;
@@ -48,22 +31,25 @@ int	main(int argc, char *argv[], char **envp)
 		return (0);
 	for (int i = 0; contents[i]; i++)
 		printf("content %i = [%s]\n", i, contents[i]);
-	t_list2	*tokens;
 
-	tokens = tokenize(contents);
-	t_list2	*tmp = tokens;
+	t_list2	*tokens = tokenize(contents);
+	ft_free_map((void **) contents, -1);
+	t_list2 *tokens2 = group_commands(tokens);
+	t_list2	*tmp = tokens2;
 	while (tmp)
 	{
 		t_token			*tok = (t_token *) tmp->content;
 		t_token_type	type = tok->type;
 		if (type == TOKEN_REDIRECT)
-			printf("%s (type:[%d] file:[%s] fd:[%d])\n", get_tokentype_name(type), ((t_redirect *)(tok->data))->type, ((t_redirect *)(tok->data))->file->text, ((t_redirect *)(tok->data))->fd);
+			token_display_redirect(tok->data);
+		else if (type != TOKEN_COMMAND)
+			token_display_word(tok->data);
 		else
-			printf("%s (text:[%s] quoted:[%d] expandlable:[%d])\n", get_tokentype_name(type), ((t_word *)(tok->data))->text, ((t_word *)(tok->data))->quoted, ((t_word *)(tok->data))->expandable);
+			token_display_command(tok->data);
 		printf("\n");
 		tmp = tmp->next;
 	}
 	ft_lstclear2(&tokens, token_destroy);
-	ft_free_map((void **) contents, -1);
+	ft_lstclear2(&tokens2, token_destroy);
 	return (0);
 }

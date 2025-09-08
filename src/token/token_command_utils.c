@@ -1,45 +1,53 @@
 #include "tokens.h"
 
-/*t_token	*token_create_command(char **args, int ac, t_redirect **redir, int rdc)
+t_token	*token_create_command(t_command *cmd)
 {
 	t_token		*token;
-	t_command	*command;
 
 	token = (t_token *) malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	command = (t_command *) malloc(sizeof(t_command));
-	if (!command)
-		return (free(token), NULL);
-	command->args = args;
-	command->arg_count = ac;
-	command->redirects = redir;
-	command->redirect_count = rdc;
 	token->type = TOKEN_COMMAND;
-	token->data.command = command;
+	token->data = cmd;
 	return (token);
 }
 
-void	token_clear_commands(t_command **commands, int command_count)
+void	token_display_command(t_command *cmd)
 {
-	int	i;
+    t_list2	*tmp;
+	int		i;
 
-	if (!commands)
-		return ;
-	i = 0;
-	while (i < command_count)
-	{
-		token_destroy_command(commands[i]);
-		i++;
-	}
-	free(commands);
+    if (!cmd)
+        return ;
+    printf("=== TOKEN_COMMAND ===\n");
+    printf("Arguments:\n");
+	tmp = cmd->args;
+    i = 0;
+    while (tmp)
+    {
+        printf("  [%d] ", i++);
+        token_display_word((t_word *)tmp->content);
+        printf("\n");
+        tmp = tmp->next;
+    }
+    printf("Redirections:\n");
+    tmp = cmd->redirects;
+    while (tmp)
+    {
+        token_display_redirect((t_redirect *)tmp->content);
+        tmp = tmp->next;
+    }
+    printf("====================\n");
 }
 
-void	token_destroy_command(t_command *command)
+void	token_destroy_command(void *data)
 {
+	t_command	*command;
+
+	command = (t_command *) data;
 	if (!command)
 		return ;
-	ft_free_map((void **) command->args, command->arg_count);
-	token_clear_redir(command->redirects, command->redirect_count);
+	ft_lstclear2(&command->args, token_destroy_word);
+	ft_lstclear2(&command->redirects, token_destroy_redir);
 	free(command);
-}*/
+}

@@ -31,10 +31,25 @@ t_word	*token_parse_word(char *content)
 	return (word);
 }
 
-void	token_destroy_word(t_word *word)
+void	token_destroy_word(void *data)
+{
+	t_word	*word;
+
+	word = (t_word *) data;
+	if (!word)
+		return ;
+	if (word->text)
+		free(word->text);
+	free(word);
+}
+
+void	token_display_word(t_word *word)
 {
 	if (!word)
 		return ;
-	free(word->text);
-	free(word);
+	printf("TOKEN_WORD=[%s]", word->text);
+	if (word->quoted)
+		printf(" (quoted)");
+	if (word->expandable)
+		printf(" (expandable)");
 }
