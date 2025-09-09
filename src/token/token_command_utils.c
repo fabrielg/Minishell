@@ -63,3 +63,11 @@ void	token_destroy_command(void *data)
 	ft_lstclear2(&command->redirects, token_destroy_redir);
 	free(command);
 }
+
+t_command	*get_command(void *data)
+{
+	t_command	*cmd;
+
+	cmd = (t_command *) data;
+	return (cmd);
+}

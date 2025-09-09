@@ -53,6 +53,14 @@ void	token_destroy_redir(void *data)
 	free(redir);
 }
 
+t_redirect	*get_redir(void *data)
+{
+	t_redirect	*r;
+
+	r = (t_redirect *) data;
+	return (r);
+}
+
 void	token_display_redirect(t_redirect *redir)
 {
 	const char	*type_str;

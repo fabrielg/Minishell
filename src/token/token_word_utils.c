@@ -48,6 +48,14 @@ void	token_destroy_word(void *data)
 	free(word);
 }
 
+t_word	*get_word(void *data)
+{
+	t_word	*w;
+
+	w = (t_word *) data;
+	return (w);
+}
+
 void	token_display_word(t_word *word)
 {
 	if (!word)
