@@ -120,17 +120,20 @@ t_word			*parse_word(char *content);
 t_token			*token_new_word(const char *s);
 void			token_destroy_word(void *data);
 void			token_display_word(t_word *word);
+t_word			*get_word(void *data);
 
 /* Functions utils for TOKEN_REDIRECT */
 t_redirect		*parse_redir(char **contents, int *i);
 t_token			*token_new_redir(char **contents, int *i);
 void			token_destroy_redir(void *data);
 void			token_display_redirect(t_redirect *redir);
+t_redirect		*get_redir(void *data);
 
 /* Functions utils for TOKEN_COMMAND */
 t_command		*command_create(void);
 t_token			*token_create_command(t_command *cmd);
 void			token_display_command(t_command *cmd);
 void			token_destroy_command(void *data);
+t_command		*get_command(void *data);
 
 #endif
