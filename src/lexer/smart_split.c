@@ -8,6 +8,7 @@ typedef struct s_split_ctx
 	int			capacity;
 	int			count;
 	int			start;
+	char	quote;
 }	t_split_ctx;
 
 static int	ensure_capacity(t_split_ctx *ctx)
@@ -38,32 +39,49 @@ static void	flush_operator(t_split_ctx *ctx, int *i)
 	*i += oplen - 1;
 }
 
-static void	process_char(t_split_ctx *ctx, unsigned char *state, int *i)
+void	handle_inside_quote(t_split_ctx *ctx, char c, int *i)
 {
-	char	c;
-	
-	c = ctx->line[*i];
-	toggle_quotes(c, state);
-	if (!(*state & IN_QUOTES))
+	if (c == ctx->quote)
 	{
-		if (c == ' ' || c == '\t')
+		flush_token(ctx, (*i) + 1);
+		ctx->quote = 0;
+	}
+}
+
+void	handle_outside_quote(t_split_ctx *ctx, char c, int *i)
+{
+	if (c == '\'' || c == '"')
+	{
+		if (ctx->start != -1)
 			flush_token(ctx, *i);
-		else if (is_operator_char(c))
-		{
-			flush_token(ctx, *i);
-			flush_operator(ctx, i);
-		}
-		else if (ctx->start == -1)
-			ctx->start = *i;
+		ctx->start = *i;
+		ctx->quote = c;
+	}
+	else if (c == ' ' || c == '\t')
+		flush_token(ctx, *i);
+	else if (is_operator_char(c))
+	{
+		flush_token(ctx, *i);
+		flush_operator(ctx, i);
 	}
 	else if (ctx->start == -1)
 		ctx->start = *i;
 }
 
+static void	process_char(t_split_ctx *ctx, int *i)
+{
+	char	c;
+
+	c = ctx->line[*i];
+	if (ctx->quote)
+		handle_inside_quote(ctx, c, i);
+	else
+		handle_outside_quote(ctx, c, i);
+}
+
 char	**smart_split(const char *line)
 {
 	t_split_ctx		ctx;
-	unsigned char	state;
 	int				i;
 
 	ctx.line = line;
@@ -71,13 +89,13 @@ char	**smart_split(const char *line)
 	ctx.count = 0;
 	ctx.start = -1;
 	ctx.tokens = malloc(sizeof(char *) * ctx.capacity);
+	ctx.quote = 0;
 	if (!ctx.tokens)
 		return (NULL);
-	state = 0;
 	i = 0;
 	while (line[i])
 	{
-		process_char(&ctx, &state, &i);
+		process_char(&ctx, &i);
 		i++;
 	}
 	flush_token(&ctx, i);
