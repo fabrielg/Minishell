@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchrset.c                                     :+:      :+:    :+:   */
+/*   ft_strnotchr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 01:08:18 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/08/18 16:20:36 by fabrielg         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:53:49 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchrset(const char *s, char *set)
+char	*ft_strnotchr(const char *s, int c)
 {
 	int		i;
-	char	*res;
 
-	if (!set || !s)
-		return (NULL);
 	i = 0;
-	while (s[i])
+	while (s[i] == (unsigned char)c)
 	{
-		res = ft_strchr(set, s[i]);
-		if (res)
-			return ((char *) &s[i]);
+		if (!s[i])
+			return ((char *) 0);
 		i++;
 	}
-	return (NULL);
+	return ((char *) &s[i]);
 }

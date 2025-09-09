@@ -24,4 +24,14 @@ int		validate_stx(int par_count, unsigned char byte);
 int		lex_line(char *cmd_line);
 int		print_stx_error(int err_code, char *err_msg, int size);
 
+//smart_split_utils______________
+
+char	*substr(const char *s, int start, int end);
+int		is_operator_char(char c);
+int		operator_len(const char *s, int i);
+
+//smart_split____________________
+
+char	**smart_split(const char *line);
+
 #endif

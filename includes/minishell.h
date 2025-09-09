@@ -18,6 +18,8 @@
 # include "tokens.h"
 # include "envp.h"
 # include "libft.h"
+# include "lexer.h"
+# include "parser.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
