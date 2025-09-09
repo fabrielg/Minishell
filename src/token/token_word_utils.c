@@ -7,13 +7,12 @@ t_word	*parse_word(char *content)
 	word = (t_word *) malloc(sizeof(t_word));
 	if (!word)
 		return (NULL);
-	word->expandable = false;
-	word->quoted = false;
-	if (ft_strchrset(content, "'\""))
-		word->quoted = true;
 	word->text = ft_strdup(content);
 	if (!word->text)
 		return (free(word), NULL);
+	word->expandable = false;
+	if (word->text && word->text[0] != '\'' && ft_strchr(content, '$'))
+		word->expandable = true;
 	return (word);
 }
 
@@ -61,8 +60,6 @@ void	token_display_word(t_word *word)
 	if (!word)
 		return ;
 	printf("TOKEN_WORD=[%s]", word->text);
-	if (word->quoted)
-		printf(" (quoted)");
 	if (word->expandable)
 		printf(" (expandable)");
 }

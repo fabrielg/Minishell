@@ -50,7 +50,6 @@ typedef enum e_redirect_type
 typedef struct s_word
 {
 	char	*text;
-	bool	quoted;
 	bool	expandable;
 }	t_word;
 
