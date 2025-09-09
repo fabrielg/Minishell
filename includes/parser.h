@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchrset.c                                     :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 01:08:18 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/08/18 16:20:36 by fabrielg         ###   ########.fr       */
+/*   Created: 2025/09/08 23:23:16 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/09/08 23:23:16 by fabrielg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PARSER_H
+# define PARSER_H
 
-char	*ft_strchrset(const char *s, char *set)
-{
-	int		i;
-	char	*res;
+# include "libft.h"
 
-	if (!set || !s)
-		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		res = ft_strchr(set, s[i]);
-		if (res)
-			return ((char *) &s[i]);
-		i++;
-	}
-	return (NULL);
-}
+/* Functions utils for parsing */
+t_list2	*parser(char *command_line);
+t_list2	*group_commands(t_list2 *tokens);
+t_list2	*tokenize(char **contents);
+
+#endif

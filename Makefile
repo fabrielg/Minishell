@@ -40,8 +40,16 @@ FILES		=	env/bst_utils \
 				builtins/exit \
 				builtins/export \
 				builtins/pwd \
-				builtins/unset
-
+				builtins/unset \
+				lexer/smart_split_utils \
+				lexer/smart_split \
+				parser/group_commands \
+				parser/parser \
+				parser/tokenizer \
+				token/token_command_utils \
+				token/token_constructor \
+				token/token_redir_utils \
+				token/token_word_utils
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))

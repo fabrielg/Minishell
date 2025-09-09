@@ -14,6 +14,8 @@
 # define TOKENS_H
 
 # include <stdbool.h>
+# include "libft.h"
+# include <stdlib.h>
 
 typedef struct s_token	t_token;
 
@@ -63,10 +65,8 @@ typedef struct s_redirect
 /* Structure for a simple command, args[0] is the command name */
 typedef struct s_command
 {
-	char		**args;
-	t_redirect	**redirects;
-	int			arg_count;
-	int			redirect_count;
+	t_list2	*args;
+	t_list2	*redirects;
 }	t_command;
 
 /* Structure for a subshell (commands between parentheses) */
@@ -107,7 +107,30 @@ typedef union u_token_data
 struct s_token
 {
 	t_token_type	type;
-	t_token_data	data;
+	void			*data;
 };
+
+/* Functions utils for tokens */
+t_token			*token_new_op(const char *s, t_token_type type);
+void			token_destroy(void *content);
+t_token_type	detect_type(char *s);
+
+/* Functions utils for TOKEN_WORD */
+t_word			*parse_word(char *content);
+t_token			*token_new_word(const char *s);
+void			token_destroy_word(void *data);
+void			token_display_word(t_word *word);
+
+/* Functions utils for TOKEN_REDIRECT */
+t_redirect		*parse_redir(char **contents, int *i);
+t_token			*token_new_redir(char **contents, int *i);
+void			token_destroy_redir(void *data);
+void			token_display_redirect(t_redirect *redir);
+
+/* Functions utils for TOKEN_COMMAND */
+t_command		*command_create(void);
+t_token			*token_create_command(t_command *cmd);
+void			token_display_command(t_command *cmd);
+void			token_destroy_command(void *data);
 
 #endif

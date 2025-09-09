@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchrset.c                                     :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 01:08:18 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/08/18 16:20:36 by fabrielg         ###   ########.fr       */
+/*   Created: 2024/11/14 17:15:13 by gfrancoi          #+#    #+#             */
+/*   Updated: 2024/11/19 12:17:11 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchrset(const char *s, char *set)
+char	*ft_strndup(const char *s, size_t size)
 {
-	int		i;
-	char	*res;
+	size_t	i;
+	size_t	length;
+	char	*dup;
 
-	if (!set || !s)
+	length = ft_strlen(s);
+	if (size > length)
+		size = length;
+	dup = malloc(sizeof(char) * (size + 1));
+	if (!dup)
 		return (NULL);
 	i = 0;
-	while (s[i])
+	while (i < size)
 	{
-		res = ft_strchr(set, s[i]);
-		if (res)
-			return ((char *) &s[i]);
+		dup[i] = s[i];
 		i++;
 	}
-	return (NULL);
+	dup[i] = 0;
+	return (dup);
 }

@@ -53,6 +53,7 @@ SRCS = \
 	mem/ft_memcpy.c\
 	mem/ft_memmove.c\
 	mem/ft_memset.c\
+	mem/ft_realloc.c\
 	nbr/ft_atoi_base.c\
 	nbr/ft_atoi.c\
 	nbr/ft_itoa.c\
@@ -71,6 +72,7 @@ SRCS = \
 	str/ft_strchr.c\
 	str/ft_strchrset.c\
 	str/ft_strdup.c\
+	str/ft_strndup.c\
 	str/ft_striteri.c\
 	str/ft_strjoin.c\
 	str/ft_strlcat.c\
@@ -79,6 +81,7 @@ SRCS = \
 	str/ft_strlen.c\
 	str/ft_strmapi.c\
 	str/ft_strncmp.c\
+	str/ft_strnotchr.c\
 	str/ft_strcmp.c\
 	str/ft_strnstr.c\
 	str/ft_strtol.c\
