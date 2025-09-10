@@ -19,5 +19,6 @@
 t_list2	*parser(char *command_line);
 t_list2	*group_commands(t_list2 *tokens);
 t_list2	*tokenize(char **contents);
+void	flush_command(t_list2 **result, t_command **current);
 
 #endif

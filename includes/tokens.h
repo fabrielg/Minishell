@@ -57,7 +57,8 @@ typedef struct s_redirect
 /* Structure for a simple command, args[0] is the command name */
 typedef struct s_command
 {
-	t_list2	*args;
+	char	**args;
+	int		argc;
 	t_list2	*redirects;
 }	t_command;
 
@@ -107,12 +108,9 @@ void			token_destroy(void *content);
 t_token_type	detect_type(char *s);
 
 /* Functions utils for TOKEN_WORD */
-//t_word			*parse_word(char *content);
-t_token			*token_new_word(const char *s);
 void			token_destroy_word(void *data);
 bool			is_expandable_word(char *word);
 void			token_display_word(char *word);
-//t_word			*get_word(void *data);
 
 /* Functions utils for TOKEN_REDIRECT */
 t_redirect		*parse_redir(char **contents, int *i);
