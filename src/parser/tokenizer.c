@@ -8,14 +8,6 @@ static int	add_token_safe(t_list2 **tokens, t_token *token)
 	return (1);
 }
 
-static int	handle_word(t_list2 **tokens, char *content)
-{
-	t_token	*token;
-
-	token = token_new_word(content);
-	return (add_token_safe(tokens, token));
-}
-
 static int	handle_redirect(t_list2 **tokens, char **contents, int *i)
 {
 	t_token	*token;
@@ -43,13 +35,10 @@ t_list2	*tokenize(char **contents)
 	while (contents[i])
 	{
 		type = detect_type(contents[i]);
-		if (type == TOKEN_WORD && !handle_word(&tokens, contents[i]))
+		if (type != TOKEN_REDIRECT && !handle_operator(&tokens, contents[i], type))
 			return (NULL);
 		else if (type == TOKEN_REDIRECT
 			&& !handle_redirect(&tokens, contents, &i))
-			return (NULL);
-		else if (type != TOKEN_WORD && type != TOKEN_REDIRECT
-			&& !handle_operator(&tokens, contents[i], type))
 			return (NULL);
 		i++;
 	}
