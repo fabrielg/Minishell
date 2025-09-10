@@ -110,6 +110,7 @@ t_token_type	detect_type(char *s);
 //t_word			*parse_word(char *content);
 t_token			*token_new_word(const char *s);
 void			token_destroy_word(void *data);
+bool			is_expandable_word(char *word);
 void			token_display_word(char *word);
 //t_word			*get_word(void *data);
 
