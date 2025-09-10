@@ -5,7 +5,7 @@ int	main(int argc, char *argv[], char **envp)
 	(void)argc;
 	(void)argv;
 	(void)envp;
-	t_list2	*tokens = parser("(cat    \"  input.txt\"&&echo    \"   'done  '  \")||grep   \"error\"   <log.txt>>   result.log|wc   -l");
+	t_list2	*tokens = parser("(cat    \"  input.txt\"&&echo    \"   'done  '  \")||grep   \"error\"   <'  $TOTO log.txt '>>   \"$TOTO result.log\"|wc   -l");
 	t_list2	*tmp = tokens;
 	while (tmp)
 	{

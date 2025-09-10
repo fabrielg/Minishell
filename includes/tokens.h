@@ -57,7 +57,7 @@ typedef struct s_word
 typedef struct s_redirect
 {
 	t_redirect_type	type;
-	t_word			*file;
+	char			*file;
 	int				fd;
 }	t_redirect;
 
