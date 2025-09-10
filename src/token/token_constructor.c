@@ -3,9 +3,9 @@
 t_token	*token_new_op(const char *s, t_token_type type)
 {
 	t_token	*token;
-	t_word	*w;
+	char	*w;
 
-	w = parse_word((char *)s);
+	w = ft_strdup(s);
 	if (!w)
 		return (NULL);
 	token = malloc(sizeof(t_token));
