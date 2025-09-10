@@ -38,7 +38,7 @@ void	token_display_command(t_command *cmd)
 	while (tmp)
 	{
 		printf("  [%d] ", i++);
-		token_display_word((t_word *)tmp->content);
+		token_display_word((char *)tmp->content);
 		printf("\n");
 		tmp = tmp->next;
 	}

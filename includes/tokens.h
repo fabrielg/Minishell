@@ -46,13 +46,6 @@ typedef enum e_redirect_type
 	REDIRECT_APPEND
 }	t_redirect_type;
 
-/* Structure representing a word or argument */
-typedef struct s_word
-{
-	char	*text;
-	bool	expandable;
-}	t_word;
-
 /* Structure for a redirection */
 typedef struct s_redirect
 {
@@ -94,7 +87,6 @@ typedef struct s_logical_expression
 /* Union containing data specific to each token type */
 typedef union u_token_data
 {
-	t_word					*word;
 	t_command				*command;
 	t_subshell				*subshell;
 	t_pipeline				*pipeline;
@@ -115,11 +107,11 @@ void			token_destroy(void *content);
 t_token_type	detect_type(char *s);
 
 /* Functions utils for TOKEN_WORD */
-t_word			*parse_word(char *content);
+//t_word			*parse_word(char *content);
 t_token			*token_new_word(const char *s);
 void			token_destroy_word(void *data);
-void			token_display_word(t_word *word);
-t_word			*get_word(void *data);
+void			token_display_word(char *word);
+//t_word			*get_word(void *data);
 
 /* Functions utils for TOKEN_REDIRECT */
 t_redirect		*parse_redir(char **contents, int *i);

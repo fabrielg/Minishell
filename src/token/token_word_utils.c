@@ -1,27 +1,11 @@
 #include "tokens.h"
 
-t_word	*parse_word(char *content)
-{
-	t_word	*word;
-
-	word = (t_word *) malloc(sizeof(t_word));
-	if (!word)
-		return (NULL);
-	word->text = ft_strdup(content);
-	if (!word->text)
-		return (free(word), NULL);
-	word->expandable = false;
-	if (word->text && word->text[0] != '\'' && ft_strchr(content, '$'))
-		word->expandable = true;
-	return (word);
-}
-
 t_token	*token_new_word(const char *s)
 {
 	t_token	*token;
-	t_word	*w;
+	char	*w;
 
-	w = parse_word((char *)s);
+	w = ft_strdup(s);
 	if (!w)
 		return (NULL);
 	token = malloc(sizeof(t_token));
@@ -37,29 +21,16 @@ t_token	*token_new_word(const char *s)
 
 void	token_destroy_word(void *data)
 {
-	t_word	*word;
+	char	*word;
 
-	word = (t_word *) data;
-	if (!word)
-		return ;
-	if (word->text)
-		free(word->text);
-	free(word);
+	word = (char *) data;
+	if (word)
+		free(word);
 }
 
-t_word	*get_word(void *data)
-{
-	t_word	*w;
-
-	w = (t_word *) data;
-	return (w);
-}
-
-void	token_display_word(t_word *word)
+void	token_display_word(char *word)
 {
 	if (!word)
 		return ;
-	printf("TOKEN_WORD=[%s]", word->text);
-	if (word->expandable)
-		printf(" (expandable)");
+	printf("TOKEN_WORD=[%s]", word);
 }
