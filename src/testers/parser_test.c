@@ -2,10 +2,11 @@
 
 int	main(int argc, char *argv[], char **envp)
 {
-	(void)argc;
-	(void)argv;
 	(void)envp;
-	t_list2	*tokens = parser("(cat    \"  input.txt\"&&echo    \"   'done  '  \")||grep   \"error\"   <'  $TOTO log.txt '>>   \"$TOTO result.log\"|wc   -l");
+	//t_list2	*tokens = parser("(cat    \"  input.txt\"&&echo    \"   'done  '  \")||grep   \"error\"   <'  $TOTO log.txt '>>   \"$TOTO result.log\"|wc   -l");
+	if (argc != 2)
+		return (0);
+	t_list2	*tokens = parser(argv[1]);
 	t_list2	*tmp = tokens;
 	while (tmp)
 	{
