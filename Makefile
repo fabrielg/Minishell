@@ -44,6 +44,7 @@ FILES		=	env/bst_utils \
 				builtins/unset \
 				lexer/smart_split_utils \
 				lexer/smart_split \
+				parser/group_commands_utils \
 				parser/group_commands \
 				parser/parser \
 				parser/tokenizer \

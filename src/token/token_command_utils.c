@@ -33,14 +33,13 @@ void	token_display_command(t_command *cmd)
 		return ;
 	printf("=== TOKEN_COMMAND ===\n");
 	printf("Arguments:\n");
-	tmp = cmd->args;
 	i = 0;
-	while (tmp)
+	while (i < cmd->argc)
 	{
-		printf("  [%d] ", i++);
-		token_display_word((t_word *)tmp->content);
+		printf("  [%d] ", i);
+		token_display_word(cmd->args[i]);
 		printf("\n");
-		tmp = tmp->next;
+		i++;
 	}
 	printf("Redirections:\n");
 	tmp = cmd->redirects;
@@ -59,7 +58,7 @@ void	token_destroy_command(void *data)
 	command = (t_command *) data;
 	if (!command)
 		return ;
-	ft_lstclear2(&command->args, token_destroy_word);
+	ft_free_map((void *) command->args, command->argc);
 	ft_lstclear2(&command->redirects, token_destroy_redir);
 	free(command);
 }

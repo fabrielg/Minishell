@@ -17,7 +17,7 @@ t_redirect	*parse_redir(char **contents, int *i)
 	else
 		r->type = REDIRECT_HEREDOC;
 	if (contents[(*i) + 1])
-		r->file = parse_word(contents[++(*i)]);
+		r->file = ft_strdup(contents[++(*i)]);
 	else
 		r->file = NULL;
 	return (r);
@@ -49,7 +49,8 @@ void	token_destroy_redir(void *data)
 	redir = (t_redirect *) data;
 	if (!redir)
 		return ;
-	token_destroy_word(redir->file);
+	if (redir->file)
+		free(redir->file);
 	free(redir);
 }
 
