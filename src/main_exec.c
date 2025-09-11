@@ -57,28 +57,22 @@ char	**cpy_env(char **env)
 int	main(int argc, char *argv[], char **envp)
 {
 	char	**env_cpy;
-	t_redirect	rdr;
-	t_command	cmd;
-	t_word		file;
-	t_redirect	*redirects[1];
+	t_mst		*env;
+	t_list2		*cmds;
+	t_command	*cmd;
+	t_token		*token;
 
 
 	(void)argc;
 	env_cpy = cpy_env(envp);
+	env = mst_alloc_env(envp);
 
-	//redirection
-	file.text = "test_redir.txt";
-	rdr.type = REDIRECT_OUTPUT;
-	rdr.file = &file;
+	cmds = parser(argv[1]);
+	token = (t_token *)cmds->content;
+	cmd = get_command(token->data);
+	// token_display_command(cmd);
 
-	//cmd
-	cmd.arg_count = 1;
-	cmd.args = argv + 1;
-	cmd.redirect_count = 1;
-	redirects[0] = &rdr;
-	cmd.redirects = redirects;
-
-	execute_cmd(&cmd, &env_cpy);
+	execute_cmd(cmd, &env);
 	free_tab(env_cpy);
 	return (0);
 }

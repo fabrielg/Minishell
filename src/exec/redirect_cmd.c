@@ -42,13 +42,15 @@ int	redirect_cmd(t_command *cmd)
 {
 	int			i;
 	t_redirect	*rdr;
+	t_list2		*curr;
 	int			ret;
 
 	i = -1;
 	ret = -1;
-	while (++i < cmd->redirect_count)
+	curr = cmd->redirects;
+	while (curr)
 	{
-		rdr = cmd->redirects[i];
+		rdr = get_redir(curr->content);
 		if (rdr->type == REDIRECT_INPUT)
 			ret = redirect_in(rdr);
 		else if (rdr->type == REDIRECT_OUTPUT)
@@ -59,6 +61,7 @@ int	redirect_cmd(t_command *cmd)
 			ret = redirect_heredoc(rdr);
 		if (ret == ERROR)
 			return (ERROR);
+		curr = curr->next;
 	}
 	return (SUCCESS);
 }

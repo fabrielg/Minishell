@@ -19,7 +19,7 @@ t_builtin	get_builtin(char *name)
 	return (NULL);
 }
 
-int	execute_cmd(t_command *cmd, char ***env)
+int	execute_cmd(t_command *cmd, t_mst **env)
 {
 	pid_t		pid;
 	int			status;
@@ -33,11 +33,13 @@ int	execute_cmd(t_command *cmd, char ***env)
 	{
 		if (redirect_cmd(cmd) == ERROR)
 			exit(REDIR_ERROR);
-		f = get_builtin(cmd->args[0]);
+		f = get_builtin(get_word(cmd->args->content)->text);
 		if (f)
-			exit(f(cmd->arg_count - 1, cmd->args + 1, env));
-		path = research_path(cmd->args[0], getenv("PATH")); //TODO : getenv
-		execve(path, cmd->args + 1, *env);
+			exit(f(cmd->args + 1, env));
+		path = research_path(get_word(cmd->args->content)->text, mst_get_node(*env, "PATH")->dic->value); //TODO : getenv
+		printf("path : [%s]\n", path);
+		// execve(path, list2_to_tab(cmd->args), *env);
+		printf("fail\n");
 		//TODO : print error
 		free(path);
 		exit(CMD_NOT_FOUND);

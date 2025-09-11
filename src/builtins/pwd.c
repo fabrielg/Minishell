@@ -1,9 +1,8 @@
 #include "exec.h"
 
-int	cmd_pwd(int argc, char **args, char ***env)
+int	cmd_pwd(t_list2 *args, t_mst **env)
 {
 	printf("command : [pwd]\n");
-	(void)argc;
 	(void)args;
 	(void)env;
 	return (SUCCESS);

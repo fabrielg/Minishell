@@ -1,9 +1,8 @@
 #include "exec.h"
 
-int	cmd_export(int argc, char **args, char ***env)
+int	cmd_export(t_list2 *args, t_mst **env)
 {
 	printf("command : [export]\n");
-	(void)argc;
 	(void)args;
 	(void)env;
 	return (SUCCESS);

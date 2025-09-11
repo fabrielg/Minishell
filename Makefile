@@ -21,7 +21,7 @@ LIBFT		= $(LIBFT_DIR)libft.a
 
 INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 
-MAIN_FILE	= main
+MAIN_FILE	= main_exec
 
 # All files in src/
 FILES		=	env/bst_utils \
@@ -34,6 +34,7 @@ FILES		=	env/bst_utils \
 				lexer/lexer \
 				exec/execute_cmd \
 				exec/redirect_cmd \
+				exec/list2_utils \
 				builtins/cd \
 				builtins/echo \
 				builtins/env \

@@ -1,9 +1,8 @@
 #include "exec.h"
 
-int	cmd_echo(int argc, char **args, char ***env)
+int	cmd_echo(t_list2 *args, t_mst **env)
 {
 	printf("command : [echo]\n");
-	(void)argc;
 	(void)args;
 	(void)env;
 	return (SUCCESS);
