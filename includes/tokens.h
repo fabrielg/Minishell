@@ -106,6 +106,7 @@ struct s_token
 t_token			*token_new_op(const char *s, t_token_type type);
 void			token_destroy(void *content);
 t_token_type	detect_type(char *s);
+void			tokens_display(t_list2 *tokens);
 
 /* Functions utils for TOKEN_WORD */
 void			token_destroy_word(void *data);
