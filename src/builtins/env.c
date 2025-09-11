@@ -1,9 +1,9 @@
 #include "exec.h"
 
-int	cmd_env(t_list2 *args, t_mst **env)
+int	cmd_env(char **args, t_mst **env)
 {
-	printf("command : [env]\n");
-	(void)args;
-	(void)env;
-	return (SUCCESS);
+	if (args[1])
+		return (0);
+	mst_display(*env);
+	return (0);
 }

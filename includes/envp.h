@@ -61,4 +61,6 @@ t_mst	*mst_get_parent(t_mst *tree, char *child);
 t_mst	*mst_get_node(t_mst *tree, char *to_find);
 int		mst_insertion(t_mst **tree, t_mst *node);
 
+char	**env_newtab(t_mst *tree);
+
 #endif

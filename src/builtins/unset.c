@@ -1,6 +1,6 @@
 #include "exec.h"
 
-int	cmd_unset(t_list2 *args, t_mst **env)
+int	cmd_unset(char **args, t_mst **env)
 {
 	printf("command : [unset]\n");
 	(void)args;

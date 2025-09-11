@@ -56,23 +56,25 @@ char	**cpy_env(char **env)
 
 int	main(int argc, char *argv[], char **envp)
 {
-	char	**env_cpy;
 	t_mst		*env;
 	t_list2		*cmds;
 	t_command	*cmd;
 	t_token		*token;
 
 
-	(void)argc;
-	env_cpy = cpy_env(envp);
+	if (argc != 2)
+		return (0);
 	env = mst_alloc_env(envp);
+	// printf("[%s]\n", env_cpy[0]);
 
 	cmds = parser(argv[1]);
 	token = (t_token *)cmds->content;
 	cmd = get_command(token->data);
 	// token_display_command(cmd);
-
-	execute_cmd(cmd, &env);
-	free_tab(env_cpy);
+	exec(cmd, &env);
+	// printf("\n\n\n");
+	// bst_display(env);
+	mst_clear(&env);
+	ft_lstclear2(&cmds, token_destroy);
 	return (0);
 }

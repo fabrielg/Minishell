@@ -1,9 +1,6 @@
 #include "exec.h"
 
-int	cmd_exit(t_list2 *args, t_mst **env)
+int	cmd_exit(char **args, t_mst **env)
 {
-	printf("command : [exit]\n");
-	(void)args;
-	(void)env;
-	return (SUCCESS);
+	return (EXIT_FAILURE);
 }

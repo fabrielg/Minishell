@@ -30,11 +30,13 @@ FILES		=	env/bst_utils \
 				env/env_node_init \
 				env/env_node_utils \
 				env/path_research \
+				env/env_newtab \
 				lexer/lexer_utils \
 				lexer/lexer \
+				exec/exec \
 				exec/execute_cmd \
+				exec/execute_one_builtin \
 				exec/redirect_cmd \
-				exec/list2_utils \
 				builtins/cd \
 				builtins/echo \
 				builtins/env \

@@ -4,7 +4,7 @@ static int	redirect_out(t_redirect *rdr, int flags)
 {
 	int	fd;
 
-	fd = open(rdr->file->text, flags, 0644);
+	fd = open(rdr->file, flags, 0644);
 	if (fd == -1)
 		return (ERROR);
 	if (dup2(fd, STDOUT_FILENO) == -1)
@@ -16,7 +16,7 @@ static int	redirect_in(t_redirect *rdr)
 {
 	int	fd;
 
-	fd = open(rdr->file->text, O_RDONLY);
+	fd = open(rdr->file, O_RDONLY);
 	if (fd == -1)
 		return (ERROR);
 	if (dup2(fd, STDIN_FILENO) == -1)
@@ -30,7 +30,7 @@ static int	redirect_heredoc(t_redirect *rdr)
 
 	if (pipe(fd) == -1)
 		return (ERROR);
-	if (write(fd[1], rdr->file->text, ft_strlen(rdr->file->text)) == -1)
+	if (write(fd[1], rdr->file, ft_strlen(rdr->file)) == -1)
 		return (close(fd[1]), close(fd[0]), ERROR);
 	close(fd[1]);
 	if (dup2(fd[0], STDIN_FILENO) == -1)

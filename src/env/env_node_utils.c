@@ -53,10 +53,11 @@ t_dic	*split_env_var(char *env_var)
 	if (!copy)
 		return (NULL);
 	value = ft_strchr(copy, '=');
-	if (!value)
-		return (NULL);
-	value[0] = 0;
-	value++;
+	if (value)
+	{
+		value[0] = 0;
+		value++;
+	}
 	key = copy;
 	return (new_dic(key, value));
 }
