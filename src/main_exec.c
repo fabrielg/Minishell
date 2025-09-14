@@ -12,48 +12,6 @@
 
 #include "minishell.h"
 
-int	free_tab(char **tab)
-{
-	int	i;
-
-	i = -1;
-	if (!tab)
-		return (0);
-	while (tab[++i])
-		free(tab[i]);
-	free(tab);
-	return (0);
-}
-
-int	tab_len(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
-
-char	**cpy_env(char **env)
-{
-	char	**env_cpy;
-	int		i;
-
-	i = -1;
-	env_cpy = calloc(tab_len(env) + 1, sizeof(char *));
-	if (!env_cpy)
-		return (NULL);
-	while (env[++i])
-	{
-		env_cpy[i] = ft_strdup(env[i]);
-		if (!env_cpy[i])
-			return (free_tab(env_cpy), NULL);
-	}
-	env_cpy[i] = NULL;
-	return (env_cpy);
-}
-
 int	main(int argc, char *argv[], char **envp)
 {
 	t_mst		*env;
@@ -64,17 +22,26 @@ int	main(int argc, char *argv[], char **envp)
 
 	if (argc != 2)
 		return (0);
-	env = mst_alloc_env(envp);
+
+	char *arr[] = {"25", "36", "30", "28", "38", "48",
+	"45", "50", "20", "22", "10", "12", "15", "05", "08", "01", NULL};
+	t_mst		*nb_mst;
+
+	nb_mst = mst_alloc_env(arr);
+	env_deletion(&nb_mst, argv[1]);
+
+	// env = mst_alloc_env(envp);
+	// env_deletion(&env, argv[1]);
+	// mst_display(env);
 	// printf("[%s]\n", env_cpy[0]);
 
-	cmds = parser(argv[1]);
-	token = (t_token *)cmds->content;
-	cmd = get_command(token->data);
-	// token_display_command(cmd);
-	exec(cmd, &env);
-	// printf("\n\n\n");
-	// bst_display(env);
-	mst_clear(&env);
-	ft_lstclear2(&cmds, token_destroy);
+	// cmds = parser(argv[1]);
+	// token = (t_token *)cmds->content;
+	// cmd = get_command(token->data);
+
+	// // token_display_command(cmd);
+	// exec(cmd, &env);
+	// mst_clear(&env);
+	// ft_lstclear2(&cmds, token_destroy);
 	return (0);
 }

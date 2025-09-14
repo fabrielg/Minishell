@@ -31,6 +31,9 @@ FILES		=	env/bst_utils \
 				env/env_node_utils \
 				env/path_research \
 				env/env_newtab \
+				env/env_deletion \
+				env/env_link \
+				env/deletion_cases \
 				lexer/lexer_utils \
 				lexer/lexer \
 				exec/exec \

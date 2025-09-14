@@ -12,8 +12,8 @@ static t_mst	*mst_search(t_mst *tree, char *to_find, t_mst *parent, bool get_par
 	else if (res == 0)
 		return (tree);
 	if (res < 0)
-		return (mst_search(tree->left, to_find, tree, get_parent));
-	return (mst_search(tree->right, to_find, tree, get_parent));
+		return (mst_search(tree->right, to_find, tree, get_parent));
+	return (mst_search(tree->left, to_find, tree, get_parent));
 }
 
 t_mst	*mst_get_parent(t_mst *tree, char *child)
@@ -43,9 +43,9 @@ static int	bst_insertion(t_mst **tree, t_mst *node)
 	if (res == 0)
 		return (1);
 	else if (res < 0)
-		bst_insertion(&(*tmp)->left, node);
-	else
 		bst_insertion(&(*tmp)->right, node);
+	else
+		bst_insertion(&(*tmp)->left, node);
 	return (0);
 }
 

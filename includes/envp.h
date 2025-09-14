@@ -62,5 +62,13 @@ t_mst	*mst_get_node(t_mst *tree, char *to_find);
 int		mst_insertion(t_mst **tree, t_mst *node);
 
 char	**env_newtab(t_mst *tree);
+int		env_deletion(t_mst **tree, char	*key);
+int		mst_size(t_mst *tree);
 
+int		mst_unlink(t_mst **tree, char *key);
+
+void	no_childs_case(t_mst *prt, bool is_right);
+void	childs_case(t_mst *prt, t_mst *child, bool is_right);
+void	childs_are_parents_case(t_mst *prt, t_mst *child, bool is_right);
+int		debug_node(t_mst *prt, t_mst *child);
 #endif
