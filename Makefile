@@ -21,7 +21,7 @@ LIBFT		= $(LIBFT_DIR)libft.a
 
 INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 
-MAIN_FILE	= main
+MAIN_FILE	= testers/parser_test
 
 # All files in src/
 FILES		=	env/bst_utils \
@@ -34,6 +34,7 @@ FILES		=	env/bst_utils \
 				lexer/lexer \
 				lexer/smart_split_utils \
 				lexer/smart_split \
+				parser/expander \
 				parser/group_commands_utils \
 				parser/group_commands \
 				parser/parser \

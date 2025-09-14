@@ -13,7 +13,8 @@
 #ifndef ENVP_H
 # define ENVP_H
 
-# include "minishell.h"
+# include "libft.h"
+# include <stdbool.h>
 
 /* Structure for a dictionnary */
 typedef struct s_dic
