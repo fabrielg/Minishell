@@ -35,7 +35,8 @@ t_list2	*tokenize(char **contents)
 	while (contents[i])
 	{
 		type = detect_type(contents[i]);
-		if (type != TOKEN_REDIRECT && !handle_operator(&tokens, contents[i], type))
+		if (type != TOKEN_REDIRECT
+			&& !handle_operator(&tokens, contents[i], type))
 			return (NULL);
 		else if (type == TOKEN_REDIRECT
 			&& !handle_redirect(&tokens, contents, &i))
