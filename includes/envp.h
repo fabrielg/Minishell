@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 21:07:21 by fabrielg          #+#    #+#             */
-/*   Updated: 2025/09/14 23:57:13 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/09/15 00:19:06 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_dic
 typedef struct s_mst	t_mst;
 struct s_mst
 {
-	t_dic	*dic;
+	t_dic	dic;
 	t_mst	*left;
 	t_mst	*right;
 	t_mst	*next;
@@ -41,19 +41,19 @@ void	bst_display(t_mst *tree);
 
 void	mst_free(t_mst **node);
 void	mst_clear(t_mst **root);
-void	freekey(t_dic **dic);
+void	freekey(t_dic *dic);
 
 /*[INIT]______________________*/
 
-t_dic	*new_dic(char *key, char *value);
-t_mst	*new_mst(t_dic *dic);
+t_dic	new_dic(char *key, char *value);
+t_mst	*new_mst(t_dic dic);
 
 /*[UTILS]______________________*/
 
 t_mst	*mst_alloc_env(char **env);
 t_mst	*mst_last(t_mst *root);
 void	mst_add_back(t_mst **root, t_mst *new);
-t_dic	*split_env_var(char *env_var);
+t_dic	split_env_var(char *env_var);
 
 /*[BST UTILS]______________________*/
 

@@ -4,14 +4,13 @@
  * @brief Frees dictionary and its key/value, sets pointer to NULL.
  * @param dic Pointer to dictionary pointer
  */
-void	freekey(t_dic **dic)
+void	freekey(t_dic *dic)
 {
-	if (!dic || !(*dic))
+	if (!dic)
 		return ;
-	if ((*dic)->key)
-		free((*dic)->key);
-	free(*dic);
-	*dic = NULL;
+	if (dic->key)
+		free(dic->key);
+	dic->key = NULL;
 }
 
 void	mst_free(t_mst **node)

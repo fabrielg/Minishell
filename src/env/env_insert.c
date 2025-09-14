@@ -13,7 +13,7 @@ static int	bst_insertion(t_mst **tree, t_mst *node)
 		*tmp = node;
 		return (0);
 	}
-	res = ft_strcmp((*tmp)->dic->key, node->dic->key);
+	res = ft_strcmp((*tmp)->dic.key, node->dic.key);
 	if (res == 0)
 		return (1);
 	else if (res < 0)
@@ -23,11 +23,11 @@ static int	bst_insertion(t_mst **tree, t_mst *node)
 	return (0);
 }
 
-static void	mst_update_value(t_mst *node, t_dic *new_dic)
+static void	mst_update_value(t_mst *node, t_dic new_dic)
 {
-	if (!node || !new_dic)
+	if (!node || !new_dic.key)
 		return ;
-	if (node->dic)
+	if (node->dic.key)
 		freekey(&node->dic);
 	node->dic = new_dic;
 }
@@ -36,9 +36,9 @@ int	mst_insertion(t_mst **root, t_mst *node)
 {
 	t_mst	*existing;
 
-	if (!node || !node->dic)
+	if (!node || !node->dic.key)
 		return (1);
-	existing = mst_get_node(*root, node->dic->key);
+	existing = mst_get_node(*root, node->dic.key);
 	if (existing)
 	{
 		mst_update_value(existing, node->dic);

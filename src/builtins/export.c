@@ -3,7 +3,7 @@
 int	cmd_export(char **args, t_mst **env)
 {
 	int		i;
-	t_dic	*dic;
+	t_dic	dic;
 	t_mst	*node;
 
 	i = 0;

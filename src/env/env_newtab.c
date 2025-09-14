@@ -28,8 +28,8 @@ char	**env_newtab(t_mst *tree)
 		return (NULL);
 	while (curr)
 	{
-		curr->dic->value[-1] = '=';
-		tab[i] = curr->dic->key;
+		curr->dic.value[-1] = '=';
+		tab[i] = curr->dic.key;
 		curr = curr->next;
 		i++;
 	}

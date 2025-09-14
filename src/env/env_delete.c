@@ -34,7 +34,7 @@ static int	mst_unlink(t_mst **tree, char *key)
 		return (1);
 	curr = *tree;
 	prev = NULL;
-	while (curr && ft_strcmp(curr->dic->key, key))
+	while (curr && ft_strcmp(curr->dic.key, key))
 	{
 		prev = curr;
 		curr = curr->next;

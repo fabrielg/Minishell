@@ -6,7 +6,7 @@ static t_mst	*mst_search(t_mst *tree, char *to_find, t_mst *parent, bool get_par
 
 	if (!tree || !to_find)
 		return (NULL);
-	res = ft_strcmp(tree->dic->key, to_find);
+	res = ft_strcmp(tree->dic.key, to_find);
 	if (res == 0 && get_parent)
 		return (parent);
 	else if (res == 0)

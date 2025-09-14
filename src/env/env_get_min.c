@@ -28,10 +28,10 @@ t_mst	*mst_get_linked_min_parent(t_mst *tree)
 	if (!tree || !tree->next)
 		return NULL;
 	cur = tree;
-	min_key = mst_get_min(tree)->dic->key;
-	if (!ft_strcmp(cur->dic->key, min_key))
+	min_key = mst_get_min(tree)->dic.key;
+	if (!ft_strcmp(cur->dic.key, min_key))
 		return NULL;
-	while (cur->next && ft_strcmp(cur->next->dic->key, min_key))
+	while (cur->next && ft_strcmp(cur->next->dic.key, min_key))
 		cur = cur->next;
 	return (cur);
 }

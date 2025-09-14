@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 22:15:10 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/14 23:52:52 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/09/15 00:24:17 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	main(int argc, char *argv[], char **envp)
 	if (argc != 2)
 		return (0);
 
-	// char *arr[] = {"25", "20", "22", "10", "12", "15", "05", "01",
-	// 	"08", "36", "30", "28", "40", "38", "48", "45", "50", NULL};
-	char *arr[] = {NULL};
+	char *arr[] = {"25", "20", "22", "10", "12", "15", "05", "01",
+		"08", "36", "30", "28", "40", "38", "48", "45", "50", NULL};
+	// char *arr[] = {NULL};
 	t_mst		*nb_mst;
 
 	nb_mst = mst_alloc_env(arr);
@@ -45,7 +45,7 @@ int	main(int argc, char *argv[], char **envp)
 
 	// // token_display_command(cmd);
 	// exec(cmd, &env);
-	// mst_clear(&env);
+	mst_clear(&nb_mst);
 	// ft_lstclear2(&cmds, token_destroy);
 	return (0);
 }
