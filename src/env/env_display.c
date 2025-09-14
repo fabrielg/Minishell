@@ -11,8 +11,6 @@ void	mst_display(t_mst *mst)
 	tmp = mst;
 	while (tmp)
 	{
-		if (!tmp->dic->value)
-			continue;
 		printf("%s=%s\n", tmp->dic->key, tmp->dic->value);
 		tmp = tmp->next;
 	}

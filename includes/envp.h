@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.fr>             +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 21:07:21 by fabrielg          #+#    #+#             */
-/*   Updated: 2025/08/18 17:17:14 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/09/14 23:57:13 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ t_mst	*mst_get_node(t_mst *tree, char *to_find);
 int		mst_insertion(t_mst **tree, t_mst *node);
 
 char	**env_newtab(t_mst *tree);
-int		env_deletion(t_mst **tree, char	*key);
+int		mst_delete(t_mst **tree, char	*key);
 int		mst_size(t_mst *tree);
 
-int		mst_unlink(t_mst **tree, char *key);
+t_mst	*mst_get_min(t_mst *tree);
+t_mst	*mst_get_min_parent(t_mst *tree);
+t_mst	*mst_get_linked_min_parent(t_mst *tree);
 
-void	no_childs_case(t_mst *prt, bool is_right);
-void	childs_case(t_mst *prt, t_mst *child, bool is_right);
-void	childs_are_parents_case(t_mst *prt, t_mst *child, bool is_right);
-int		debug_node(t_mst *prt, t_mst *child);
+int	debug_node(t_mst *node);
+
 #endif

@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/08 21:59:48 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/14 21:47:03 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,16 +24,17 @@ INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 MAIN_FILE	= main_exec
 
 # All files in src/
-FILES		=	env/bst_utils \
+FILES		=	env/env_insert \
 				env/env_display \
 				env/env_free \
 				env/env_node_init \
 				env/env_node_utils \
 				env/path_research \
 				env/env_newtab \
-				env/env_deletion \
-				env/env_link \
-				env/deletion_cases \
+				env/env_delete \
+				env/env_get_min \
+				env/env_debug \
+				env/env_get_node \
 				lexer/lexer_utils \
 				lexer/lexer \
 				exec/exec \
