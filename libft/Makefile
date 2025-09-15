@@ -68,6 +68,7 @@ SRCS = \
 	printf/ft_printf.c\
 	printf/parsing.c\
 	str/ft_split.c\
+	str/ft_strappend.c\
 	str/ft_strarrlen.c\
 	str/ft_strchr.c\
 	str/ft_strchrset.c\

@@ -30,14 +30,16 @@ FILES		=	env/bst_utils \
 				env/env_node_init \
 				env/env_node_utils \
 				env/path_research \
-				lexer/lexer_utils \
+				lexer/utils/lexer_utils \
 				lexer/lexer \
-				lexer/smart_split_utils \
-				lexer/smart_split \
-				parser/group_commands_utils \
-				parser/group_commands \
+				lexer/smart_split/smart_split_utils \
+				lexer/smart_split/smart_split \
+				parser/expander/expander_utils \
+				parser/expander/expander \
+				parser/group_commands/group_commands_utils \
+				parser/group_commands/group_commands \
 				parser/parser \
-				parser/tokenizer \
+				parser/tokenizer/tokenizer \
 				token/token_command_utils \
 				token/token_constructor \
 				token/token_redir_utils \

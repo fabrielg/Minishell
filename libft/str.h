@@ -17,6 +17,8 @@
 
 void	free_split(char **split);
 char	**ft_split(char const *s, char c);
+void	ft_strappend(char **s, char *to_append);
+void	ft_strnappend(char **s, char *to_append, size_t size);
 size_t	ft_strarrlen(char **str);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strchrset(const char *s, char *set);
