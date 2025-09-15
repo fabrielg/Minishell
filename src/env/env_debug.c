@@ -1,5 +1,9 @@
 #include "envp.h"
 
+/**
+ * @brief Prints debug information for a single MST node.
+ * @return 0 if node has a next, 1 otherwise
+ */
 int	debug_node(t_mst *node)
 {
 	printf("\n");

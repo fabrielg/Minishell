@@ -1,6 +1,10 @@
 #include "envp.h"
 
-int		mst_size(t_mst *tree)
+/**
+ * @brief Counts the number of nodes in a linked MST.
+ * @return Number of nodes
+ */
+int	mst_size(t_mst *tree)
 {
 	int		size;
 	t_mst	*curr;
@@ -15,6 +19,11 @@ int		mst_size(t_mst *tree)
 	return (size);
 }
 
+/**
+ * @brief Creates a new environment array from MST nodes.
+ * @return NULL-terminated array of "KEY=VALUE" strings,
+ * or NULL on allocation failure
+ */
 char	**env_newtab(t_mst *tree)
 {
 	int		i;

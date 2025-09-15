@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 21:07:21 by fabrielg          #+#    #+#             */
-/*   Updated: 2025/09/15 00:19:06 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/09/15 02:19:55 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,31 @@ void	freekey(t_dic *dic);
 
 t_dic	new_dic(char *key, char *value);
 t_mst	*new_mst(t_dic dic);
-
-/*[UTILS]______________________*/
-
 t_mst	*mst_alloc_env(char **env);
+
+/*[NODE_UTILS]______________________*/
+
 t_mst	*mst_last(t_mst *root);
 void	mst_add_back(t_mst **root, t_mst *new);
 t_dic	split_env_var(char *env_var);
 
-/*[BST UTILS]______________________*/
+/*[GETTERS]______________________*/
 
 t_mst	*mst_get_parent(t_mst *tree, char *child);
 t_mst	*mst_get_node(t_mst *tree, char *to_find);
-int		mst_insertion(t_mst **tree, t_mst *node);
-
-char	**env_newtab(t_mst *tree);
-int		mst_delete(t_mst **tree, char	*key);
-int		mst_size(t_mst *tree);
-
 t_mst	*mst_get_min(t_mst *tree);
 t_mst	*mst_get_min_parent(t_mst *tree);
 t_mst	*mst_get_linked_min_parent(t_mst *tree);
 
-int	debug_node(t_mst *node);
+/*[MST_UTILS]______________________*/
+
+int		mst_size(t_mst *tree);
+char	**env_newtab(t_mst *tree);
+int		mst_insertion(t_mst **tree, t_mst *node);
+int		mst_delete(t_mst **tree, char	*key);
+
+/*[DEBUG]______________________*/
+
+int		debug_node(t_mst *node);
 
 #endif

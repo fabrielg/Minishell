@@ -23,7 +23,7 @@ void	mst_display(t_mst *mst)
 void	bst_display(t_mst *tree)
 {
 	if (!tree)
-		return;
+		return ;
 	bst_display(tree->left);
 	ft_printf("export %s=%s\n", tree->dic.key, tree->dic.value);
 	bst_display(tree->right);

@@ -1,7 +1,7 @@
 #include "envp.h"
 
 /**
- * @brief Frees dictionary and its key/value, sets pointer to NULL.
+ * @brief Frees the dictionary key/value, sets pointer to NULL.
  * @param dic Pointer to dictionary pointer
  */
 void	freekey(t_dic *dic)
@@ -13,6 +13,10 @@ void	freekey(t_dic *dic)
 	dic->key = NULL;
 }
 
+/**
+ * @brief Frees a single MST node and its dictionary.
+ * @param node Pointer to MST node to free
+ */
 void	mst_free(t_mst **node)
 {
 	freekey(&(*node)->dic);

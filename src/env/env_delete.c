@@ -3,6 +3,12 @@
 static int		mst_unlink(t_mst **tree, char *key);
 static t_mst	*replace_node(t_mst *node);
 
+/**
+ * @brief Deletes a node with given key from MST.
+ * @param tree Pointer to root of MST
+ * @param key  Key of node to delete
+ * @return 1 if deleted, 0 otherwise
+ */
 int	mst_delete(t_mst **tree, char *key)
 {
 	t_mst	*prt;
@@ -23,10 +29,14 @@ int	mst_delete(t_mst **tree, char *key)
 	return (1);
 }
 
+/**
+ * @brief Unlinks a node from the linked list of MST nodes.
+ * @return 1 if unlinked, 0 on failure
+ */
 static int	mst_unlink(t_mst **tree, char *key)
 {
-	t_mst *curr;
-	t_mst *prev;
+	t_mst	*curr;
+	t_mst	*prev;
 
 	if (!tree || !*tree)
 		return (0);
@@ -52,17 +62,21 @@ static int	mst_unlink(t_mst **tree, char *key)
 	return (1);
 }
 
+/**
+ * @brief Replaces a deleted MST node with proper successor.
+ * @return Pointer to new subtree root after replacement
+ */
 static t_mst	*replace_node(t_mst *node)
 {
-	t_mst *parent;
-	t_mst *successor;
+	t_mst	*parent;
+	t_mst	*successor;
 
 	if (!node->left && !node->right)
 		return (NULL);
 	if (!node->right)
-		return node->left;
+		return (node->left);
 	if (!node->left)
-		return node->right;
+		return (node->right);
 	parent = mst_get_min_parent(node);
 	if (!parent)
 	{

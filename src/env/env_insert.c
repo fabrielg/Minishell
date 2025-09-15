@@ -1,5 +1,11 @@
 #include "envp.h"
 
+/**
+ * @brief Inserts a node into BST according to key order.
+ * @param tree Pointer to BST root
+ * @param node Node to insert
+ * @return 0 on success, 1 on failure or duplicate
+ */
 static int	bst_insertion(t_mst **tree, t_mst *node)
 {
 	int		res;
@@ -23,6 +29,9 @@ static int	bst_insertion(t_mst **tree, t_mst *node)
 	return (0);
 }
 
+/**
+ * @brief Updates the dictionary value of an existing MST node.
+ */
 static void	mst_update_value(t_mst *node, t_dic new_dic)
 {
 	if (!node || !new_dic.key)
@@ -32,6 +41,10 @@ static void	mst_update_value(t_mst *node, t_dic new_dic)
 	node->dic = new_dic;
 }
 
+/**
+ * @brief Inserts node into MST (linked + BST) or updates value if key exists.
+ * @return 0 on success, 1 on failure
+ */
 int	mst_insertion(t_mst **root, t_mst *node)
 {
 	t_mst	*existing;
