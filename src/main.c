@@ -11,23 +11,47 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+
+void	init_minishell(t_minishell *ms, char **envp)
+{
+	ft_bzero(ms, sizeof(t_minishell));
+	ms->exports = mst_alloc_env(envp);
+	if (DEBUG_MODE)
+		ms->shell_name = BLUE_B"Minichaise (debug) 🪑: "RESET;
+	else
+		ms->shell_name = WHITE_B"Minichaise 🪑: "RESET;
+}
+
+void	clear_minishell(t_minishell *ms)
+{
+	mst_clear(&ms->exports);
+	ft_lstclear2(&ms->tokens, token_destroy);
+	if (ms->input_line)
+		free(ms->input_line);
+}
 
 int	main(int argc, char *argv[], char **envp)
 {
+	t_minishell	ms;
+
 	(void)argc;
 	(void)argv;
-	t_mst	*mst;
-	mst = mst_alloc_env(envp);
-	mst_display(mst);
-	printf("\n\n\n");
-	bst_display(mst);
-	printf("\n\n\n");
-	t_mst	*node;
-	node = mst_get_node(mst, "USER");
-	if (node && node->dic)
-		printf("%s=%s\n", node->dic->key, node->dic->value);
-	else
-		ft_putendl_fd("Not found !", 1);
-	mst_clear(&mst);
+	init_minishell(&ms, envp);
+	while (1)
+	{
+		ms.input_line = readline(ms.shell_name);
+		if (!ms.input_line)
+			break; ;
+		add_history(ms.input_line);
+		ms.tokens = parser(ms.input_line, ms.exports, ms.last_exit_code);
+		tokens_display(ms.tokens);
+		ft_lstclear2(&ms.tokens, token_destroy);
+		free(ms.input_line);
+	}
+	rl_clear_history();
+	clear_minishell(&ms);
 	return (0);
 }

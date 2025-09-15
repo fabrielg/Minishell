@@ -13,16 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdbool.h>
-# include <sys/types.h>
-# include "tokens.h"
 # include "envp.h"
-# include "libft.h"
-# include "lexer.h"
-# include "parser.h"
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
+# include "tokens.h"
+# include <sys/types.h>
 
 # ifndef DEBUG_MODE
 #  define DEBUG_MODE 0
@@ -32,12 +25,12 @@
 typedef struct s_minishell
 {
 	char		**envp;					/* Copy of environment (modifiable) */
-	char		**export_list;			/* Exported variables (KEY=VALUE format) */
+	t_mst		*exports;				/* Exported variables (KEY=VALUE format) */
 
 	// TODO: t_ast	*ast_root;			/* Root of AST */
 	t_token		*ast_root;				/* Root of the AST */
 	char		*input_line;			/* Raw input line from readline */
-	t_token		*tokens;				/* List of tokens after lexing */
+	t_list2		*tokens;				/* List of tokens after parsing */
 
 	/* Return codes and status */
 	int			last_exit_code;			/* Return code of last command ($?) */
@@ -46,6 +39,7 @@ typedef struct s_minishell
 	
 	/* History and readline */
 	char		**history;				/* Custom history */
+	char		*shell_name;			/* The prompt display by readline */
 	
 	/* Signal management */
 	int			signal_received;		/* Last signal received */
@@ -59,9 +53,6 @@ typedef struct s_minishell
 	char		*current_directory;		/* Current PWD */
 	int			stdin_backup;			/* Backup of FD for redirections */
 	int			stdout_backup;			/* Backup of FD for redirections */
-	
-	/* Debugging/Development */
-	char		*shell_name;			/* Shell name for error messages */
 }	t_minishell;
 
 #endif
