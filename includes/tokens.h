@@ -62,39 +62,6 @@ typedef struct s_command
 	t_list2	*redirects;
 }	t_command;
 
-/* Structure for a subshell (commands between parentheses) */
-typedef struct s_subshell
-{
-	t_token		*content;
-	t_redirect	**redirects;
-	int			redirect_count;
-}	t_subshell;
-
-/* Structure for a pipeline (commands connected by pipes |) */
-typedef struct s_pipeline
-{
-	t_token	**commands;
-	int		command_count;
-}	t_pipeline;
-
-/* Structure for logical expressions (&& and ||) */
-typedef struct s_logical_expression
-{
-	t_logical_op	op;
-	t_token			*left;
-	t_token			*right;
-}	t_logical_expression;
-
-/* Union containing data specific to each token type */
-typedef union u_token_data
-{
-	t_command				*command;
-	t_subshell				*subshell;
-	t_pipeline				*pipeline;
-	t_logical_expression	*logical_expr;
-	t_redirect				*redirect;
-}	t_token_data;
-
 /* Structure representing a token */
 struct s_token
 {
@@ -106,6 +73,7 @@ struct s_token
 t_token			*token_new_op(const char *s, t_token_type type);
 void			token_destroy(void *content);
 t_token_type	detect_type(char *s);
+void			tokens_display(t_list2 *tokens);
 
 /* Functions utils for TOKEN_WORD */
 void			token_destroy_word(void *data);

@@ -1,4 +1,5 @@
 #include "exec.h"
+#include <fcntl.h>
 
 static int	redirect_out(t_redirect *rdr, int flags)
 {

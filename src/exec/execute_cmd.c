@@ -1,4 +1,6 @@
 #include "exec.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
 t_builtin	get_builtin(char *name)
 {

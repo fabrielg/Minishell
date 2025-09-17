@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 23:23:16 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/08 23:23:16 by fabrielg         ###   ########.fr       */
+/*   Created: 2025/08/16 00:31:16 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/08/16 17:03:08 by fabrielg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef EXPANDER_H
+# define EXPANDER_H
 
-# include "libft.h"
-# include "minishell.h"
+# include "envp.h"
 
-/* Functions utils for parsing */
-t_list2	*parser(char *command_line);
-void	expander(t_list2 *tokens, t_mst *env, int exit_code);
-t_list2	*group_commands(t_list2 *tokens);
-t_list2	*tokenize(char **contents);
-void	flush_command(t_list2 **result, t_command **current);
+void	append_segment(char **new_arg, char *arg, int start, int end);
+void	expand_checker(char *args[2], int *i, int exit_code, t_mst *env);
 
 #endif

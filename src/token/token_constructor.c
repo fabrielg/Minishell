@@ -50,3 +50,25 @@ t_token_type	detect_type(char *s)
 		return (TOKEN_REDIRECT);
 	return (TOKEN_WORD);
 }
+
+void	tokens_display(t_list2 *tokens)
+{
+	t_list2			*tmp;
+	t_token			*current_token;
+	t_token_type	type;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		current_token = (t_token *) tmp->content;
+		type = current_token->type;
+		if (type == TOKEN_REDIRECT)
+			token_display_redirect(current_token->data);
+		else if (type != TOKEN_COMMAND)
+			token_display_word(current_token->data);
+		else
+			token_display_command(current_token->data);
+		printf("\n");
+		tmp = tmp->next;
+	}
+}

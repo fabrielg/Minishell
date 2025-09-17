@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/17 21:17:12 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/17 22:31:42 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,6 @@ FILES		=	env/env_insert \
 				env/env_debug \
 				env/env_get_node \
 				env/env_modif \
-				lexer/lexer_utils \
-				lexer/lexer \
 				exec/exec \
 				exec/execute_cmd \
 				exec/execute_one_builtin \
@@ -49,12 +47,16 @@ FILES		=	env/env_insert \
 				builtins/export \
 				builtins/pwd \
 				builtins/unset \
-				lexer/smart_split_utils \
-				lexer/smart_split \
-				parser/group_commands_utils \
-				parser/group_commands \
+				lexer/utils/lexer_utils \
+				lexer/lexer \
+				lexer/smart_split/smart_split_utils \
+				lexer/smart_split/smart_split \
+				parser/expander/expander_utils \
+				parser/expander/expander \
+				parser/group_commands/group_commands_utils \
+				parser/group_commands/group_commands \
 				parser/parser \
-				parser/tokenizer \
+				parser/tokenizer/tokenizer \
 				token/token_command_utils \
 				token/token_constructor \
 				token/token_redir_utils \
