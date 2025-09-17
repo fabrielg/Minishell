@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/17 22:31:42 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/17 22:39:24 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LIBFT		= $(LIBFT_DIR)libft.a
 
 INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 
-MAIN_FILE	= main_exec
+MAIN_FILE	= main
 
 # All files in src/
 FILES		=	env/env_insert \
