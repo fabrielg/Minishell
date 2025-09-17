@@ -38,7 +38,8 @@ int	execute_cmd(t_command *cmd, t_mst **env)
 		f = get_builtin(cmd->args[0]);
 		if (f)
 			exit(f(cmd->args, env));
-		path = research_path(cmd->args[0], mst_get_node(*env, "PATH")->dic.value);
+		path = research_path(cmd->args[0],
+				mst_get_node(*env, "PATH")->dic.value);
 		env_cpy = env_newtab(*env);
 		execve(path, cmd->args, env_cpy);
 		//TODO : print error

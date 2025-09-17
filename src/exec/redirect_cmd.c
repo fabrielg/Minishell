@@ -40,12 +40,10 @@ static int	redirect_heredoc(t_redirect *rdr)
 
 int	redirect_cmd(t_command *cmd)
 {
-	int			i;
 	t_redirect	*rdr;
 	t_list2		*curr;
 	int			ret;
 
-	i = -1;
 	ret = -1;
 	curr = cmd->redirects;
 	while (curr)

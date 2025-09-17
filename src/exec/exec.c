@@ -2,12 +2,10 @@
 
 int	exec(t_command *cmd, t_mst **env)
 {
-	int	i;
 	int	saved_fd[2];
 
 	saved_fd[0] = dup(STDIN_FILENO);
 	saved_fd[1] = dup(STDOUT_FILENO);
-	i = -1;
 	if (get_builtin(cmd->args[0]))
 	{
 		execute_one_builtin(cmd, env);

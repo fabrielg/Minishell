@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/14 21:47:03 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/17 21:17:12 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME		= minishell
 CUSTOM_NAME	= MiniChaise
-CFLAGS		= -g3 #-Wall -Wextra -Werror
+CFLAGS		= -g3 -Wall -Wextra -Werror
 
 LIBFT_DIR	= ./libft/
 LIBFT		= $(LIBFT_DIR)libft.a
@@ -35,6 +35,7 @@ FILES		=	env/env_insert \
 				env/env_get_min \
 				env/env_debug \
 				env/env_get_node \
+				env/env_modif \
 				lexer/lexer_utils \
 				lexer/lexer \
 				exec/exec \

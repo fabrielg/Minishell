@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 22:15:10 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/15 01:39:11 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/09/17 21:21:05 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	main(int argc, char *argv[], char **envp)
 	t_token		*token;
 	char		*line;
 
+	(void)argc;
+	(void)argv;
 	env = mst_alloc_env(envp);
 	cmd = NULL;
 	while (1)

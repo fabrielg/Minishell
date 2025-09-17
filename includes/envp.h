@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 21:07:21 by fabrielg          #+#    #+#             */
-/*   Updated: 2025/09/15 02:19:55 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/09/17 20:53:37 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int		mst_size(t_mst *tree);
 char	**env_newtab(t_mst *tree);
 int		mst_insertion(t_mst **tree, t_mst *node);
 int		mst_delete(t_mst **tree, char	*key);
+int		mst_modif_value(t_mst **env, char *key, char *new_value);
 
 /*[DEBUG]______________________*/
 

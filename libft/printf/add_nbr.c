@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_nbr.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 15:24:00 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/02/03 16:27:00 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2025/09/15 01:11:22 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_nb_digits_formatted(t_conversion conv, int n)
 	{
 		if (conv.flags & SIGNED)
 			result++;
-		else if (conv.flags & SPACE)
+		else if (conv.flags & _SPACE)
 			result++;
 	}
 	return (result);
@@ -37,7 +37,7 @@ static char	ft_get_sign_symbol(t_conversion conv, int n)
 {
 	if (n >= 0 && conv.flags & SIGNED)
 		return ('+');
-	else if (n >= 0 && conv.flags & SPACE)
+	else if (n >= 0 && conv.flags & _SPACE)
 		return (' ');
 	return ('-');
 }
@@ -71,11 +71,11 @@ void	ft_add_nbr(t_strbuilder *build, t_conversion conv, int n)
 	else
 		fill = ' ' + !!(conv.flags & ZERO_PAD) * ('0' - ' ') * !!digits;
 	sign = ft_get_sign_symbol(conv, n);
-	if ((conv.flags & SIGNED || conv.flags & SPACE || n < 0) && fill == '0')
+	if ((conv.flags & SIGNED || conv.flags & _SPACE || n < 0) && fill == '0')
 		ft_sb_add_char(build, sign);
 	if (!(conv.flags & LEFT_ALIGN) && conv.field_width > digits)
 		ft_sb_add_nchar(build, fill, conv.field_width - digits);
-	if ((conv.flags & SIGNED || conv.flags & SPACE || n < 0) && fill == ' ')
+	if ((conv.flags & SIGNED || conv.flags & _SPACE || n < 0) && fill == ' ')
 		ft_sb_add_char(build, sign);
 	if (conv.precision >= 0 && conv.precision > ft_nb_digits(n))
 		ft_sb_add_nchar(build, '0', conv.precision - ft_nb_digits(n));

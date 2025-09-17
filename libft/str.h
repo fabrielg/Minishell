@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:56:09 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/08/18 16:25:16 by fabrielg         ###   ########.fr       */
+/*   Updated: 2025/09/17 20:57:02 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*ft_strdup(const char *s);
 char	*ft_strndup(const char *s, size_t size);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin3(char *s1, char *s2, char *s3);
 size_t	ft_strlcat(char *dst, const char *src, size_t siz);
 size_t	ft_strlcpy(char *dst, const char *src, size_t siz);
 size_t	ft_strlen(const char *s);

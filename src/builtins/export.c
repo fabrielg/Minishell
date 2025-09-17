@@ -1,5 +1,9 @@
 #include "exec.h"
 
+/**
+ * @brief Executes the export builtin, adding/updating environment variables.
+ * @return 0 on success, EXIT_FAILURE on error
+ */
 int	cmd_export(char **args, t_mst **env)
 {
 	int		i;

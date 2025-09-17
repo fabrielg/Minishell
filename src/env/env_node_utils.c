@@ -45,12 +45,10 @@ void	mst_add_back(t_mst **root, t_mst *new)
  */
 t_dic	split_env_var(char *env_var)
 {
-	t_dic	dic;
 	char	*copy;
 	char	*key;
 	char	*value;
 
-	dic = new_dic(key, value);
 	copy = ft_strdup(env_var);
 	if (!copy)
 		return (new_dic(NULL, NULL));

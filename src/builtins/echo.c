@@ -2,12 +2,14 @@
 
 #define N_FLAG 0b1
 
+/**
+ * @brief Parses echo option flag (-n).
+ * @return N_FLAG if -n option, 0 otherwise
+ */
 static unsigned char	get_flag(char *arg, int len, int *id_out)
 {
-	int				i;
-	unsigned char	flag;
+	int	i;
 
-	flag = 0b0;
 	i = 0;
 	if (arg[i] != '-')
 		return (0);
@@ -18,6 +20,10 @@ static unsigned char	get_flag(char *arg, int len, int *id_out)
 	return (N_FLAG);
 }
 
+/**
+ * @brief Executes the echo builtin, printing arguments with optional newline.
+ * @return 0
+ */
 int	cmd_echo(char **args, t_mst **env)
 {
 	unsigned char	flag;

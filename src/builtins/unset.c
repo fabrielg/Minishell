@@ -1,5 +1,9 @@
 #include "exec.h"
 
+/**
+ * @brief Executes the unset builtin, removing variables from environment.
+ * @return 0
+ */
 int	cmd_unset(char **args, t_mst **env)
 {
 	int	i;
@@ -9,6 +13,5 @@ int	cmd_unset(char **args, t_mst **env)
 		return (0);
 	while (args[++i])
 		mst_delete(env, args[i]);
-	printf("\n\nunset_cmd\n\n");
-	return (SUCCESS);
+	return (0);
 }
