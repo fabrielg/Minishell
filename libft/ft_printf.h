@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 16:34:45 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/02/07 18:01:25 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2025/09/15 01:11:25 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define PREFIX		0b00001 // #
 # define ZERO_PAD	0b00010 // 0
 # define LEFT_ALIGN	0b00100 // -
-# define SPACE		0b01000 // ' '
+# define _SPACE		0b01000 // ' '
 # define SIGNED		0b10000 // +
 
 typedef struct s_specifier

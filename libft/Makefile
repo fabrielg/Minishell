@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+         #
+#    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/10 20:19:05 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/08/18 16:25:39 by fabrielg         ###   ########.fr        #
+#    Updated: 2025/09/17 20:57:34 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ SRCS = \
 	str/ft_strndup.c\
 	str/ft_striteri.c\
 	str/ft_strjoin.c\
+	str/ft_strjoin3.c\
 	str/ft_strlcat.c\
 	str/ft_strlcpy.c\
 	str/ft_strlen_char.c\
@@ -113,7 +114,7 @@ $(NAME): $(OBJS)
 
 clean:
 	rm -fr $(OBJ_DIR)
- 
+
 fclean: clean
 	rm $(NAME)
 

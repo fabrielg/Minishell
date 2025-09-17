@@ -11,7 +11,7 @@ void	mst_display(t_mst *mst)
 	tmp = mst;
 	while (tmp)
 	{
-		printf("%s=%s\n", tmp->dic->key, tmp->dic->value);
+		ft_printf("%s=%s\n", tmp->dic.key, tmp->dic.value);
 		tmp = tmp->next;
 	}
 }
@@ -23,8 +23,8 @@ void	mst_display(t_mst *mst)
 void	bst_display(t_mst *tree)
 {
 	if (!tree)
-		return;
-	bst_display(tree->right);
-	ft_printf("%s=%s\n", tree->dic->key, tree->dic->value);
+		return ;
 	bst_display(tree->left);
+	ft_printf("export %s=\"%s\"\n", tree->dic.key, tree->dic.value);
+	bst_display(tree->right);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 02:06:44 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/08/17 23:00:06 by fabrielg         ###   ########.fr       */
+/*   Updated: 2025/09/15 01:09:40 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_minishell
 	int			last_exit_code;			/* Return code of last command ($?) */
 	int			shell_exit_code;		/* Exit code of the shell */
 	bool		should_exit;			/* Flag to terminate the shell */
-	
+
 	/* History and readline */
 	char		**history;				/* Custom history */
 	char		*shell_name;			/* The prompt display by readline */
@@ -44,11 +44,11 @@ typedef struct s_minishell
 	/* Signal management */
 	int			signal_received;		/* Last signal received */
 	bool		in_child_process;		/* To adapt signal behavior */
-	
+
 	/* Processes and pipes */
 	pid_t		*child_pids;			/* PIDs of active child processes */
 	int			pipe_fds[2];			/* File descriptors for pipes (temporary) */
-	
+
 	/* Session variables */
 	char		*current_directory;		/* Current PWD */
 	int			stdin_backup;			/* Backup of FD for redirections */

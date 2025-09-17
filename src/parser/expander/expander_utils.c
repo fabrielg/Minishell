@@ -30,8 +30,8 @@ static int	handle_variable(char **new_arg, char *arg, int i, t_mst *env)
 	{
 		key = ft_substr(arg, start, i - start);
 		node = mst_get_node(env, key);
-		if (node && node->dic && node->dic->value)
-			ft_strappend(new_arg, node->dic->value);
+		if (node && node->dic.value)
+			ft_strappend(new_arg, node->dic.value);
 		free(key);
 	}
 	else
