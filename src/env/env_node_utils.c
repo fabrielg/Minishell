@@ -26,7 +26,7 @@ t_mst	*mst_last(t_mst *root)
 void	mst_add_back(t_mst **root, t_mst *new)
 {
 	t_mst	*node;
-	
+
 	if (!root)
 		return ;
 	if (!(*root))
@@ -43,7 +43,7 @@ void	mst_add_back(t_mst **root, t_mst *new)
  * @param env_var String in format "KEY=VALUE"
  * @return Dictionary with key/value or NULL on error
  */
-t_dic	*split_env_var(char *env_var)
+t_dic	split_env_var(char *env_var)
 {
 	char	*copy;
 	char	*key;
@@ -51,12 +51,13 @@ t_dic	*split_env_var(char *env_var)
 
 	copy = ft_strdup(env_var);
 	if (!copy)
-		return (NULL);
+		return (new_dic(NULL, NULL));
 	value = ft_strchr(copy, '=');
-	if (!value)
-		return (NULL);
-	value[0] = 0;
-	value++;
+	if (value)
+	{
+		value[0] = 0;
+		value++;
+	}
 	key = copy;
 	return (new_dic(key, value));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 15:36:56 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/02/03 16:27:21 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2025/09/15 01:11:22 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	check_flags(const char **format)
 		else if (**format == '-')
 			flags |= LEFT_ALIGN;
 		else if (**format == ' ')
-			flags |= SPACE;
+			flags |= _SPACE;
 		else if (**format == '+')
 			flags |= SIGNED;
 		(*format)++;

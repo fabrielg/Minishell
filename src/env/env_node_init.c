@@ -3,18 +3,15 @@
 /**
  * @brief Creates a new dictionary entry with key-value pair.
  * @param key   Key string (stored by reference)
- * @param value Value string (stored by reference) 
+ * @param value Value string (stored by reference)
  * @return New dictionary or NULL on malloc failure
  */
-t_dic	*new_dic(char *key, char *value)
+t_dic	new_dic(char *key, char *value)
 {
-	t_dic	*dic;
+	t_dic	dic;
 
-	dic = (t_dic *) malloc(sizeof(t_dic));
-	if (!dic)
-		return (NULL);
-	dic->key = key;
-	dic->value = value;
+	dic.key = key;
+	dic.value = value;
 	return (dic);
 }
 
@@ -23,7 +20,7 @@ t_dic	*new_dic(char *key, char *value)
  * @param dic Dictionary to store in node (can be NULL)
  * @return New MST node or NULL on allocation failure
  */
-t_mst	*new_mst(t_dic *dic)
+t_mst	*new_mst(t_dic dic)
 {
 	t_mst	*new;
 
@@ -44,7 +41,7 @@ t_mst	*mst_alloc_env(char **env)
 	size_t	i;
 	t_mst	*root;
 	t_mst	*node;
-	t_dic	*current_var;
+	t_dic	current_var;
 
 	if (!env)
 		return (NULL);

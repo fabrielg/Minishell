@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+         #
+#    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/08/17 23:00:42 by fabrielg         ###   ########.fr        #
+#    Updated: 2025/09/17 22:39:24 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME		= minishell
 CUSTOM_NAME	= MiniChaise
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -g3 -Wall -Wextra -Werror
 
 LIBFT_DIR	= ./libft/
 LIBFT		= $(LIBFT_DIR)libft.a
@@ -24,12 +24,29 @@ INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 MAIN_FILE	= main
 
 # All files in src/
-FILES		=	env/bst_utils \
+FILES		=	env/env_insert \
 				env/env_display \
 				env/env_free \
 				env/env_node_init \
 				env/env_node_utils \
 				env/path_research \
+				env/env_newtab \
+				env/env_delete \
+				env/env_get_min \
+				env/env_debug \
+				env/env_get_node \
+				env/env_modif \
+				exec/exec \
+				exec/execute_cmd \
+				exec/execute_one_builtin \
+				exec/redirect_cmd \
+				builtins/cd \
+				builtins/echo \
+				builtins/env \
+				builtins/exit \
+				builtins/export \
+				builtins/pwd \
+				builtins/unset \
 				lexer/utils/lexer_utils \
 				lexer/lexer \
 				lexer/smart_split/smart_split_utils \
@@ -65,7 +82,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)
 	cc $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJ_DIR) : 
+$(OBJ_DIR) :
 	mkdir -p $(OBJ_DIR)
 
 clean :
