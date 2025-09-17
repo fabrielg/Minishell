@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "parser.h"
+#include "exec.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -48,6 +49,9 @@ int	main(int argc, char *argv[], char **envp)
 		add_history(ms.input_line);
 		ms.tokens = parser(ms.input_line, ms.exports, ms.last_exit_code);
 		tokens_display(ms.tokens);
+		t_token		*tok = (t_token *) ms.tokens->content;
+		t_command *cmd = get_command(tok->data);
+		exec(cmd, &ms.exports);
 		ft_lstclear2(&ms.tokens, token_destroy);
 		free(ms.input_line);
 	}
