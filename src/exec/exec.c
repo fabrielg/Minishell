@@ -1,20 +1,15 @@
 #include "exec.h"
+#include "minishell.h"
 
-int	exec(t_command *cmd, t_mst **env)
+int	exec(t_command *cmd, t_minishell *ms)
 {
-	int	saved_fd[2];
-
-	saved_fd[0] = dup(STDIN_FILENO);
-	saved_fd[1] = dup(STDOUT_FILENO);
-	if (get_builtin(cmd->args[0]))
+	if (get_builtin(cmd->args[0], NULL))
 	{
-		execute_one_builtin(cmd, env);
-		dup2(saved_fd[0], STDOUT_FILENO);
-		dup2(saved_fd[1], STDIN_FILENO);
-		close(saved_fd[0]);
-		close(saved_fd[1]);
+		ms->last_exit_code = execute_one_builtin(cmd, ms);
+		printf("last exit code : %i\n", ms->last_exit_code);
 		return (0);
 	}
-	execute_cmd(cmd, env);
+	ms->last_exit_code = execute_cmd(cmd, ms);
+	printf("last exit code : %i\n", ms->last_exit_code);
 	return (0);
 }

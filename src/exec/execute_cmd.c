@@ -1,8 +1,9 @@
 #include "exec.h"
+#include "minishell.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 
-t_builtin	get_builtin(char *name)
+t_builtin	get_builtin(char *name, unsigned char *flag)
 {
 	if (!ft_strcmp(name, "echo"))
 		return (cmd_echo);
@@ -17,42 +18,57 @@ t_builtin	get_builtin(char *name)
 	else if (!ft_strcmp(name, "env"))
 		return (cmd_env);
 	else if (!ft_strcmp(name, "exit"))
+	{
+		if (flag)
+			*flag = F_EXIT;
 		return (cmd_exit);
+	}
 	return (NULL);
 }
 
-int	execute_cmd(t_command *cmd, t_mst **env)
+int	child_exec(t_command *cmd, t_minishell *ms)
 {
-	pid_t		pid;
-	int			status;
 	t_builtin	f;
 	char		*path;
 	char		**env_cpy;
 
-	pid = fork();
 	f = NULL;
+	if (redirect_cmd(cmd) == ERROR)
+		return (REDIR_ERROR);
+	f = get_builtin(cmd->args[0], NULL);
+	if (f)
+		return (f(cmd->args, &(ms->exports)));
+	path = research_path(cmd->args[0],
+	mst_get_node(ms->exports, "PATH")->dic.value);
+	env_cpy = env_newtab(ms->exports);
+	execve(path, cmd->args, env_cpy);
+	free(path);
+	return (CMD_NOT_FOUND);
+}
+
+int	execute_cmd(t_command *cmd, t_minishell *ms)
+{
+	pid_t			pid;
+	int				status;
+	unsigned char	exit_code;
+
+	if (!cmd)
+		return (CMD_NOT_FOUND);
+	pid = fork();
 	if (pid == -1)
 		return (ERROR);
 	if (pid == 0)
 	{
-		if (redirect_cmd(cmd) == ERROR)
-			exit(REDIR_ERROR);
-		f = get_builtin(cmd->args[0]);
-		if (f)
-			exit(f(cmd->args, env));
-		path = research_path(cmd->args[0],
-				mst_get_node(*env, "PATH")->dic.value);
-		env_cpy = env_newtab(*env);
-		execve(path, cmd->args, env_cpy);
-		//TODO : print error
-		free(path);
-		exit(CMD_NOT_FOUND);
+		exit_code = child_exec(cmd, ms);
+		exit(clear_minishell(ms, exit_code));
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			return (WIFEXITED(status));
+			return (WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+			return (128 + WTERMSIG(status));
 	}
 	return (SUCCESS);
 }

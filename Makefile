@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/17 22:39:24 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/18 21:01:47 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME		= minishell
 CUSTOM_NAME	= MiniChaise
-CFLAGS		= -g3 -Wall -Wextra -Werror
+CFLAGS		= -g3 #-Wall -Wextra -Werror
 
 LIBFT_DIR	= ./libft/
 LIBFT		= $(LIBFT_DIR)libft.a
@@ -60,7 +60,8 @@ FILES		=	env/env_insert \
 				token/token_command_utils \
 				token/token_constructor \
 				token/token_redir_utils \
-				token/token_word_utils
+				token/token_word_utils \
+				minishell_utils
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))

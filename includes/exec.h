@@ -10,8 +10,10 @@
 # define REDIR_ERROR 1
 # define CMD_NOT_FOUND 127
 # define PERM_DENIED 126
+# define F_EXIT 0b1
 
-typedef struct s_mst	t_mst;
+typedef struct s_mst		t_mst;
+typedef struct s_minishell	t_minishell;
 typedef int	(*t_builtin)(char **args, t_mst **env);
 
 //BUILT-INS___________________________
@@ -28,10 +30,10 @@ int			cmd_exit(char **args, t_mst **env);
 
 char		**list2_to_tab(t_list2 *lst);
 int			redirect_cmd(t_command *cmd);
-int			execute_cmd(t_command *cmd, t_mst **env);
-int			execute_one_builtin(t_command *cmd, t_mst **env);
-int			exec(t_command *cmd, t_mst **env);
-t_builtin	get_builtin(char *name);
+int			execute_cmd(t_command *cmd, t_minishell *ms);
+int			execute_one_builtin(t_command *cmd, t_minishell *ms);
+int			exec(t_command *cmd, t_minishell *ms);
+t_builtin	get_builtin(char *name, unsigned char *flag_out);
 char		*research_path(char *cmd, char *env_path);
 
 #endif
