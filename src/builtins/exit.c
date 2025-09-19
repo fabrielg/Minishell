@@ -32,17 +32,17 @@ int	cmd_exit(char **args, t_mst **env)
 
 	(void)env;
 	status = 0;
-	write(1, "exit\n", 5);
+	write(STDERR_FILENO, "exit\n", 5);
 	if (!args[1])
 		return (0);
 	if (!is_numeric(args[1]))
 	{
-		write(2, "exit: numeric argument required\n", 32);
+		write(STDERR_FILENO, "exit: numeric argument required\n", 32);
 		return (255);
 	}
 	if (args[2])
 	{
-		write(2, "exit: too many arguments\n", 25);
+		write(STDERR_FILENO, "exit: too many arguments\n", 25);
 		return (1);
 	}
 	return (status);

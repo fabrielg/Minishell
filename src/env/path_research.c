@@ -41,8 +41,8 @@ char	*research_path(char *cmd, char *env_path)
 	int		i;
 	int		j;
 
-	i = 5;
-	j = 5;
+	i = 0;
+	j = 0;
 	while (env_path[i++])
 	{
 		if (env_path[i] != ':')

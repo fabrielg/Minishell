@@ -7,12 +7,12 @@
 int	cmd_pwd(char **args, t_mst **env)
 {
 	t_mst	*node;
+	char	cwd[PATH_MAX_LEN];
 
 	(void)args;
-	node = mst_get_node(*env, "PWD");
-	if (!node || !node->dic.value)
-		return (EXIT_FAILURE);
-	write(STDOUT_FILENO, node->dic.value, ft_strlen(node->dic.value));
+	if (!getcwd(cwd, PATH_MAX_LEN))
+		return (1);
+	write(STDOUT_FILENO, cwd, ft_strlen(cwd));
 	write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }

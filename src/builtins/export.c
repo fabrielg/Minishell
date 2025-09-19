@@ -1,24 +1,57 @@
 #include "exec.h"
 
+static int	is_valid_identifier(char *arg)
+{
+	int	i;
+
+	i = 1;
+	if (!arg || !arg[0])
+		return (0);
+	if (!ft_isalpha(arg[0]) && arg[0] != '_')
+		return (0);
+	while (arg[i] && arg[i] != '=')
+	{
+		if (!ft_isalnum(arg[i]) && arg[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static void print_export_err(char *arg)
+{
+	write(STDERR_FILENO, "export: `", 9);
+	write(STDERR_FILENO, arg, ft_strlen(arg));
+	write(STDERR_FILENO, "': not a valid identifier\n", 26);
+}
+
 /**
  * @brief Executes the export builtin, adding/updating environment variables.
  * @return 0 on success, EXIT_FAILURE on error
  */
 int	cmd_export(char **args, t_mst **env)
 {
-	int		i;
-	t_dic	dic;
-	t_mst	*node;
+	int				i;
+	t_dic			dic;
+	t_mst			*node;
+	unsigned char	exit_code;
 
 	i = 0;
+	exit_code = 0;
 	if (!args[1])
-		return (bst_display(*env), 0);
+		return (bst_display(*env), exit_code);
 	while (args[++i])
 	{
+		if (!is_valid_identifier(args[i]))
+		{
+			exit_code = 1;
+			print_export_err(args[i]);
+			continue ;
+		}
 		dic = split_env_var(args[i]);
 		node = new_mst(dic);
 		if (mst_insertion(env, node) == 1)
-			return (EXIT_FAILURE);
+			return (1);
 	}
-	return (0);
+	return (exit_code);
 }

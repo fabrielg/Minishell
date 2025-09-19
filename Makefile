@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/18 21:01:47 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/19 19:11:38 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ FILES		=	env/env_insert \
 				token/token_constructor \
 				token/token_redir_utils \
 				token/token_word_utils \
-				minishell_utils
+				minishell_utils/minishell_utils \
+				minishell_utils/print_error
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))

@@ -1,4 +1,5 @@
 #include "exec.h"
+#include <errno.h>
 #include "minishell.h"
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -28,9 +29,10 @@ t_builtin	get_builtin(char *name, unsigned char *flag)
 
 int	child_exec(t_command *cmd, t_minishell *ms)
 {
-	t_builtin	f;
-	char		*path;
-	char		**env_cpy;
+	t_builtin		f;
+	t_mst			*env_path;
+	char			*path;
+	char			**env_cpy;
 
 	f = NULL;
 	if (redirect_cmd(cmd) == ERROR)
@@ -38,12 +40,14 @@ int	child_exec(t_command *cmd, t_minishell *ms)
 	f = get_builtin(cmd->args[0], NULL);
 	if (f)
 		return (f(cmd->args, &(ms->exports)));
-	path = research_path(cmd->args[0],
-	mst_get_node(ms->exports, "PATH")->dic.value);
+	env_path = mst_get_node(ms->exports, "PATH");
+	if (!env_path)
+		return (exec_error(cmd->args[0], PATH_ERR_MSG, CMD_NOT_FOUND));
+	path = research_path(cmd->args[0], env_path->dic.value);
 	env_cpy = env_newtab(ms->exports);
 	execve(path, cmd->args, env_cpy);
 	free(path);
-	return (CMD_NOT_FOUND);
+	return (exec_error(cmd->args[0], NOT_FOUND_ERR, CMD_NOT_FOUND));
 }
 
 int	execute_cmd(t_command *cmd, t_minishell *ms)

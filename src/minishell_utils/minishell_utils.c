@@ -1,0 +1,29 @@
+#include "minishell.h"
+#include "exec.h"
+
+void	init_minishell(t_minishell *ms, char **envp)
+{
+	ft_bzero(ms, sizeof(t_minishell));
+	ms->exports = mst_alloc_env(envp);
+	ms->stdin_backup = dup(STDIN_FILENO);
+	ms->stdout_backup = dup(STDOUT_FILENO);
+	ms->shell_exit_code = -1;
+	if (DEBUG_MODE)
+		ms->shell_name = BLUE_B"Minichaise (debug) 🪑: "RESET;
+	else
+		ms->shell_name = WHITE_B"Minichaise 🪑: "RESET;
+}
+
+int	clear_minishell(t_minishell *ms, int exit_code)
+{
+	mst_clear(&ms->exports);
+	ft_lstclear2(&ms->tokens, token_destroy);
+	if (ms->input_line)
+		free(ms->input_line);
+	ms->input_line = NULL;
+	if (ms->stdin_backup)
+		close(ms->stdin_backup);
+	if (ms->stdout_backup)
+		close(ms->stdout_backup);
+	return (exit_code);
+}

@@ -11,6 +11,10 @@
 # define CMD_NOT_FOUND 127
 # define PERM_DENIED 126
 # define F_EXIT 0b1
+# define PATH_MAX_LEN 4096
+
+# define PATH_ERR_MSG "No such file or directory\n"
+# define NOT_FOUND_ERR "Command not found\n"
 
 typedef struct s_mst		t_mst;
 typedef struct s_minishell	t_minishell;
