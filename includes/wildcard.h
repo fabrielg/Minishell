@@ -13,6 +13,7 @@
 #ifndef WILDCARD_H
 # define WILDCARD_H
 
+char	**glob_token(const char *token, int *out_count);
 char	**glob_dir(const char *dir, const char *pattern, int *out_count);
 int		star_match(const char *pat, const char *name);
 
