@@ -7,6 +7,8 @@ t_list2	*parser(char *command_line, t_mst *env, int exit_code)
 	char	**contents;
 	t_list2	*tokens;
 
+	if (lex_line(command_line) == 2)
+		return (NULL);
 	contents = smart_split(command_line);
 	if (!contents)
 		return (NULL);
