@@ -4,7 +4,7 @@
  * @brief Executes the pwd builtin by printing the current directory.
  * @return 0 on success, 1 if PWD is unset
  */
-int	cmd_pwd(char **args, t_mst **env)
+t_uint8	cmd_pwd(char **args, t_mst **env)
 {
 	t_mst	*node;
 	char	cwd[PATH_MAX_LEN];

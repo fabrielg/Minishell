@@ -41,12 +41,12 @@ static char	*get_cd_path(char *arg, t_mst *env)
  * @brief Executes the cd builtin, updating PWD and OLDPWD.
  * @return 0 on success, 1 on failure
  */
-int	cmd_cd(char **args, t_mst **env)
+t_uint8	cmd_cd(char **args, t_mst **env)
 {
-	char	*path;
-	t_mst	*pwd;
-	char	*err_msg;
-	int		err_code;
+	char		*path;
+	t_mst		*pwd;
+	char		*err_msg;
+	t_uint8		err_code;
 
 	path = get_cd_path(args[1], *env);
 	if (!path)

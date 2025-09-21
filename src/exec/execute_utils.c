@@ -1,12 +1,24 @@
 #include "exec.h"
-#include <errno.h>
 #include "minishell.h"
-#include <sys/types.h>
-#include <sys/wait.h>
 #include <sys/stat.h>
 #include <errno.h>
 
-int	is_builtin(char **args, t_mst **env, int *exit_code)
+/**
+ * @brief Prints an execution error and sets exit code.
+ * @return  1
+ */
+static t_uint8	cmd_err(t_uint8 *exit_code, char *arg, char *err_msg, int code)
+{
+	*exit_code = exec_error(arg, err_msg, code);
+	return (1);
+}
+
+/**
+ * @brief Checks if the command is a builtin and executes it.
+ * @note Set exit_code to the builtin return value
+ * @return 1 if builtin executed, 0 otherwise
+ */
+t_uint8	is_builtin(char **args, t_mst **env, t_uint8 *exit_code)
 {
 	t_builtin	f;
 
@@ -20,13 +32,12 @@ int	is_builtin(char **args, t_mst **env, int *exit_code)
 	return (0);
 }
 
-static int	cmd_err(int *exit_code, char *arg, char *err_msg, int code)
-{
-	*exit_code = exec_error(arg, err_msg, code);
-	return (1);
-}
-
-int	is_abs_rltv_path(char **args, t_mst *env, int *exit_code)
+/**
+ * @brief Executes command if path is absolute or relative.
+ * @note Set exit_code to the adapted error (0, 1, 126 or 127)
+ * @return 1 if executed or error handled, 0 otherwise
+ */
+t_uint8	is_abs_rltv_path(char **args, t_mst *env, t_uint8 *exit_code)
 {
 	struct stat		st;
 	char			**env_cpy;
@@ -41,14 +52,19 @@ int	is_abs_rltv_path(char **args, t_mst *env, int *exit_code)
 		return (cmd_err(exit_code, args[0], NO_PERM_MSG, PERM_ERR));
 	env_cpy = env_newtab(env);
 	if (!env_cpy)
-		return (cmd_err(exit_code, NULL, NULL, 0));
+		return (cmd_err(exit_code, NULL, NULL, 1));
 	execve(args[0], args, env_cpy);
 	if (errno == EACCES)
 		return (cmd_err(exit_code, args[0], NO_PERM_MSG, PERM_ERR));
 	return (cmd_err(exit_code, args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
 }
 
-int	is_in_path(char **args, t_mst *m_path, t_mst *env, int *exit_code)
+/**
+ * @brief Executes command if found in PATH variable.
+ * @note Set exit_code to the adapted error (0, 1, 126 or 127)
+ * @return 1 if executed or error handled, 0 otherwise
+ */
+t_uint8	is_in_path(char **args, t_mst *m_path, t_mst *env, t_uint8 *exit_code)
 {
 	char	**env_cpy;
 	char	*path;
@@ -63,7 +79,7 @@ int	is_in_path(char **args, t_mst *m_path, t_mst *env, int *exit_code)
 	}
 	env_cpy = env_newtab(env);
 	if (!env_cpy)
-		return (free(path), cmd_err(exit_code, NULL, NULL, 0));
+		return (free(path), cmd_err(exit_code, NULL, NULL, 1));
 	execve(path, args, env_cpy);
 	free(path);
 	free(env_cpy);

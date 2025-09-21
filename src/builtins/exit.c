@@ -26,9 +26,9 @@ static int	is_numeric(const char *str)
  * @brief Executes the exit builtin with optional status code.
  * @return Exit status
  */
-int	cmd_exit(char **args, t_mst **env)
+t_uint8	cmd_exit(char **args, t_mst **env)
 {
-	unsigned char	status;
+	t_uint8	status;
 
 	(void)env;
 	status = 0;
@@ -45,6 +45,6 @@ int	cmd_exit(char **args, t_mst **env)
 		write(STDERR_FILENO, "exit: too many arguments\n", 25);
 		return (1);
 	}
-	status = (unsigned char)atoi(args[1]);
+	status = (t_uint8)atoi(args[1]);
 	return (status);
 }

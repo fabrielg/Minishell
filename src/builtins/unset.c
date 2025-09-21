@@ -4,7 +4,7 @@
  * @brief Executes the unset builtin, removing variables from environment.
  * @return 0
  */
-int	cmd_unset(char **args, t_mst **env)
+t_uint8	cmd_unset(char **args, t_mst **env)
 {
 	int	i;
 

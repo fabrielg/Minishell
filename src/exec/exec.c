@@ -1,6 +1,10 @@
 #include "exec.h"
 #include "minishell.h"
 
+/**
+ * @brief Executes a command (builtin or external) and updates last exit code.
+ * @return 0
+ */
 int	exec(t_command *cmd, t_minishell *ms)
 {
 	if (get_builtin(cmd->args[0], NULL))

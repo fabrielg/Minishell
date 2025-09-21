@@ -1,6 +1,10 @@
 #include "exec.h"
 #include "minishell.h"
 
+/**
+ * @brief Executes a builtin command in the current process.
+ * @return Exit code of the builtin
+ */
 int	execute_one_builtin(t_command *cmd, t_minishell *ms)
 {
 	t_builtin		f;

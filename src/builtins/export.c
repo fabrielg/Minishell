@@ -18,7 +18,7 @@ static int	is_valid_identifier(char *arg)
 	return (1);
 }
 
-static void print_export_err(char *arg)
+static void	print_export_err(char *arg)
 {
 	write(STDERR_FILENO, "export: `", 9);
 	write(STDERR_FILENO, arg, ft_strlen(arg));
@@ -29,12 +29,12 @@ static void print_export_err(char *arg)
  * @brief Executes the export builtin, adding/updating environment variables.
  * @return 0 on success, EXIT_FAILURE on error
  */
-int	cmd_export(char **args, t_mst **env)
+t_uint8	cmd_export(char **args, t_mst **env)
 {
 	int				i;
 	t_dic			dic;
 	t_mst			*node;
-	unsigned char	exit_code;
+	t_uint8			exit_code;
 
 	i = 0;
 	exit_code = 0;

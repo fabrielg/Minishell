@@ -1,6 +1,11 @@
 #include "minishell.h"
 #include "exec.h"
 
+/**
+ * @brief Initializes minishell.
+ * @param ms   Minishell context to initialize
+ * @param envp Environment variables from system
+ */
 void	init_minishell(t_minishell *ms, char **envp)
 {
 	ft_bzero(ms, sizeof(t_minishell));
@@ -14,7 +19,13 @@ void	init_minishell(t_minishell *ms, char **envp)
 		ms->shell_name = WHITE_B"Minichaise 🪑: "RESET;
 }
 
-int	clear_minishell(t_minishell *ms, int exit_code)
+/**
+ * @brief Frees minishell resources and restores state before exit.
+ * @param ms        Minishell context
+ * @param exit_code Shell exit code to return
+ * @return The given exit_code
+ */
+t_uint8	clear_minishell(t_minishell *ms, t_uint8 exit_code)
 {
 	mst_clear(&ms->exports);
 	ft_lstclear2(&ms->tokens, token_destroy);

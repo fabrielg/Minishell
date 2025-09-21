@@ -1,13 +1,15 @@
 #include "exec.h"
-#include <errno.h>
 #include "minishell.h"
-#include <sys/types.h>
 #include <sys/wait.h>
 
-int	child_exec(t_command *cmd, t_minishell *ms)
+/**
+ * @brief Executes a command in the child process.
+ * @return Exit code of executed command or error code
+ */
+t_uint8	child_exec(t_command *cmd, t_minishell *ms)
 {
 	t_mst			*env_path;
-	int				exit_code;
+	t_uint8			exit_code;
 
 	exit_code = -1;
 	if (redirect_cmd(cmd) == ERROR)
@@ -24,11 +26,15 @@ int	child_exec(t_command *cmd, t_minishell *ms)
 	return (exec_error(cmd->args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
 }
 
+/**
+ * @brief Forks and executes a command in a child process.
+ * @return Exit status of command, or error code
+ */
 int	execute_cmd(t_command *cmd, t_minishell *ms)
 {
 	pid_t			pid;
 	int				status;
-	unsigned char	exit_code;
+	t_uint8			exit_code;
 
 	exit_code = 1;
 	if (!cmd)

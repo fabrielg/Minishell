@@ -1,10 +1,11 @@
 #include "exec.h"
-#include <errno.h>
 #include "minishell.h"
-#include <sys/types.h>
-#include <sys/wait.h>
 
-int	handle_exit(t_command *cmd, t_minishell *ms, unsigned char *exit_code)
+/**
+ * @brief Handles exit status for exit builtin.
+ * @return Exit code on success, -1 on error
+ */
+int	handle_exit(t_command *cmd, t_minishell *ms, t_uint8 *exit_code)
 {
 	if (cmd->argc == 1)
 		*exit_code = ms->last_exit_code;
@@ -13,7 +14,12 @@ int	handle_exit(t_command *cmd, t_minishell *ms, unsigned char *exit_code)
 	return (-1);
 }
 
-t_builtin	get_builtin(char *name, unsigned char *flag)
+/**
+ * @brief Matches command name to builtin function.
+ * @note set flag to 1 if builtin is exit
+ * @return Function pointer to builtin, NULL if not found
+ */
+t_builtin	get_builtin(char *name, t_uint8 *flag)
 {
 	if (!ft_strcmp(name, "echo"))
 		return (cmd_echo);

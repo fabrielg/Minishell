@@ -6,7 +6,7 @@
  * @brief Parses echo option flag (-n).
  * @return N_FLAG if -n option, 0 otherwise
  */
-static unsigned char	get_flag(char *arg, int len, int *id_out)
+static t_uint8	get_flag(char *arg, int len, int *id_out)
 {
 	int	i;
 
@@ -24,19 +24,19 @@ static unsigned char	get_flag(char *arg, int len, int *id_out)
  * @brief Executes the echo builtin, printing arguments with optional newline.
  * @return 0
  */
-int	cmd_echo(char **args, t_mst **env)
+t_uint8	cmd_echo(char **args, t_mst **env)
 {
-	unsigned char	flag;
+	t_uint8			flag;
 	int				i;
 
 	i = 1;
 	flag = 0b0;
 	(void)env;
-	if (!args[1])
-		return (0);
-	flag = get_flag(args[1], ft_strlen(args[1]), &i);
-	write(STDOUT_FILENO, args[1], ft_strlen(args[1])); //SHOULDNT DISPLAY IF FLAG
-	while (args[++i])
+	if (args[1] && args[2])
+		flag = get_flag(args[1], ft_strlen(args[1]), &i);
+	if (args[1])
+		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
+	while (args[1] && args[++i])
 	{
 		write(STDOUT_FILENO, " ", 1);
 		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
