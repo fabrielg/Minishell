@@ -6,9 +6,9 @@
  */
 t_uint8	cmd_pwd(char **args, t_mst **env)
 {
-	t_mst	*node;
 	char	cwd[PATH_MAX_LEN];
 
+	(void)env;
 	(void)args;
 	if (!getcwd(cwd, PATH_MAX_LEN))
 		return (1);
