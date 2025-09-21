@@ -22,6 +22,7 @@ void	ft_strnappend(char **s, char *to_append, size_t size);
 size_t	ft_strarrlen(char **str);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strchrset(const char *s, char *set);
+char	*ft_strcpy(char *dst, const char *src);
 char	*ft_strdup(const char *s);
 char	*ft_strndup(const char *s, size_t size);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));

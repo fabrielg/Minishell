@@ -22,5 +22,6 @@ t_list2	*parser(char *command_line, t_mst *env, int exit_code)
 	expander(tokens, env, exit_code);
 	if (!tokens)
 		return (NULL);
+	glob_commands(tokens);
 	return (tokens);
 }
