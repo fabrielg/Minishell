@@ -56,7 +56,9 @@ FILES		=	env/env_insert \
 				parser/group_commands/group_commands_utils \
 				parser/group_commands/group_commands \
 				parser/wildcard_manager/glob_args_commands \
+				parser/wildcard_manager/glob_commands \
 				parser/wildcard_manager/glob_dir \
+				parser/wildcard_manager/glob_redirs_commands \
 				parser/wildcard_manager/glob_token \
 				parser/wildcard_manager/star_match \
 				parser/parser \

@@ -13,6 +13,10 @@
 #ifndef WILDCARD_H
 # define WILDCARD_H
 
+# include "tokens.h"
+
+int		glob_redirects_list(t_list2 *redirects);
+void	glob_one_command(t_command *cmd);
 char	**glob_token(const char *token, int *out_count);
 char	**glob_dir(const char *dir, const char *pattern, int *out_count);
 int		star_match(const char *pat, const char *name);

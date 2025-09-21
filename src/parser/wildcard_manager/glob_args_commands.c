@@ -55,7 +55,7 @@ static char	**fill_expanded_tokens(char **args, int arg_count, int new_count)
 	return (new_args);
 }
 
-static void	glob_one_command(t_command *cmd)
+void	glob_one_command(t_command *cmd)
 {
 	char	**old_args;
 	char	**new_args;
@@ -71,23 +71,4 @@ static void	glob_one_command(t_command *cmd)
 	ft_free_map((void **)old_args, -1);
 	cmd->args = new_args;
 	cmd->argc = new_argc;
-}
-
-void	glob_args_commands(t_list2 *tokens)
-{
-	t_list2		*curr;
-	t_token		*curr_token;
-	t_command	*curr_cmd;
-
-	curr = tokens;
-	while (curr)
-	{
-		curr_token = (t_token *)(curr->content);
-		if (curr_token->type == TOKEN_COMMAND)
-		{
-			curr_cmd = (t_command *) curr_token->data;
-			glob_one_command(curr_cmd);
-		}
-		curr = curr->next;
-	}
 }
