@@ -55,6 +55,8 @@ FILES		=	env/env_insert \
 				parser/expander/expander \
 				parser/group_commands/group_commands_utils \
 				parser/group_commands/group_commands \
+				parser/wildcard_manager/glob_dir \
+				parser/wildcard_manager/star_match \
 				parser/parser \
 				parser/tokenizer/tokenizer \
 				token/token_command_utils \
