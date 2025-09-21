@@ -4,50 +4,24 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-t_builtin	get_builtin(char *name, unsigned char *flag)
-{
-	if (!ft_strcmp(name, "echo"))
-		return (cmd_echo);
-	else if (!ft_strcmp(name, "cd"))
-		return (cmd_cd);
-	else if (!ft_strcmp(name, "pwd"))
-		return (cmd_pwd);
-	else if (!ft_strcmp(name, "export"))
-		return (cmd_export);
-	else if (!ft_strcmp(name, "unset"))
-		return (cmd_unset);
-	else if (!ft_strcmp(name, "env"))
-		return (cmd_env);
-	else if (!ft_strcmp(name, "exit"))
-	{
-		if (flag)
-			*flag = F_EXIT;
-		return (cmd_exit);
-	}
-	return (NULL);
-}
-
 int	child_exec(t_command *cmd, t_minishell *ms)
 {
-	t_builtin		f;
 	t_mst			*env_path;
-	char			*path;
-	char			**env_cpy;
+	int				exit_code;
 
-	f = NULL;
+	exit_code = -1;
 	if (redirect_cmd(cmd) == ERROR)
-		return (REDIR_ERROR);
-	f = get_builtin(cmd->args[0], NULL);
-	if (f)
-		return (f(cmd->args, &(ms->exports)));
+		return (REDIR_ERR);
+	if (is_builtin(cmd->args, &ms->exports, &exit_code))
+		return (exit_code);
+	if (is_abs_rltv_path(cmd->args, ms->exports, &exit_code))
+		return (exit_code);
 	env_path = mst_get_node(ms->exports, "PATH");
 	if (!env_path)
-		return (exec_error(cmd->args[0], PATH_ERR_MSG, CMD_NOT_FOUND));
-	path = research_path(cmd->args[0], env_path->dic.value);
-	env_cpy = env_newtab(ms->exports);
-	execve(path, cmd->args, env_cpy);
-	free(path);
-	return (exec_error(cmd->args[0], NOT_FOUND_ERR, CMD_NOT_FOUND));
+		return (exec_error(cmd->args[0], NO_PATH_MSG, NOT_FOUND_ERR));
+	if (is_in_path(cmd->args, env_path, ms->exports, &exit_code))
+		return (exit_code);
+	return (exec_error(cmd->args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
 }
 
 int	execute_cmd(t_command *cmd, t_minishell *ms)
@@ -56,8 +30,9 @@ int	execute_cmd(t_command *cmd, t_minishell *ms)
 	int				status;
 	unsigned char	exit_code;
 
+	exit_code = 1;
 	if (!cmd)
-		return (CMD_NOT_FOUND);
+		return (NOT_FOUND_ERR);
 	pid = fork();
 	if (pid == -1)
 		return (ERROR);

@@ -7,14 +7,16 @@
 
 # define ERROR -1
 # define SUCCESS 1
-# define REDIR_ERROR 1
-# define CMD_NOT_FOUND 127
-# define PERM_DENIED 126
+# define REDIR_ERR 1
+# define NOT_FOUND_ERR 127
+# define PERM_ERR 126
 # define F_EXIT 0b1
 # define PATH_MAX_LEN 4096
 
-# define PATH_ERR_MSG "No such file or directory\n"
-# define NOT_FOUND_ERR "Command not found\n"
+# define NO_PATH_MSG   "No such file or directory\n"
+# define NOT_FOUND_MSG "Command not found\n"
+# define NO_PERM_MSG   "Permission denied\n"
+# define IS_DIR_MSG    ": Is a directory\n"
 
 typedef struct s_mst		t_mst;
 typedef struct s_minishell	t_minishell;
@@ -39,5 +41,11 @@ int			execute_one_builtin(t_command *cmd, t_minishell *ms);
 int			exec(t_command *cmd, t_minishell *ms);
 t_builtin	get_builtin(char *name, unsigned char *flag_out);
 char		*research_path(char *cmd, char *env_path);
+int			handle_exit(t_command *cmd, t_minishell *ms, unsigned char *exit_code);
+
+int			is_builtin(char **args, t_mst **env, int *exit_code);
+int			is_abs_rltv_path(char **args, t_mst *env, int *exit_code);
+int			is_in_path(char **args, t_mst *m_path, t_mst *env, int *exit_code);
+
 
 #endif

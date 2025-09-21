@@ -35,7 +35,7 @@ int	cmd_echo(char **args, t_mst **env)
 	if (!args[1])
 		return (0);
 	flag = get_flag(args[1], ft_strlen(args[1]), &i);
-	write(STDOUT_FILENO, args[1], ft_strlen(args[1]));
+	write(STDOUT_FILENO, args[1], ft_strlen(args[1])); //SHOULDNT DISPLAY IF FLAG
 	while (args[++i])
 	{
 		write(STDOUT_FILENO, " ", 1);

@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/19 19:11:38 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/20 18:34:38 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ FILES		=	env/env_insert \
 				exec/execute_cmd \
 				exec/execute_one_builtin \
 				exec/redirect_cmd \
+				exec/execute_utils \
+				exec/builtin_utils \
 				builtins/cd \
 				builtins/echo \
 				builtins/env \

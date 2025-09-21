@@ -7,7 +7,7 @@
 int	cmd_env(char **args, t_mst **env)
 {
 	if (args[1])
-		return (CMD_NOT_FOUND);
+		return (NOT_FOUND_ERR);
 	mst_display(*env);
 	return (0);
 }
