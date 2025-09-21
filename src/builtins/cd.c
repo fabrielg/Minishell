@@ -1,7 +1,5 @@
 #include "exec.h"
 
-#define PATH_MAX_LEN 4096
-
 /**
  * @brief Updates the PWD variable in the environment to current directory.
  * @return 0 on success, 1 on failure
@@ -43,11 +41,12 @@ static char	*get_cd_path(char *arg, t_mst *env)
  * @brief Executes the cd builtin, updating PWD and OLDPWD.
  * @return 0 on success, 1 on failure
  */
-int	cmd_cd(char **args, t_mst **env)
+t_uint8	cmd_cd(char **args, t_mst **env)
 {
-	char	*path;
-	t_mst	*pwd;
-	char	*err_msg;
+	char		*path;
+	t_mst		*pwd;
+	char		*err_msg;
+	t_uint8		err_code;
 
 	path = get_cd_path(args[1], *env);
 	if (!path)
@@ -56,12 +55,13 @@ int	cmd_cd(char **args, t_mst **env)
 	if (pwd)
 		if (mst_modif_value(env, "OLDPWD", pwd->dic.value))
 			return (1);
-	if (chdir(path))
+	err_code = chdir(path);
+	if (err_code)
 	{
 		err_msg = ft_strjoin("cd: ", path);
 		perror(err_msg);
 		free(err_msg);
-		return (1);
+		return (err_code);
 	}
 	if (assign_new_pwd(env, pwd))
 		return (1);
