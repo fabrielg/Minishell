@@ -6,7 +6,7 @@ int main(void)
 	char	**r;
 
 	printf("Pattern: \"*.c\" in .\n");
-	r = glob_dir(".", "*.c", &n);
+	r = glob_token("*.c", &n);
 	if (r)
 	{
 		printf("matches (%d):\n", n);
@@ -22,7 +22,7 @@ int main(void)
 	}
 
 	printf("\nPattern: \"*\" in .\n");
-	r = glob_dir(".", "*", &n);
+	r = glob_token("*", &n);
 	if (r)
 	{
 		printf("matches (%d):\n", n);
@@ -37,7 +37,7 @@ int main(void)
 		printf("no matches\n");
 
 	printf("\nPattern: \".*\" in . (dotfiles)\n");
-	r = glob_dir(".", ".*", &n);
+	r = glob_token(".*", &n);
 	if (r)
 	{
 		printf("matches (%d):\n", n);

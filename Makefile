@@ -21,7 +21,7 @@ LIBFT		= $(LIBFT_DIR)libft.a
 
 INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 
-MAIN_FILE	= main
+MAIN_FILE	= testers/wildcard_test
 
 # All files in src/
 FILES		=	env/env_insert \
@@ -56,6 +56,7 @@ FILES		=	env/env_insert \
 				parser/group_commands/group_commands_utils \
 				parser/group_commands/group_commands \
 				parser/wildcard_manager/glob_dir \
+				parser/wildcard_manager/glob_token \
 				parser/wildcard_manager/star_match \
 				parser/parser \
 				parser/tokenizer/tokenizer \

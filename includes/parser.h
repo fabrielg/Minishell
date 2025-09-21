@@ -18,7 +18,7 @@
 
 /* Functions utils for parsing */
 t_list2	*parser(char *command_line);
-char	**glob_dir(const char *dir, const char *pattern, int *out_count);
+char	**glob_token(const char *token, int *out_count);
 void	expander(t_list2 *tokens, t_mst *env, int exit_code);
 t_list2	*group_commands(t_list2 *tokens);
 t_list2	*tokenize(char **contents);
