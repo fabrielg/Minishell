@@ -3,14 +3,21 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-/**
- * @brief Prints an execution error and sets exit code.
- * @return  1
- */
-static t_uint8	cmd_err(t_uint8 *exit_code, char *arg, char *err_msg, int code)
+#define BASH_DIR "/bin/bash"
+
+static t_uint8	no_shebang_case(t_uint8 *exit_code, char *arg, char **env_cpy)
 {
-	*exit_code = exec_error(arg, err_msg, code);
-	return (1);
+	char	*tab[3];
+
+	tab[0] = BASH_DIR;
+	tab[1] = arg;
+	tab[2] = NULL;
+
+	execve(BASH_DIR, tab, env_cpy);
+	free(env_cpy);
+	if (errno == EACCES)
+		return (cmd_err(exit_code, arg, NO_PERM_MSG, PERM_ERR));
+	return (cmd_err(exit_code, arg, NOT_FOUND_MSG, NOT_FOUND_ERR));
 }
 
 /**
@@ -54,6 +61,9 @@ t_uint8	is_abs_rltv_path(char **args, t_mst *env, t_uint8 *exit_code)
 	if (!env_cpy)
 		return (cmd_err(exit_code, NULL, NULL, 1));
 	execve(args[0], args, env_cpy);
+	if (errno == ENOEXEC)
+		return (no_shebang_case(exit_code ,args[0], env_cpy));
+	free(env_cpy);
 	if (errno == EACCES)
 		return (cmd_err(exit_code, args[0], NO_PERM_MSG, PERM_ERR));
 	return (cmd_err(exit_code, args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));

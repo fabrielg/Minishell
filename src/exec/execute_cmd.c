@@ -20,10 +20,10 @@ t_uint8	child_exec(t_command *cmd, t_minishell *ms)
 		return (exit_code);
 	env_path = mst_get_node(ms->exports, "PATH");
 	if (!env_path)
-		return (exec_error(cmd->args[0], NO_PATH_MSG, NOT_FOUND_ERR));
+		return (exec_err(cmd->args[0], NO_PATH_MSG, NOT_FOUND_ERR));
 	if (is_in_path(cmd->args, env_path, ms->exports, &exit_code))
 		return (exit_code);
-	return (exec_error(cmd->args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
+	return (exec_err(cmd->args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
 }
 
 /**

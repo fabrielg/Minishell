@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 02:06:44 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/21 18:15:22 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/09/22 03:05:47 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_minishell
 
 void		init_minishell(t_minishell *ms, char **envp);
 t_uint8		clear_minishell(t_minishell *ms, t_uint8 exit_code);
-int			exec_error(char *cmd, char *msg, t_uint8 exit_code);
+int			exec_err(char *cmd, char *msg, t_uint8 exit_code);
+t_uint8		cmd_err(t_uint8 *exit_code, char *arg, char *err_msg, int code);
 
 #endif
