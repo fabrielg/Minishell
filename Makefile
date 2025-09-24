@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/17 22:39:24 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/22 02:46:22 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,9 @@ FILES		=	env/env_insert \
 				exec/execute_cmd \
 				exec/execute_one_builtin \
 				exec/redirect_cmd \
+				exec/execute_utils \
+				exec/builtin_utils \
+				exec/shebang_utils \
 				builtins/cd \
 				builtins/echo \
 				builtins/env \
@@ -55,12 +58,20 @@ FILES		=	env/env_insert \
 				parser/expander/expander \
 				parser/group_commands/group_commands_utils \
 				parser/group_commands/group_commands \
+				parser/wildcard_manager/glob_args_commands \
+				parser/wildcard_manager/glob_commands \
+				parser/wildcard_manager/glob_dir \
+				parser/wildcard_manager/glob_redirs_commands \
+				parser/wildcard_manager/glob_token \
+				parser/wildcard_manager/star_match \
 				parser/parser \
 				parser/tokenizer/tokenizer \
 				token/token_command_utils \
 				token/token_constructor \
 				token/token_redir_utils \
-				token/token_word_utils
+				token/token_word_utils \
+				minishell_utils/minishell_utils \
+				minishell_utils/print_error
 
 SRC_DIR		= ./src/
 SRC_FILES	= $(addsuffix .c, $(FILES)) $(addsuffix .c, $(MAIN_FILE))

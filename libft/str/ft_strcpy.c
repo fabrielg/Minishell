@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macro.h                                            :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/03 17:32:25 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/21 18:08:09 by alde-abr         ###   ########.fr       */
+/*   Created: 2024/11/13 19:14:29 by gfrancoi          #+#    #+#             */
+/*   Updated: 2024/11/19 11:53:49 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACRO_H
-# define MACRO_H
+#include "libft.h"
 
-typedef unsigned long	t_ul;
-typedef unsigned int	t_ui;
-typedef unsigned char	t_uint8;
+char	*ft_strcpy(char *dst, const char *src)
+{
+	int	i;
 
-#endif
+	if (!dst || !src)
+		return (NULL);
+	i = 0;
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}

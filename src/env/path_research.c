@@ -41,8 +41,8 @@ char	*research_path(char *cmd, char *env_path)
 	int		i;
 	int		j;
 
-	i = 5;
-	j = 5;
+	i = 0;
+	j = 0;
 	while (env_path[i++])
 	{
 		if (env_path[i] != ':')
@@ -51,7 +51,7 @@ char	*research_path(char *cmd, char *env_path)
 		env_path[i] = '\0';
 		path = create_path(cmd, env_path + j);
 		env_path[i] = tmp;
-		if (!access(path, X_OK))
+		if (!access(path, F_OK))
 			return (path);
 		free(path);
 		j = i + 1;

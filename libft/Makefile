@@ -72,6 +72,7 @@ SRCS = \
 	str/ft_strarrlen.c\
 	str/ft_strchr.c\
 	str/ft_strchrset.c\
+	str/ft_strcpy.c\
 	str/ft_strdup.c\
 	str/ft_strndup.c\
 	str/ft_striteri.c\

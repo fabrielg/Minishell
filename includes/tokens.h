@@ -43,7 +43,8 @@ typedef enum e_redirect_type
 	REDIRECT_INPUT,
 	REDIRECT_OUTPUT,
 	REDIRECT_HEREDOC,
-	REDIRECT_APPEND
+	REDIRECT_APPEND,
+	REDIRECT_AMBIGUOUS
 }	t_redirect_type;
 
 /* Structure for a redirection */

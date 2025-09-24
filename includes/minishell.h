@@ -6,26 +6,16 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 02:06:44 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/15 01:09:40 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/09/22 03:05:47 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdbool.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include "tokens.h"
-# include "exec.h"
 # include "envp.h"
-# include "libft.h"
-# include "lexer.h"
-# include "parser.h"
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <fcntl.h>
+# include "tokens.h"
+# include <sys/types.h>
 
 # ifndef DEBUG_MODE
 #  define DEBUG_MODE 0
@@ -34,37 +24,25 @@
 /* Main structure containing all shell data */
 typedef struct s_minishell
 {
-	char		**envp;					/* Copy of environment (modifiable) */
-	char		**export_list;			/* Exported variables (KEY=VALUE format) */
+	char			*shell_name;
+	t_mst			*exports;
+	char			*input_line;
 
-	// TODO: t_ast	*ast_root;			/* Root of AST */
-	t_token		*ast_root;				/* Root of the AST */
-	char		*input_line;			/* Raw input line from readline */
-	t_token		*tokens;				/* List of tokens after lexing */
-
-	/* Return codes and status */
-	int			last_exit_code;			/* Return code of last command ($?) */
-	int			shell_exit_code;		/* Exit code of the shell */
-	bool		should_exit;			/* Flag to terminate the shell */
-
-	/* History and readline */
-	char		**history;				/* Custom history */
-
-	/* Signal management */
-	int			signal_received;		/* Last signal received */
-	bool		in_child_process;		/* To adapt signal behavior */
-
-	/* Processes and pipes */
-	pid_t		*child_pids;			/* PIDs of active child processes */
-	int			pipe_fds[2];			/* File descriptors for pipes (temporary) */
-
-	/* Session variables */
-	char		*current_directory;		/* Current PWD */
-	int			stdin_backup;			/* Backup of FD for redirections */
-	int			stdout_backup;			/* Backup of FD for redirections */
-
-	/* Debugging/Development */
-	char		*shell_name;			/* Shell name for error messages */
+	// TODO: t_ast	*ast_root;
+	t_list2			*tokens;
+	unsigned char	last_exit_code;
+	int				shell_exit_code;
+	int				signal_received;
+	bool			in_child_process;
+	pid_t			*child_pids;
+	int				pipe_fds[2];
+	int				stdin_backup;
+	int				stdout_backup;
 }	t_minishell;
+
+void		init_minishell(t_minishell *ms, char **envp);
+t_uint8		clear_minishell(t_minishell *ms, t_uint8 exit_code);
+int			exec_err(char *cmd, char *msg, t_uint8 exit_code);
+t_uint8		cmd_err(t_uint8 *exit_code, char *arg, char *err_msg, int code);
 
 #endif

@@ -77,6 +77,8 @@ void	token_display_redirect(t_redirect *redir)
 		type_str = "HEREDOC <<";
 	else if (redir->type == REDIRECT_APPEND)
 		type_str = "APPEND >>";
+	else if (redir->type == REDIRECT_AMBIGUOUS)
+		type_str = "ambigous redirect";
 	printf("Redirect: %s, fd=%d, file=", type_str, redir->fd);
 	token_display_word(redir->file);
 	printf("\n");
