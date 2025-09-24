@@ -37,7 +37,8 @@ char	**env_newtab(t_mst *tree)
 		return (NULL);
 	while (curr)
 	{
-		curr->dic.value[-1] = '=';
+		if (curr->dic.value[0])
+			curr->dic.value[-1] = '=';
 		tab[i] = curr->dic.key;
 		curr = curr->next;
 		i++;
