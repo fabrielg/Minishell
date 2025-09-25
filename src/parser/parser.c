@@ -2,14 +2,14 @@
 #include "lexer.h"
 #include "parser.h"
 
-t_list2	*parser(char *command_line, t_minishell *ms)
+t_list2	*parser(t_minishell *ms)
 {
 	char	**contents;
 	t_list2	*tokens;
 
-	if (lex_line(command_line) == 2)
+	if (lex_line(ms->input_line) == 2)
 		return (NULL);
-	contents = smart_split(command_line);
+	contents = smart_split(ms->input_line);
 	if (!contents)
 		return (NULL);
 	tokens = tokenize(contents);

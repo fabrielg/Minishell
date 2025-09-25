@@ -17,7 +17,7 @@
 # include "minishell.h"
 
 /* Functions utils for parsing */
-t_list2	*parser(char *command_line, t_minishell *ms);
+t_list2	*parser(t_minishell *ms);
 void	glob_commands(t_list2 *tokens);
 void	expander(t_list2 *tokens, t_mst *env, int exit_code);
 t_list2	*group_commands(t_list2 *tokens);
