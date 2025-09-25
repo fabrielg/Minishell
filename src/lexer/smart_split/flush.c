@@ -28,7 +28,7 @@ void	flush_token(t_split_ctx *ctx, int end)
 {
 	if (ctx->start == -1)
 		return ;
-	ctx->tokens[ctx->count++] = ft_substr(ctx->line, ctx->start, end);
+	ctx->tokens[ctx->count++] = substr(ctx->line, ctx->start, end);
 	ctx->start = -1;
 	ensure_capacity(ctx);
 }
@@ -38,7 +38,7 @@ void	flush_operator(t_split_ctx *ctx, int *i)
 	int	oplen;
 
 	oplen = operator_len(ctx->line, *i);
-	ctx->tokens[ctx->count++] = ft_substr(ctx->line, *i, *i + oplen);
+	ctx->tokens[ctx->count++] = substr(ctx->line, *i, *i + oplen);
 	ensure_capacity(ctx);
 	*i += oplen - 1;
 }

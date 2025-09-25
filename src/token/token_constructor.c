@@ -51,23 +51,35 @@ t_token_type	detect_type(char *s)
 	return (TOKEN_WORD);
 }
 
+static void	token_display(t_token *token)
+{
+	char	*data;
+
+	data = (char *) token->data;
+	if (token->type == TOKEN_COMMAND)
+		token_display_command(token->data);
+	else if (token->type == TOKEN_LOGICAL_EXPRESSION)
+		printf("TOKEN_LOGICAL_EXPRESSION=[%s]\n", data);
+	else if (token->type == TOKEN_PIPELINE)
+		printf("TOKEN_PIPELINE=[%s]\n", data);
+	else if (token->type == TOKEN_REDIRECT)
+		token_display_redirect(token->data);
+	else if (token->type == TOKEN_SUBSHELL)
+		printf("TOKEN_SUBSHELL=[%s]\n", data);
+	else if (token->type == TOKEN_WORD)
+		token_display_word(data);
+}
+
 void	tokens_display(t_list2 *tokens)
 {
 	t_list2			*tmp;
 	t_token			*current_token;
-	t_token_type	type;
 
 	tmp = tokens;
 	while (tmp)
 	{
 		current_token = (t_token *) tmp->content;
-		type = current_token->type;
-		if (type == TOKEN_REDIRECT)
-			token_display_redirect(current_token->data);
-		else if (type != TOKEN_COMMAND)
-			token_display_word(current_token->data);
-		else
-			token_display_command(current_token->data);
+		token_display(current_token);
 		printf("\n");
 		tmp = tmp->next;
 	}
