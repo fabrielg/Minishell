@@ -14,6 +14,8 @@ t_uint8	child_exec(t_command *cmd, t_minishell *ms)
 	exit_code = -1;
 	if (redirect_cmd(cmd) == ERROR)
 		return (REDIR_ERR);
+	if (!cmd->args[0])
+		return (0);
 	if (is_builtin(cmd->args, &ms->exports, &exit_code))
 		return (exit_code);
 	if (is_abs_rltv_path(cmd->args, ms->exports, &exit_code))
