@@ -1,60 +1,19 @@
 #include "lexer.h"
 #include <string.h>
+#include "smart_split.h"
 
-typedef struct s_split_ctx
-{
-	const char	*line;
-	char		**tokens;
-	int			capacity;
-	int			count;
-	int			start;
-	char	quote;
-}	t_split_ctx;
-
-static int	ensure_capacity(t_split_ctx *ctx)
-{
-	if (ctx->count < ctx->capacity - 1)
-		return (1);
-	ctx->capacity *= 2;
-	ctx->tokens = realloc(ctx->tokens, sizeof(char *) * ctx->capacity);
-	return (ctx->tokens != NULL);
-}
-
-static void	flush_token(t_split_ctx *ctx, int end)
-{
-	if (ctx->start == -1)
-		return ;
-	ctx->tokens[ctx->count++] = substr(ctx->line, ctx->start, end);
-	ctx->start = -1;
-	ensure_capacity(ctx);
-}
-
-static void	flush_operator(t_split_ctx *ctx, int *i)
-{
-	int	oplen;
-
-	oplen = operator_len(ctx->line, *i);
-	ctx->tokens[ctx->count++] = substr(ctx->line, *i, *i + oplen);
-	ensure_capacity(ctx);
-	*i += oplen - 1;
-}
-
-void	handle_inside_quote(t_split_ctx *ctx, char c, int *i)
+static void	handle_inside_quote(t_split_ctx *ctx, char c)
 {
 	if (c == ctx->quote)
-	{
-		flush_token(ctx, (*i) + 1);
 		ctx->quote = 0;
-	}
 }
 
-void	handle_outside_quote(t_split_ctx *ctx, char c, int *i)
+static void	handle_outside_quote(t_split_ctx *ctx, char c, int *i)
 {
 	if (c == '\'' || c == '"')
 	{
-		if (ctx->start != -1)
-			flush_token(ctx, *i);
-		ctx->start = *i;
+		if (ctx->start == -1)
+			ctx->start = *i;
 		ctx->quote = c;
 	}
 	else if (c == ' ' || c == '\t')
@@ -74,7 +33,7 @@ static void	process_char(t_split_ctx *ctx, int *i)
 
 	c = ctx->line[*i];
 	if (ctx->quote)
-		handle_inside_quote(ctx, c, i);
+		handle_inside_quote(ctx, c);
 	else
 		handle_outside_quote(ctx, c, i);
 }
@@ -90,6 +49,7 @@ char	**smart_split(const char *line)
 	ctx.start = -1;
 	ctx.tokens = malloc(sizeof(char *) * ctx.capacity);
 	ctx.quote = 0;
+	ctx.can_flush = 0;
 	if (!ctx.tokens)
 		return (NULL);
 	i = 0;
@@ -100,5 +60,6 @@ char	**smart_split(const char *line)
 	}
 	flush_token(&ctx, i);
 	ctx.tokens[ctx.count] = NULL;
+	tokens_remove_quotes(ctx);
 	return (ctx.tokens);
 }
