@@ -31,7 +31,7 @@ int	main(int argc, char *argv[], char **envp)
 		if (!ms.input_line)
 			break; ;
 		add_history(ms.input_line);
-		ms.tokens = parser(ms.input_line, ms.exports, ms.last_exit_code);
+		ms.tokens = parser(&ms);
 		// tokens_display(ms.tokens);
 		if(ms.tokens)
 		{

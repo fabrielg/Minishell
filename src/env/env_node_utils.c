@@ -58,6 +58,8 @@ t_dic	split_env_var(char *env_var)
 		value[0] = 0;
 		value++;
 	}
+	else
+		value = "";
 	key = copy;
 	return (new_dic(key, value));
 }

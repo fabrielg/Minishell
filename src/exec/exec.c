@@ -7,7 +7,7 @@
  */
 int	exec(t_command *cmd, t_minishell *ms)
 {
-	if (get_builtin(cmd->args[0], NULL))
+	if (cmd->args[0] != 0 && get_builtin(cmd->args[0], NULL))
 	{
 		ms->last_exit_code = execute_one_builtin(cmd, ms);
 		printf("last exit code : %i\n", ms->last_exit_code);

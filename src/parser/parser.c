@@ -2,14 +2,20 @@
 #include "lexer.h"
 #include "parser.h"
 
-t_list2	*parser(char *command_line, t_mst *env, int exit_code)
+t_list2	*parser(t_minishell *ms)
 {
 	char	**contents;
 	t_list2	*tokens;
+	char	*line_trim;
 
-	if (lex_line(command_line) == 2)
+	line_trim = ft_strtrim(ms->input_line, " \a\b\t\n\v\f\r");
+	if (!line_trim)
 		return (NULL);
-	contents = smart_split(command_line);
+	free(ms->input_line);
+	ms->input_line = line_trim;
+	if (lex_line(ms->input_line) == 2)
+		return (NULL);
+	contents = smart_split(ms->input_line);
 	if (!contents)
 		return (NULL);
 	tokens = tokenize(contents);
@@ -19,7 +25,9 @@ t_list2	*parser(char *command_line, t_mst *env, int exit_code)
 	tokens = group_commands(tokens);
 	if (!tokens)
 		return (NULL);
-	expander(tokens, env, exit_code);
+	if (handle_heredocs(tokens, ms))
+		return (NULL);
+	expander(tokens, ms->exports, ms->last_exit_code);
 	if (!tokens)
 		return (NULL);
 	glob_commands(tokens);

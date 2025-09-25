@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 23:23:16 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/08 23:23:16 by fabrielg         ###   ########.fr       */
+/*   Updated: 2025/09/25 01:22:15 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 # include "minishell.h"
 
 /* Functions utils for parsing */
-t_list2	*parser(char *command_line, t_mst *env, int exit_code);
+t_list2	*parser(t_minishell *ms);
 void	glob_commands(t_list2 *tokens);
 void	expander(t_list2 *tokens, t_mst *env, int exit_code);
 t_list2	*group_commands(t_list2 *tokens);
 t_list2	*tokenize(char **contents);
 void	flush_command(t_list2 **result, t_command **current);
+int		handle_heredocs(t_list2 *tokens, t_minishell *ms);
+int		create_heredoc(t_redirect *rdr, t_minishell *ms);
 
 #endif

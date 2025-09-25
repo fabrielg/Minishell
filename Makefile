@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/22 02:46:22 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/25 02:08:06 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,8 +52,10 @@ FILES		=	env/env_insert \
 				builtins/unset \
 				lexer/utils/lexer_utils \
 				lexer/lexer \
+				lexer/smart_split/flush \
 				lexer/smart_split/smart_split_utils \
 				lexer/smart_split/smart_split \
+				lexer/smart_split/tokens_remove_quotes \
 				parser/expander/expander_utils \
 				parser/expander/expander \
 				parser/group_commands/group_commands_utils \
@@ -66,6 +68,8 @@ FILES		=	env/env_insert \
 				parser/wildcard_manager/star_match \
 				parser/parser \
 				parser/tokenizer/tokenizer \
+				parser/heredoc_manager/handle_heredoc \
+				parser/heredoc_manager/create_heredoc \
 				token/token_command_utils \
 				token/token_constructor \
 				token/token_redir_utils \

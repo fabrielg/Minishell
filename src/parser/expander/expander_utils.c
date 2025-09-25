@@ -43,6 +43,8 @@ void	append_segment(char **new_arg, char *arg, int start, int end)
 {
 	char	*tmp;
 
+	if (*new_arg == NULL)
+		*new_arg = ft_strdup("");
 	if (end > start)
 	{
 		tmp = ft_substr(arg, start, end - start);

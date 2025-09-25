@@ -36,7 +36,6 @@ static int	redirect_in(t_redirect *rdr)
 	return (close(fd), SUCCESS);
 }
 
-
 /**
  * @brief Redirects STDIN from a heredoc string using a pipe.
  * @param rdr Redirection descriptor (contains heredoc content)
@@ -44,16 +43,13 @@ static int	redirect_in(t_redirect *rdr)
  */
 static int	redirect_heredoc(t_redirect *rdr)
 {
-	int	fd[2];
+	int	fd;
 
-	if (pipe(fd) == -1)
-		return (ERROR);
-	if (write(fd[1], rdr->file, ft_strlen(rdr->file)) == -1)
-		return (close(fd[1]), close(fd[0]), ERROR);
-	close(fd[1]);
-	if (dup2(fd[0], STDIN_FILENO) == -1)
-		return (close(fd[0]), ERROR);
-	return (close(fd[0]), SUCCESS);
+	fd = open(rdr->file, O_RDONLY);
+	unlink(rdr->file);
+	if (dup2(fd, STDIN_FILENO) == -1)
+		return (close(fd), ERROR);
+	return (close(fd), SUCCESS);
 }
 
 /**
