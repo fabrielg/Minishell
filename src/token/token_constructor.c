@@ -51,7 +51,7 @@ t_token_type	detect_type(char *s)
 	return (TOKEN_WORD);
 }
 
-static void	token_display(t_token *token)
+void	token_display(t_token *token)
 {
 	char	*data;
 

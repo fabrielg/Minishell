@@ -7,10 +7,10 @@ t_list2	*get_redir_lst(t_token *token)
 {
 	t_command	*cmd;
 
-	if (token->type && token->type != TOKEN_COMMAND)
+	if (token->type != TOKEN_COMMAND)
 		return (NULL);
 	cmd = (t_command *)token->data;
-	if (cmd->redirects)
+	if (cmd && cmd->redirects)
 		return (cmd->redirects);
 	return (NULL);
 }
