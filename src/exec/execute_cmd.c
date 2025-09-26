@@ -1,5 +1,6 @@
 #include "exec.h"
 #include "minishell.h"
+#include "sig.h"
 #include <sys/wait.h>
 
 /**
@@ -46,12 +47,15 @@ int	execute_cmd(t_command *cmd, t_minishell *ms)
 		return (ERROR);
 	if (pid == 0)
 	{
+		reset_signals();
 		exit_code = child_exec(cmd, ms);
 		exit(clear_minishell(ms, exit_code));
 	}
 	else
 	{
+		g_sig_pid = pid;
 		waitpid(pid, &status, 0);
+		g_sig_pid = 0;
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))

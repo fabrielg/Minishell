@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/25 02:08:06 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/26 20:22:48 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME		= minishell
 CUSTOM_NAME	= MiniChaise
-CFLAGS		= -g3 -Wall -Wextra -Werror
+CFLAGS		= -g3 #-Wall -Wextra -Werror
 
 LIBFT_DIR	= ./libft/
 LIBFT		= $(LIBFT_DIR)libft.a
@@ -50,6 +50,7 @@ FILES		=	env/env_insert \
 				builtins/export \
 				builtins/pwd \
 				builtins/unset \
+				signals/signals_handler \
 				lexer/utils/lexer_utils \
 				lexer/lexer \
 				lexer/smart_split/flush \
@@ -75,6 +76,7 @@ FILES		=	env/env_insert \
 				token/token_redir_utils \
 				token/token_word_utils \
 				minishell_utils/minishell_utils \
+				minishell_utils/minishell_process \
 				minishell_utils/print_error
 
 SRC_DIR		= ./src/
