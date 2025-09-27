@@ -43,6 +43,9 @@ FILES		=	env/env_insert \
 				exec/execute_utils \
 				exec/builtin_utils \
 				exec/shebang_utils \
+				ast/ast_build \
+				ast/ast_display \
+				ast/ast_utils \
 				builtins/cd \
 				builtins/echo \
 				builtins/env \

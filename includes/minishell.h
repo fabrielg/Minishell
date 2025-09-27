@@ -15,6 +15,7 @@
 
 # include "envp.h"
 # include "tokens.h"
+# include "ast.h"
 # include <sys/types.h>
 
 # ifndef DEBUG_MODE
@@ -28,7 +29,7 @@ typedef struct s_minishell
 	t_mst			*exports;
 	char			*input_line;
 
-	// TODO: t_ast	*ast_root;
+	t_ast			*ast_root;
 	t_list2			*tokens;
 	unsigned char	last_exit_code;
 	int				shell_exit_code;
