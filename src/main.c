@@ -13,6 +13,7 @@
 #include "minishell.h"
 #include "parser.h"
 #include "exec.h"
+#include "ast.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -32,14 +33,15 @@ int	main(int argc, char *argv[], char **envp)
 			break; ;
 		add_history(ms.input_line);
 		ms.tokens = parser(&ms);
-		// tokens_display(ms.tokens);
 		if(ms.tokens)
 		{
 			tok = (t_token *) ms.tokens->content;
 			cmd = get_command(tok->data);
+			ms.ast_root = ast_build(ms.tokens);
 			exec(cmd, &ms);
 			if (ms.shell_exit_code != -1)
 				return (printf("exit_code : %i\n", ms.shell_exit_code), clear_minishell(&ms, ms.shell_exit_code));
+			ast_clear(&ms.ast_root);
 			ft_lstclear2(&ms.tokens, token_destroy);
 		}
 		free(ms.input_line);
