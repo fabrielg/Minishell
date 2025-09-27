@@ -3,9 +3,9 @@
 #include "exec.h"
 #include <readline/history.h>
 
-pid_t g_sig_pid = 0;
+pid_t	g_sig_pid = 0;
 
-int	is_EOF(char *input_line)
+int	is_end_of_file(char *input_line)
 {
 	if (input_line)
 		return (0);
@@ -27,6 +27,7 @@ int	process_line(t_minishell *ms)
 	cmd = get_command(tok->data);
 	exec(cmd, ms);
 	ft_lstclear2(&ms->tokens, token_destroy);
+	return (0);
 }
 
 void	handle_prompt_signal(t_uint8 *exit_code)

@@ -26,7 +26,7 @@ t_list2	*parser(t_minishell *ms)
 	if (!tokens)
 		return (NULL);
 	if (handle_heredocs(tokens, ms))
-		return (NULL);
+		return (ft_lstclear2(&tokens, token_destroy), NULL);
 	expander(tokens, ms->exports, ms->last_exit_code);
 	if (!tokens)
 		return (NULL);

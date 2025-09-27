@@ -7,7 +7,7 @@
  * @brief Executes a command in the child process.
  * @return Exit code of executed command or error code
  */
-t_uint8	child_exec(t_command *cmd, t_minishell *ms)
+static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
 {
 	t_mst			*env_path;
 	t_uint8			exit_code;
@@ -51,15 +51,8 @@ int	execute_cmd(t_command *cmd, t_minishell *ms)
 		exit_code = child_exec(cmd, ms);
 		exit(clear_minishell(ms, exit_code));
 	}
-	else
-	{
-		g_sig_pid = pid;
-		waitpid(pid, &status, 0);
-		g_sig_pid = 0;
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
-		else if (WIFSIGNALED(status))
-			return (128 + WTERMSIG(status));
-	}
-	return (SUCCESS);
+	g_sig_pid = pid;
+	waitpid(pid, &status, 0);
+	g_sig_pid = 0;
+	return (cmd_exit_status(status));
 }

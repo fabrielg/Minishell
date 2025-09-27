@@ -1,22 +1,10 @@
 #include "minishell.h"
 #include "parser.h"
 
-//[GUETTER]____________________________
-
-t_list2	*get_redir_lst(t_token *token)
-{
-	t_command	*cmd;
-
-	if (token->type != TOKEN_COMMAND)
-		return (NULL);
-	cmd = (t_command *)token->data;
-	if (cmd && cmd->redirects)
-		return (cmd->redirects);
-	return (NULL);
-}
-
-//[FUNCTION]____________________________
-
+/**
+ * @brief Processes all heredoc redirections in a redirection list.
+ * @return 0 on success, 1 on failure
+ */
 static int	fill_heredocs(t_list2 *rdr_lst, t_minishell *ms)
 {
 	t_list2		*tmp;
@@ -24,17 +12,24 @@ static int	fill_heredocs(t_list2 *rdr_lst, t_minishell *ms)
 
 	tmp = rdr_lst;
 	if (!rdr_lst)
-		return (1);
+		return (0);
 	while (tmp)
 	{
 		rdr = (t_redirect *)tmp->content;
 		if (rdr->type == REDIRECT_HEREDOC)
-			create_heredoc(rdr, ms);
+		{
+			if (create_heredoc(rdr, ms))
+				return (1);
+		}
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
+/**
+ * @brief Handles heredocs for all commands in the token list.
+ * @return 0 on success, 1 if any heredoc creation fails
+ */
 int	handle_heredocs(t_list2 *tokens, t_minishell *ms)
 {
 	t_list2		*tmp;
@@ -45,7 +40,8 @@ int	handle_heredocs(t_list2 *tokens, t_minishell *ms)
 	while (tmp)
 	{
 		rdr_lst = get_redir_lst(tmp->content);
-		fill_heredocs(rdr_lst, ms);
+		if (fill_heredocs(rdr_lst, ms))
+			return (1);
 		tmp = tmp->next;
 	}
 	ms->tokens = NULL;

@@ -4,10 +4,12 @@
 # include <sys/types.h>
 # include <signal.h>
 
-extern pid_t g_sig_pid;
+extern pid_t	g_sig_pid;
 
-void		init_signals(void);
-void		check_last_sig(t_uint8 *exit_code);
-void		reset_signals(void);
+//[SIGNALS]________________________________
+
+void	init_signals(void);
+void	reset_signals(void);
+void	handle_sigint(int sig);
 
 #endif

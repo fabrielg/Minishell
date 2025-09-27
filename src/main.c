@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 22:15:10 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/26 20:50:42 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/09/27 18:04:55 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(int argc, char *argv[], char **envp)
 	while (1)
 	{
 		ms.input_line = readline(ms.shell_name);
-		if (is_EOF(ms.input_line))
-			break;
+		if (is_end_of_file(ms.input_line))
+			break ;
 		handle_prompt_signal(&ms.last_exit_code);
 		if (*ms.input_line)
 			process_line(&ms);

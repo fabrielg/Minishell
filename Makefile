@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/26 20:22:48 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/27 18:17:46 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME		= minishell
 CUSTOM_NAME	= MiniChaise
-CFLAGS		= -g3 #-Wall -Wextra -Werror
+CFLAGS		= -g3 -Wall -Wextra -Werror
 
 LIBFT_DIR	= ./libft/
 LIBFT		= $(LIBFT_DIR)libft.a
@@ -67,10 +67,12 @@ FILES		=	env/env_insert \
 				parser/wildcard_manager/glob_redirs_commands \
 				parser/wildcard_manager/glob_token \
 				parser/wildcard_manager/star_match \
+				parser/utils/redir_getter \
 				parser/parser \
 				parser/tokenizer/tokenizer \
 				parser/heredoc_manager/handle_heredoc \
 				parser/heredoc_manager/create_heredoc \
+				parser/heredoc_manager/heredoc_utils \
 				token/token_command_utils \
 				token/token_constructor \
 				token/token_redir_utils \

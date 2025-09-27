@@ -2,22 +2,22 @@
 #include "minishell.h"
 #include <sys/stat.h>
 #include <errno.h>
+#include <sys/wait.h>
 
-#define BASH_DIR "/bin/bash"
-
-static t_uint8	no_shebang_case(t_uint8 *exit_code, char *arg, char **env_cpy)
+/**
+ * @brief Converts a process wait status to a shell exit code.
+ * @return Exit code corresponding to process termination
+ */
+int	cmd_exit_status(int status)
 {
-	char	*tab[3];
-
-	tab[0] = BASH_DIR;
-	tab[1] = arg;
-	tab[2] = NULL;
-
-	execve(BASH_DIR, tab, env_cpy);
-	free(env_cpy);
-	if (errno == EACCES)
-		return (cmd_err(exit_code, arg, NO_PERM_MSG, PERM_ERR));
-	return (cmd_err(exit_code, arg, NOT_FOUND_MSG, NOT_FOUND_ERR));
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		return (128 + WTERMSIG(status));
+	}
+	return (1);
 }
 
 /**
@@ -62,7 +62,7 @@ t_uint8	is_abs_rltv_path(char **args, t_mst *env, t_uint8 *exit_code)
 		return (cmd_err(exit_code, NULL, NULL, 1));
 	execve(args[0], args, env_cpy);
 	if (errno == ENOEXEC)
-		return (no_shebang_case(exit_code ,args[0], env_cpy));
+		return (no_shebang_case(args[0], env_cpy, exit_code));
 	free(env_cpy);
 	if (errno == EACCES)
 		return (cmd_err(exit_code, args[0], NO_PERM_MSG, PERM_ERR));
