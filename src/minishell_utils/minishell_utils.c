@@ -28,6 +28,7 @@ void	init_minishell(t_minishell *ms, char **envp)
 t_uint8	clear_minishell(t_minishell *ms, t_uint8 exit_code)
 {
 	mst_clear(&ms->exports);
+	ast_clear(&ms->ast_root);
 	ft_lstclear2(&ms->tokens, token_destroy);
 	if (ms->input_line)
 		free(ms->input_line);

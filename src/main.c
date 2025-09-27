@@ -11,12 +11,15 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+#include "exec.h"
+#include "ast.h"
 #include "sig.h"
 #include <readline/readline.h>
 
 int	main(int argc, char *argv[], char **envp)
 {
-	t_minishell		ms;
+	t_minishell	ms;
 
 	(void)argc;
 	(void)argv;

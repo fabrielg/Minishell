@@ -22,10 +22,15 @@ int	process_line(t_minishell *ms)
 	ms->tokens = parser(ms);
 	if (!ms->tokens)
 		return (1);
-	tokens_display(ms->tokens); //DEBUG
+	if (DEBUG_MODE)
+		tokens_display(ms->tokens);
 	tok = (t_token *) ms->tokens->content;
 	cmd = get_command(tok->data);
+	ms->ast_root = ast_build(ms->tokens);
+	if (DEBUG_MODE)
+		ast_display(ms->ast_root, 0);
 	exec(cmd, ms);
+	ast_clear(&ms->ast_root);
 	ft_lstclear2(&ms->tokens, token_destroy);
 	return (0);
 }
