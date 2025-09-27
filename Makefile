@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/25 02:08:06 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/09/27 18:17:46 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ FILES		=	env/env_insert \
 				builtins/export \
 				builtins/pwd \
 				builtins/unset \
+				signals/signals_handler \
 				lexer/utils/lexer_utils \
 				lexer/lexer \
 				lexer/smart_split/flush \
@@ -66,15 +67,18 @@ FILES		=	env/env_insert \
 				parser/wildcard_manager/glob_redirs_commands \
 				parser/wildcard_manager/glob_token \
 				parser/wildcard_manager/star_match \
+				parser/utils/redir_getter \
 				parser/parser \
 				parser/tokenizer/tokenizer \
 				parser/heredoc_manager/handle_heredoc \
 				parser/heredoc_manager/create_heredoc \
+				parser/heredoc_manager/heredoc_utils \
 				token/token_command_utils \
 				token/token_constructor \
 				token/token_redir_utils \
 				token/token_word_utils \
 				minishell_utils/minishell_utils \
+				minishell_utils/minishell_process \
 				minishell_utils/print_error
 
 SRC_DIR		= ./src/

@@ -14,6 +14,6 @@ int	exec(t_command *cmd, t_minishell *ms)
 		return (0);
 	}
 	ms->last_exit_code = execute_cmd(cmd, ms);
-	printf("last exit code : %i\n", ms->last_exit_code);
+	// printf("last exit code : %i\n", ms->last_exit_code);
 	return (0);
 }
