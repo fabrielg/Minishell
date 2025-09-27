@@ -12,7 +12,6 @@ t_uint8	no_shebang_case(char *arg, char **env_cpy, t_uint8 *exit_code)
 	tab[0] = BASH_DIR;
 	tab[1] = arg;
 	tab[2] = NULL;
-
 	execve(BASH_DIR, tab, env_cpy);
 	free(env_cpy);
 	if (errno == EACCES)

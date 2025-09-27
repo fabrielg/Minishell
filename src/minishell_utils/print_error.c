@@ -18,6 +18,7 @@ int	exec_err(char *cmd, char *msg, t_uint8 exit_code)
 		write(STDERR_FILENO, msg, ft_strlen(msg));
 	return (exit_code);
 }
+
 /**
  * @brief Prints an execution error and sets exit code.
  * @return  1

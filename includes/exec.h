@@ -22,17 +22,17 @@
 
 typedef struct s_mst		t_mst;
 typedef struct s_minishell	t_minishell;
-typedef t_uint8	(*t_builtin)(char **args, t_mst **env);
+typedef t_uint8				(*t_builtin)(char **args, t_mst **env);
 
 //[BUILT-INS]_________________________________________
 
-t_uint8			cmd_echo(char **args, t_mst **env);
-t_uint8			cmd_cd(char **args, t_mst **env);
-t_uint8			cmd_pwd(char **args, t_mst **env);
-t_uint8			cmd_export(char **args, t_mst **env);
-t_uint8			cmd_unset(char **args, t_mst **env);
-t_uint8			cmd_env(char **args, t_mst **env);
-t_uint8			cmd_exit(char **args, t_mst **env);
+t_uint8		cmd_echo(char **args, t_mst **env);
+t_uint8		cmd_cd(char **args, t_mst **env);
+t_uint8		cmd_pwd(char **args, t_mst **env);
+t_uint8		cmd_export(char **args, t_mst **env);
+t_uint8		cmd_unset(char **args, t_mst **env);
+t_uint8		cmd_env(char **args, t_mst **env);
+t_uint8		cmd_exit(char **args, t_mst **env);
 
 //[MAIN_EXEC]_________________________________________
 
@@ -52,9 +52,11 @@ char		*research_path(char *cmd, char *env_path);
 
 //[FORK_UTILS]________________________________________
 
+int			cmd_exit_status(int status);
 int			redirect_cmd(t_command *cmd);
 t_uint8		is_builtin(char **args, t_mst **env, t_uint8 *exit_code);
 t_uint8		is_abs_rltv_path(char **args, t_mst *env, t_uint8 *exit_code);
-t_uint8		is_in_path(char **args, t_mst *m_path, t_mst *env, t_uint8 *exit_code);
+t_uint8		no_shebang_case(char *arg, char **env_cpy, t_uint8 *exit_code);
+t_uint8		is_in_path(char **args, t_mst *m_path, t_mst *env, t_uint8 *ext_cd);
 
 #endif
