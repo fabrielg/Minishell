@@ -43,6 +43,7 @@ FILES		=	env/env_insert \
 				exec/execute_utils \
 				exec/builtin_utils \
 				exec/shebang_utils \
+				ast/assign_pipes \
 				ast/ast_build \
 				ast/ast_display \
 				ast/ast_utils \

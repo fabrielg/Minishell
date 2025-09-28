@@ -61,6 +61,7 @@ typedef struct s_command
 	char	**args;
 	int		argc;
 	t_list2	*redirects;
+	int		pipes[2];
 }	t_command;
 
 /* Structure representing a token */

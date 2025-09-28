@@ -27,6 +27,7 @@ int	process_line(t_minishell *ms)
 	tok = (t_token *) ms->tokens->content;
 	cmd = get_command(tok->data);
 	ms->ast_root = ast_build(ms->tokens);
+	assign_pipes(ms->ast_root);
 	if (DEBUG_MODE)
 		ast_display(ms->ast_root);
 	exec(cmd, ms);

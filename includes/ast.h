@@ -45,4 +45,6 @@ t_ast	*ast_new_subshell(t_ast *sub);
 void	ast_display(t_ast *node);
 void	ast_clear(t_ast **root);
 
+int		assign_pipes(t_ast *node);
+
 #endif
