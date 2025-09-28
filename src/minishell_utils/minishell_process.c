@@ -28,7 +28,7 @@ int	process_line(t_minishell *ms)
 	cmd = get_command(tok->data);
 	ms->ast_root = ast_build(ms->tokens);
 	if (DEBUG_MODE)
-		ast_display(ms->ast_root, 0);
+		ast_display(ms->ast_root);
 	exec(cmd, ms);
 	ast_clear(&ms->ast_root);
 	ft_lstclear2(&ms->tokens, token_destroy);

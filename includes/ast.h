@@ -42,7 +42,7 @@ t_ast	*ast_new_command(t_command *cmd);
 t_ast	*ast_new_pipeline(t_ast *left, t_ast *right);
 t_ast	*ast_new_logical(t_logical_op op, t_ast *left, t_ast *right);
 t_ast	*ast_new_subshell(t_ast *sub);
-void	ast_display(t_ast *node, int depth);
+void	ast_display(t_ast *node);
 void	ast_clear(t_ast **root);
 
 #endif

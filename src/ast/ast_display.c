@@ -32,6 +32,7 @@ static char	*get_redir_type(t_redirect_type type)
 
 static void	ast_display_cmd(t_command *cmd, int depth)
 {
+	t_list2		*redirs;
 	t_redirect	*redir;
 	int			i;
 
@@ -41,16 +42,17 @@ static void	ast_display_cmd(t_command *cmd, int depth)
 		printf("%s ", cmd->args[i++]);
 	printf("\n");
 	print_indent(depth);
-	while (cmd->redirects)
+	redirs = cmd->redirects;
+	while (redirs)
 	{
-		redir = (t_redirect *) cmd->redirects->content;
+		redir = (t_redirect *) redirs->content;
 		printf("%s %s  ", get_redir_type(redir->type), redir->file);
-		cmd->redirects = cmd->redirects->next;
+		redirs = redirs->next;
 	}
 	printf("\n");
 }
 
-void	ast_display(t_ast *node, int depth)
+static void	ast_display_aux(t_ast *node, int depth)
 {
 	if (!node)
 		return ;
@@ -60,8 +62,8 @@ void	ast_display(t_ast *node, int depth)
 	else if (node->type == TOKEN_PIPELINE)
 	{
 		printf("PIPELINE:\n");
-		ast_display(node->pipeline.left, depth + 1);
-		ast_display(node->pipeline.right, depth + 1);
+		ast_display_aux(node->pipeline.left, depth + 1);
+		ast_display_aux(node->pipeline.right, depth + 1);
 	}
 	else if (node->type == TOKEN_LOGICAL_EXPRESSION)
 	{
@@ -69,12 +71,20 @@ void	ast_display(t_ast *node, int depth)
 			printf("LOGICAL: &&\n");
 		else
 			printf("LOGICAL: ||\n");
-		ast_display(node->logical.left, depth + 1);
-		ast_display(node->logical.right, depth + 1);
+		ast_display_aux(node->logical.left, depth + 1);
+		ast_display_aux(node->logical.right, depth + 1);
 	}
 	else if (node->type == TOKEN_SUBSHELL)
 	{
 		printf("SUBSHELL:\n");
-		ast_display(node->subshell, depth + 1);
+		ast_display_aux(node->subshell, depth + 1);
 	}
+}
+
+void	ast_display(t_ast *node)
+{
+	t_ast	*tmp;
+
+	tmp = node;
+	ast_display_aux(tmp, 0);
 }
