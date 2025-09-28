@@ -28,6 +28,7 @@ typedef struct s_split_ctx
 
 void	flush_token(t_split_ctx *ctx, int end);
 void	flush_operator(t_split_ctx *ctx, int *i);
-void	tokens_remove_quotes(t_split_ctx ctx);
+void	token_unquote(char **str_ptr);
+void	tokens_remove_quotes(char **tokens, int count);
 
 #endif

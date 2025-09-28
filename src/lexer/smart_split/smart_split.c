@@ -60,6 +60,5 @@ char	**smart_split(const char *line)
 	}
 	flush_token(&ctx, i);
 	ctx.tokens[ctx.count] = NULL;
-	tokens_remove_quotes(ctx);
 	return (ctx.tokens);
 }

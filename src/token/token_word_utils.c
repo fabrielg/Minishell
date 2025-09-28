@@ -11,10 +11,23 @@ void	token_destroy_word(void *data)
 
 bool	is_expandable_word(char *word)
 {
+	int		i;
+	char	quote;
+
 	if (!word)
 		return (false);
-	if (word[0] != '\'' && ft_strchr(word, '$'))
-		return (true);
+	i = 0;
+	quote = 0;
+	while (word[i])
+	{
+		if (!quote && (word[i] == '\'' || word[i] == '"'))
+			quote = word[i];
+		else if (quote && word[i] == quote)
+			quote = 0;
+		else if (word[i] == '$' && quote != '\'')
+			return (true);
+		i++;
+	}
 	return (false);
 }
 

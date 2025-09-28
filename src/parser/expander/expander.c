@@ -2,25 +2,7 @@
 #include "libft.h"
 #include "tokens.h"
 #include "expander.h"
-
-static void	unquote(char **s)
-{
-	size_t	s_len;
-	char	*new_s;
-
-	if (!s || !(*s))
-		return ;
-	s_len = ft_strlen(*s);
-	if (s_len < 2)
-		return ;
-	if (((*s)[0] == '"' && (*s)[s_len - 1] == '"')
-		|| ((*s)[0] == '\'' && (*s)[s_len - 1] == '\''))
-	{
-		new_s = ft_substr(*s, 1, s_len - 2);
-		free(*s);
-		*s = new_s;
-	}
-}
+#include "smart_split.h"
 
 void	expand_arg(char **arg_ptr, t_mst *env, int exit_code)
 {
@@ -54,26 +36,23 @@ void	expand_command(t_command *cmd, t_mst *env, int exit_code)
 {
 	t_list2		*redirs;
 	t_redirect	*redir;
-	bool		is_expandable;
 	int			i;
 
 	i = 0;
 	while (i < cmd->argc)
 	{
-		is_expandable = is_expandable_word(cmd->args[i]);
-		unquote(&cmd->args[i]);
-		if (is_expandable)
+		if (is_expandable_word(cmd->args[i]))
 			expand_arg(&cmd->args[i], env, exit_code);
+		token_unquote(&cmd->args[i]);
 		i++;
 	}
 	redirs = cmd->redirects;
 	while (redirs)
 	{
 		redir = (t_redirect *) redirs->content;
-		is_expandable = is_expandable_word(redir->file);
-		unquote(&redir->file);
-		if (is_expandable)
+		if (is_expandable_word(redir->file))
 			expand_arg(&redir->file, env, exit_code);
+		token_unquote(&redir->file);
 		redirs = redirs->next;
 	}
 }

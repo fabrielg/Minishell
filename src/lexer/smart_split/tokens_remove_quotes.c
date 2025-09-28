@@ -2,7 +2,7 @@
 #include "lexer.h"
 #include "smart_split.h"
 
-char	*remove_paired_quotes(const char *str)
+static char	*remove_paired_quotes(const char *str)
 {
 	char			*res;
 	unsigned char	quote;
@@ -31,17 +31,23 @@ char	*remove_paired_quotes(const char *str)
 	return (res);
 }
 
-void	tokens_remove_quotes(t_split_ctx ctx)
+void	token_unquote(char **str_ptr)
 {
 	char	*clean;
-	int		i;
+
+	clean = remove_paired_quotes(*str_ptr);
+	free(*str_ptr);
+	*str_ptr = clean;
+}
+
+void	tokens_remove_quotes(char **tokens, int count)
+{
+	int	i;
 
 	i = 0;
-	while (i < ctx.count)
+	while (i < count)
 	{
-		clean = remove_paired_quotes(ctx.tokens[i]);
-		free(ctx.tokens[i]);
-		ctx.tokens[i] = clean;
+		token_unquote(&tokens[i]);
 		i++;
 	}
 }
