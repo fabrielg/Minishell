@@ -49,7 +49,6 @@ static void	ast_display_cmd(t_command *cmd, int depth)
 		printf("%s %s  ", get_redir_type(redir->type), redir->file);
 		redirs = redirs->next;
 	}
-	printf("\n");
 	print_indent(depth);
 	printf("pipes[0] = %d pipes[1] = %d\n", cmd->pipes[0], cmd->pipes[1]);
 }
