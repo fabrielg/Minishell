@@ -9,10 +9,22 @@
  */
 static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
 {
-	t_mst			*env_path;
-	t_uint8			exit_code;
+	t_mst		*env_path;
+	t_uint8		exit_code;
 
 	exit_code = -1;
+	if (cmd->pipes[0] > 2)
+	{
+		if (dup2(cmd->pipes[0], STDIN_FILENO) == -1)
+			return (perror("dup2"), 1);
+		close(cmd->pipes[0]);
+	}
+	if (cmd->pipes[1] > 2)
+	{
+		if (dup2(cmd->pipes[1], STDOUT_FILENO) == -1)
+			return (perror("dup2"), 1);
+		close(cmd->pipes[1]);
+	}
 	if (redirect_cmd(cmd) == ERROR)
 		return (REDIR_ERR);
 	if (!cmd->args[0])
@@ -45,7 +57,14 @@ int	execute_cmd(t_command *cmd, t_minishell *ms)
 	pid = fork();
 	if (pid == -1)
 		return (ERROR);
-	if (pid == 0)
+	if (pid > 0)
+	{
+		if (cmd->pipes[0] > 2)
+			close(cmd->pipes[0]);
+		if (cmd->pipes[1] > 2)
+			close(cmd->pipes[1]);
+	}
+	else if (pid == 0)
 	{
 		reset_signals();
 		exit_code = child_exec(cmd, ms);

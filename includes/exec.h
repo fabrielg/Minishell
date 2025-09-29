@@ -4,6 +4,7 @@
 # include "envp.h"
 # include "libft.h"
 # include "tokens.h"
+# include "ast.h"
 
 # define ERROR -1
 # define SUCCESS 1
@@ -39,6 +40,7 @@ t_uint8		cmd_exit(char **args, t_mst **env);
 int			execute_cmd(t_command *cmd, t_minishell *ms);
 int			execute_one_builtin(t_command *cmd, t_minishell *ms);
 int			exec(t_command *cmd, t_minishell *ms);
+int			exec_ast(t_ast *node, t_minishell *ms);
 
 //[BUILTIN_UTILS]_____________________________________
 
