@@ -50,5 +50,6 @@ int			process_line(t_minishell *ms);
 
 int			exec_err(char *cmd, char *msg, t_uint8 exit_code);
 t_uint8		cmd_err(t_uint8 *exit_code, char *arg, char *err_msg, int code);
+t_uint8		set_err(t_uint8 *exit_code, t_uint8 new);
 
 #endif
