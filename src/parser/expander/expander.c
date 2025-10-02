@@ -50,7 +50,7 @@ void	expand_command(t_command *cmd, t_mst *env, int exit_code)
 	while (redirs)
 	{
 		redir = (t_redirect *) redirs->content;
-		if (is_expandable_word(redir->file))
+		if (is_expandable_word(redir->file) && redir->type != REDIRECT_HEREDOC)
 			expand_arg(&redir->file, env, exit_code);
 		token_unquote(&redir->file);
 		redirs = redirs->next;
