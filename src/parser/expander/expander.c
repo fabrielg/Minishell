@@ -32,11 +32,26 @@ void	expand_arg(char **arg_ptr, t_mst *env, int exit_code)
 	*arg_ptr = args[1];
 }
 
+void	expand_redirs(t_list2 *redirs, t_mst *env, int exit_code, bool unquote)
+{
+	t_list2		*tmp;
+	t_redirect	*redir;
+
+	tmp = redirs;
+	while (tmp)
+	{
+		redir = (t_redirect *) tmp->content;
+		if (is_expandable_word(redir->file) && redir->type != REDIRECT_HEREDOC)
+			expand_arg(&redir->file, env, exit_code);
+		if (unquote)
+			token_unquote(&redir->file);
+		tmp = tmp->next;
+	}
+}
+
 void	expand_command(t_command *cmd, t_mst *env, int exit_code)
 {
-	t_list2		*redirs;
-	t_redirect	*redir;
-	int			i;
+	int	i;
 
 	i = 0;
 	while (i < cmd->argc)
@@ -46,15 +61,7 @@ void	expand_command(t_command *cmd, t_mst *env, int exit_code)
 		token_unquote(&cmd->args[i]);
 		i++;
 	}
-	redirs = cmd->redirects;
-	while (redirs)
-	{
-		redir = (t_redirect *) redirs->content;
-		if (is_expandable_word(redir->file) && redir->type != REDIRECT_HEREDOC)
-			expand_arg(&redir->file, env, exit_code);
-		token_unquote(&redir->file);
-		redirs = redirs->next;
-	}
+	expand_redirs(cmd->redirects, env, exit_code, true);
 }
 
 void	expander(t_list2 *tokens, t_mst *env, int exit_code)
