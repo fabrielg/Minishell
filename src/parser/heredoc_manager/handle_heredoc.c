@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include "parser.h"
+#include "expander.h"
 
 /**
  * @brief Processes all heredoc redirections in a redirection list.
@@ -19,6 +20,8 @@ static int	fill_heredocs(t_list2 *rdr_lst, t_minishell *ms)
 		if (rdr->type == REDIRECT_HEREDOC)
 		{
 			if (create_heredoc(rdr, ms))
+				return (1);
+			if (expand_heredoc(rdr, ms->exports, ms->last_exit_code))
 				return (1);
 		}
 		tmp = tmp->next;
