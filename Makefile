@@ -60,6 +60,7 @@ FILES		=	env/env_insert \
 				lexer/smart_split/smart_split_utils \
 				lexer/smart_split/smart_split \
 				lexer/smart_split/tokens_remove_quotes \
+				parser/expander/expander_heredoc \
 				parser/expander/expander_utils \
 				parser/expander/expander \
 				parser/group_commands/group_commands_utils \
