@@ -49,6 +49,7 @@ int	execute_cmd(t_command *cmd, t_minishell *ms)
 	{
 		reset_signals();
 		exit_code = child_exec(cmd, ms);
+		printf("exit code : %i\n", exit_code);
 		exit(clear_minishell(ms, exit_code));
 	}
 	g_sig_pid = pid;
