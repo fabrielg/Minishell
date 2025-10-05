@@ -31,8 +31,7 @@ int	main(int argc, char *argv[], char **envp)
 		if (is_end_of_file(ms.input_line))
 			break ;
 		handle_prompt_signal(&ms.last_exit_code);
-		if (*ms.input_line)
-			process_line(&ms);
+		process_line(&ms);
 		if (ms.shell_exit_code != -1)
 			return (clear_minishell(&ms, ms.shell_exit_code));
 		free(ms.input_line);

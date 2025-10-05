@@ -27,8 +27,8 @@ static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
 	}
 	if (redirect_cmd(cmd) == ERROR)
 		return (REDIR_ERR);
-	if (!cmd->args[0])
-		return (0);
+	if (!*(cmd->args[0]))
+		return (exec_err(cmd->args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
 	if (is_builtin(cmd->args, &ms->exports, &exit_code))
 		return (exit_code);
 	if (is_abs_rltv_path(cmd->args, ms->exports, &exit_code))
@@ -47,9 +47,9 @@ static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
  */
 int	execute_cmd(t_command *cmd, t_minishell *ms)
 {
-	pid_t			pid;
-	int				status;
-	t_uint8			exit_code;
+	pid_t		pid;
+	int			status;
+	t_uint8		exit_code;
 
 	exit_code = 1;
 	if (!cmd)
@@ -68,6 +68,7 @@ int	execute_cmd(t_command *cmd, t_minishell *ms)
 	{
 		reset_signals();
 		exit_code = child_exec(cmd, ms);
+		printf("exit code : %i\n", exit_code);
 		exit(clear_minishell(ms, exit_code));
 	}
 	g_sig_pid = pid;
