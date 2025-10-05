@@ -1,3 +1,4 @@
+#include "minishell.h"
 #include "exec.h"
 #include <fcntl.h>
 
@@ -30,7 +31,7 @@ static int	redirect_in(t_redirect *rdr)
 
 	fd = open(rdr->file, O_RDONLY);
 	if (fd == -1)
-		return (ERROR);
+		return (exec_err(rdr->file, NO_PATH_MSG, 1));
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return (close(fd), ERROR);
 	return (close(fd), SUCCESS);

@@ -18,10 +18,12 @@ int	process_line(t_minishell *ms)
 	t_token		*tok;
 	t_command	*cmd;
 
+	if (!*ms->input_line)
+		return (set_err(&ms->last_exit_code, NOT_FOUND_ERR));
 	add_history(ms->input_line);
 	ms->tokens = parser(ms);
 	if (!ms->tokens)
-		return (1);
+		return (set_err(&ms->last_exit_code, 1));
 	if (DEBUG_MODE)
 		tokens_display(ms->tokens);
 	tok = (t_token *) ms->tokens->content;

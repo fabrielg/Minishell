@@ -28,3 +28,13 @@ t_uint8	cmd_err(t_uint8 *exit_code, char *arg, char *err_msg, int code)
 	*exit_code = exec_err(arg, err_msg, code);
 	return (1);
 }
+
+/**
+ * @brief Prints an execution error and sets exit code.
+ * @return  1
+ */
+t_uint8	set_err(t_uint8 *exit_code, t_uint8 new)
+{
+	*exit_code = new;
+	return (1);
+}
