@@ -35,9 +35,9 @@ static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
  */
 int	execute_cmd(t_command *cmd, t_minishell *ms)
 {
-	pid_t			pid;
-	int				status;
-	t_uint8			exit_code;
+	pid_t		pid;
+	int			status;
+	t_uint8		exit_code;
 
 	exit_code = 1;
 	if (!cmd)

@@ -10,7 +10,6 @@
  */
 int	cmd_exit_status(int status)
 {
-	printf("status %i\n", status);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
