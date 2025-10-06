@@ -27,7 +27,7 @@ static int	exec_pipeline(t_ast *node, t_minishell *ms)
 	if (!node || node->type != TOKEN_PIPELINE)
 		return (1);
 	left_status = exec_ast(node->pipeline.left, ms);
-	(void) left_status;
+	(void)left_status;
 	right_status = exec_ast(node->pipeline.right, ms);
 	if (node->pipeline.left && node->pipeline.left->type == TOKEN_COMMAND)
 	{

@@ -41,6 +41,14 @@ static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
 	return (exec_err(cmd->args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
 }
 
+static void close_pipes(t_command *cmd)
+{
+	if (cmd->pipes[0] > 2)
+		close(cmd->pipes[0]);
+	if (cmd->pipes[1] > 2)
+		close(cmd->pipes[1]);
+}
+
 /**
  * @brief Forks and executes a command in a child process.
  * @return Exit status of command, or error code
@@ -57,13 +65,6 @@ int	execute_cmd(t_command *cmd, t_minishell *ms)
 	pid = fork();
 	if (pid == -1)
 		return (ERROR);
-	if (pid > 0)
-	{
-		if (cmd->pipes[0] > 2)
-			close(cmd->pipes[0]);
-		if (cmd->pipes[1] > 2)
-			close(cmd->pipes[1]);
-	}
 	else if (pid == 0)
 	{
 		reset_signals();
@@ -71,8 +72,8 @@ int	execute_cmd(t_command *cmd, t_minishell *ms)
 		printf("exit code : %i\n", exit_code);
 		exit(clear_minishell(ms, exit_code));
 	}
+	close_pipes(cmd);
+	cmd->pid = pid;
 	g_sig_pid = pid;
-	waitpid(pid, &status, 0);
-	g_sig_pid = 0;
-	return (cmd_exit_status(status));
+	return (pid);
 }
