@@ -35,21 +35,46 @@ static t_ast	*parse_logical_expr(t_list2 **tokens)
 
 static t_ast	*parse_pipeline(t_list2 **tokens)
 {
-	t_ast	*left;
-	t_ast	*right;
-	t_token	*tok;
+	t_list2		*save;
+	t_token		*tok;
+	t_ast		**cmds;
+	size_t		count;
+	size_t		i;
 
-	left = parse_simple_command_or_subshell(tokens);
+	save = *tokens;
+	count = 0;
+	while (save)
+	{
+		tok = (t_token *)save->content;
+		if (tok->type == TOKEN_COMMAND || 
+			(tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0))
+			count++;
+		if (tok->type != TOKEN_PIPELINE && tok->type != TOKEN_COMMAND && tok->type != TOKEN_SUBSHELL)
+			break ;
+		save = save->next;
+	}
+	if (count == 0)
+		return (NULL);
+	cmds = ft_calloc(count + 1, sizeof(t_ast *));
+	if (!cmds)
+		return (NULL);
+	i = 0;
 	while (*tokens)
 	{
 		tok = (t_token *)(*tokens)->content;
-		if (tok->type != TOKEN_PIPELINE)
+		if (tok->type == TOKEN_COMMAND || 
+			(tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0))
+		{
+			cmds[i++] = parse_simple_command_or_subshell(tokens);
+			continue ;
+		}
+		else if (tok->type == TOKEN_PIPELINE)
+			*tokens = (*tokens)->next;
+		else
 			break ;
-		*tokens = (*tokens)->next;
-		right = parse_simple_command_or_subshell(tokens);
-		left = ast_new_pipeline(left, right);
 	}
-	return (left);
+	cmds[i] = NULL;
+	return (ast_new_pipeline(cmds, count));
 }
 
 static t_ast	*parse_subshell(t_list2 **tokens)

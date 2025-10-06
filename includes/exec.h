@@ -37,7 +37,7 @@ t_uint8		cmd_exit(char **args, t_mst **env);
 
 //[MAIN_EXEC]_________________________________________
 
-int			execute_cmd(t_command *cmd, t_minishell *ms);
+int			execute_cmd(t_command *cmd, t_minishell *ms, bool wait_child);
 int			execute_one_builtin(t_command *cmd, t_minishell *ms);
 int			exec(t_command *cmd, t_minishell *ms);
 int			exec_ast(t_ast *node, t_minishell *ms);

@@ -1,21 +1,21 @@
 #include "ast.h"
 
-static t_command	*find_rightmost_cmd(t_ast *node)
+/*static t_command	*find_rightmost_cmd(t_ast *node)
 {
 	if (!node)
 		return (NULL);
 	if (node->type == TOKEN_COMMAND)
 		return (node->cmd);
-	else if (node->type == TOKEN_PIPELINE)
-		return (find_rightmost_cmd(node->pipeline.right));
+	// else if (node->type == TOKEN_PIPELINE)
+	// 	return (find_rightmost_cmd(node->pipeline.right));
 	else if (node->type == TOKEN_LOGICAL_EXPRESSION)
 		return (find_rightmost_cmd(node->logical.right));
 	else if (node->type == TOKEN_SUBSHELL)
 		return (find_rightmost_cmd(node->subshell));
 	return (NULL);
-}
+}*/
 
-static int	assign_pipes_aux(t_ast *node, t_command *left_most)
+/*static int	assign_pipes_aux(t_ast *node, t_command *left_most)
 {
 	int	fd[2];
 
@@ -42,9 +42,11 @@ static int	assign_pipes_aux(t_ast *node, t_command *left_most)
 	else if (node->type == TOKEN_SUBSHELL)
 		assign_pipes_aux(node->subshell, NULL);
 	return (0);
-}
+}*/
 
 int	assign_pipes(t_ast *node)
 {
-	return (assign_pipes_aux(node, NULL));
+	//return (assign_pipes_aux(node, NULL));
+	(void)node;
+	return (0);
 }

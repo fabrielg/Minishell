@@ -9,20 +9,20 @@ int	wait_all_commands(t_ast *root)
 
 	status = 0;
 	if (!root)
-		return ;
+		return (0);
 	node = root;
 	if (node->type == TOKEN_PIPELINE)
 	{
-		wait_all_commands(&node->pipeline.left);
-		wait_all_commands(&node->pipeline.right);
+		for (int i = 0; i < node->pipeline.count; i++)
+			wait_all_commands(node->pipeline.cmds[i]);
 	}
 	else if (node->type == TOKEN_LOGICAL_EXPRESSION)
 	{
-		wait_all_commands(&node->logical.left);
-		wait_all_commands(&node->logical.right);
+		wait_all_commands(node->logical.left);
+		wait_all_commands(node->logical.right);
 	}
 	else if (node->type == TOKEN_SUBSHELL)
-		wait_all_commands(&node->subshell);
+		wait_all_commands(node->subshell);
 	waitpid(root->cmd->pid, &status, 0);
 	return (status);
 }

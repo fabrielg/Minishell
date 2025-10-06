@@ -24,8 +24,8 @@ struct s_ast
 		t_command	*cmd;
 		struct
 		{
-			struct s_ast	*left;
-			struct s_ast	*right;
+			int				count;
+			struct s_ast	**cmds;
 		}	pipeline;
 		struct
 		{
@@ -39,7 +39,7 @@ struct s_ast
 
 t_ast	*ast_build(t_list2 *tokens);
 t_ast	*ast_new_command(t_command *cmd);
-t_ast	*ast_new_pipeline(t_ast *left, t_ast *right);
+t_ast	*ast_new_pipeline(t_ast **cmds, size_t count);
 t_ast	*ast_new_logical(t_logical_op op, t_ast *left, t_ast *right);
 t_ast	*ast_new_subshell(t_ast *sub);
 void	ast_display(t_ast *node);

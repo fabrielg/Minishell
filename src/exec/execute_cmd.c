@@ -53,11 +53,11 @@ static void close_pipes(t_command *cmd)
  * @brief Forks and executes a command in a child process.
  * @return Exit status of command, or error code
  */
-int	execute_cmd(t_command *cmd, t_minishell *ms)
+int	execute_cmd(t_command *cmd, t_minishell *ms, bool wait_child)
 {
-	pid_t		pid;
-	int			status;
-	t_uint8		exit_code;
+	pid_t	pid;
+	int		status;
+	t_uint8	exit_code;
 
 	exit_code = 1;
 	if (!cmd)
@@ -72,8 +72,13 @@ int	execute_cmd(t_command *cmd, t_minishell *ms)
 		printf("exit code : %i\n", exit_code);
 		exit(clear_minishell(ms, exit_code));
 	}
-	close_pipes(cmd);
 	cmd->pid = pid;
 	g_sig_pid = pid;
+	close_pipes(cmd);
+	if (wait_child)
+	{
+		waitpid(pid, &status, 0);
+		ms->last_exit_code = cmd_exit_status(status);
+	}
 	return (pid);
 }
