@@ -1,10 +1,11 @@
 #include "exec.h"
 #include "minishell.h"
 #include "ast.h"
+#include <wait.h>
 
 /**
  * @brief Executes a command (builtin or external) and updates last exit code.
- * @return 0
+ * @return last exit code
  */
 int	exec(t_command *cmd, t_minishell *ms)
 {
@@ -13,16 +14,16 @@ int	exec(t_command *cmd, t_minishell *ms)
 		ms->last_exit_code = execute_one_builtin(cmd, ms);
 		if (DEBUG_MODE)
 			printf("last exit code : %i\n", ms->last_exit_code);
-		return (0);
+		return (ms->last_exit_code);
 	}
 	ms->last_exit_code = execute_cmd(cmd, ms);
-	return (0);
+	return (ms->last_exit_code);
 }
 
 static int	exec_pipeline(t_ast *node, t_minishell *ms)
 {
-	int left_status;
-	int right_status;
+	int	left_status;
+	int	right_status;
 
 	if (!node || node->type != TOKEN_PIPELINE)
 		return (1);
@@ -42,6 +43,53 @@ static int	exec_pipeline(t_ast *node, t_minishell *ms)
 	return (right_status);
 }
 
+static int	exec_logical(t_ast *node, t_minishell *ms)
+{
+	int	left_status;
+	int	right_status;
+
+	left_status = exec_ast(node->logical.left, ms);
+	right_status = 0;
+	if (node->logical.op == LOGICAL_AND)
+	{
+		if (left_status == 0)
+			right_status = exec_ast(node->logical.right, ms);
+		else
+			right_status = left_status;
+	}
+	else if (node->logical.op == LOGICAL_OR)
+	{
+		if (left_status != 0)
+			right_status = exec_ast(node->logical.right, ms);
+		else
+			right_status = left_status;
+	}
+	ms->last_exit_code = right_status;
+	return (right_status);
+}
+
+static int	exec_subshell(t_ast *node, t_minishell *ms)
+{
+	pid_t	pid;
+	int		status;
+	int		exit_code;
+
+	pid = fork();
+	if (pid == -1)
+		return (ERROR);
+	else if (pid == 0)
+	{
+		exit_code = exec_ast(node->subshell, ms);
+		exit(clear_minishell(ms, exit_code));
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		ms->last_exit_code = cmd_exit_status(status);
+		return (ms->last_exit_code);
+	}
+}
+
 int	exec_ast(t_ast *node, t_minishell *ms)
 {
 	if (!node)
@@ -50,9 +98,9 @@ int	exec_ast(t_ast *node, t_minishell *ms)
 		return (exec(node->cmd, ms));
 	else if (node->type == TOKEN_PIPELINE)
 		return (exec_pipeline(node, ms));
-	/*else if (node->type == TOKEN_LOGICAL_EXPRESSION)
+	else if (node->type == TOKEN_LOGICAL_EXPRESSION)
 		return (exec_logical(node, ms));
 	else if (node->type == TOKEN_SUBSHELL)
-		return (exec_subshell(node, ms));*/
+		return (exec_subshell(node, ms));
 	return (1);
 }
