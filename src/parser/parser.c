@@ -25,11 +25,9 @@ t_list2	*parser(t_minishell *ms)
 	tokens = group_commands(tokens);
 	if (!tokens)
 		return (NULL);
-	expander(tokens, ms->exports, ms->last_exit_code);
 	if (handle_heredocs(tokens, ms))
 		return (ft_lstclear2(&tokens, token_destroy), NULL);
 	if (!tokens)
 		return (NULL);
-	glob_commands(tokens);
 	return (tokens);
 }
