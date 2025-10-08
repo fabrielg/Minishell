@@ -33,7 +33,7 @@ static t_ast	*parse_logical_expr(t_list2 **tokens)
 	return (left);
 }
 
-static size_t	count_pipelines(t_list2 *tokens)
+static size_t count_pipelines(t_list2 *tokens)
 {
 	size_t	count;
 	t_token	*tok;
@@ -44,18 +44,45 @@ static size_t	count_pipelines(t_list2 *tokens)
 	while (tokens)
 	{
 		tok = (t_token *)tokens->content;
-		if (tok->type == TOKEN_COMMAND ||
-			(tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0))
+		if (tok->type == TOKEN_COMMAND)
+		{
 			seen_command = true;
+			tokens = tokens->next;
+		}
+		else if (tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0)
+		{
+			int	depth = 0;
+
+			seen_command = true;
+			while (tokens)
+			{
+				t_token *t = (t_token *)tokens->content;
+				if (t->type == TOKEN_SUBSHELL)
+				{
+					if (ft_strcmp(t->data, "(") == 0)
+						depth++;
+					else if (ft_strcmp(t->data, ")") == 0)
+					{
+						depth--;
+						if (depth == 0)
+						{
+							tokens = tokens->next;
+							break ;
+						}
+					}
+				}
+				tokens = tokens->next;
+			}
+		}
 		else if (tok->type == TOKEN_PIPELINE)
 		{
 			if (seen_command)
 				count++;
 			seen_command = false;
+			tokens = tokens->next;
 		}
 		else
 			break ;
-		tokens = tokens->next;
 	}
 	if (seen_command)
 		count++;
