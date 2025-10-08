@@ -33,28 +33,43 @@ static t_ast	*parse_logical_expr(t_list2 **tokens)
 	return (left);
 }
 
+static size_t	count_pipelines(t_list2 *tokens)
+{
+	size_t	count;
+	t_token	*tok;
+	bool	seen_command;
+
+	count = 0;
+	seen_command = false;
+	while (tokens)
+	{
+		tok = (t_token *)tokens->content;
+		if (tok->type == TOKEN_COMMAND ||
+			(tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0))
+			seen_command = true;
+		else if (tok->type == TOKEN_PIPELINE)
+		{
+			if (seen_command)
+				count++;
+			seen_command = false;
+		}
+		else
+			break ;
+		tokens = tokens->next;
+	}
+	if (seen_command)
+		count++;
+	return (count);
+}
+
 static t_ast	*parse_pipeline(t_list2 **tokens)
 {
-	t_list2	*save;
 	t_token	*tok;
 	t_ast	**cmds;
 	size_t	count;
 	size_t	i;
 
-	save = *tokens;
-	count = 0;
-	while (save)
-	{
-		tok = (t_token *)save->content;
-		if (tok->type == TOKEN_COMMAND ||
-			(tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0))
-			count++;
-		if (tok->type != TOKEN_PIPELINE &&
-			tok->type != TOKEN_COMMAND &&
-			tok->type != TOKEN_SUBSHELL)
-			break ;
-		save = save->next;
-	}
+	count = count_pipelines(*tokens);
 	if (count == 0)
 		return (NULL);
 	else if (count == 1)
@@ -88,7 +103,6 @@ static t_ast	*parse_pipeline(t_list2 **tokens)
 static t_ast	*parse_subshell(t_list2 **tokens)
 {
 	t_ast	*sub;
-	t_token	*tok;
 
 	if (!*tokens)
 		return (NULL);
@@ -96,17 +110,6 @@ static t_ast	*parse_subshell(t_list2 **tokens)
 	sub = parse_logical_expr(tokens);
 	if (!sub)
 		return (NULL);
-	if (!*tokens)
-	{
-		printf("Syntax error: missing closing parenthesis\n");
-		return (NULL);
-	}
-	tok = (t_token *)(*tokens)->content;
-	if (tok->type != TOKEN_SUBSHELL || ft_strcmp(tok->data, ")") != 0)
-	{
-		printf("Syntax error: missing closing parenthesis\n");
-		return (NULL);
-	}
 	*tokens = (*tokens)->next;
 	return (ast_new_subshell(sub));
 }
