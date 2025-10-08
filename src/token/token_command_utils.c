@@ -48,6 +48,7 @@ void	token_display_command(t_command *cmd)
 		token_display_redirect((t_redirect *)tmp->content);
 		tmp = tmp->next;
 	}
+	printf("pipes[0] = %d\npipes[1] = %d\n", cmd->pipes[0], cmd->pipes[1]);
 	printf("====================\n");
 }
 

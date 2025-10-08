@@ -35,6 +35,8 @@ static t_command	*command_create_with_args(int argc)
 	cmd->argc = 0;
 	cmd->redirects = NULL;
 	cmd->args[0] = NULL;
+	cmd->pipes[0] = STDIN_FILENO;
+	cmd->pipes[1] = STDOUT_FILENO;
 	return (cmd);
 }
 

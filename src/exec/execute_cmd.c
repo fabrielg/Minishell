@@ -9,10 +9,22 @@
  */
 static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
 {
-	t_mst			*env_path;
-	t_uint8			exit_code;
+	t_mst		*env_path;
+	t_uint8		exit_code;
 
 	exit_code = -1;
+	if (cmd->pipes[0] > 2)
+	{
+		if (dup2(cmd->pipes[0], STDIN_FILENO) == -1)
+			return (perror("dup2"), 1);
+		close(cmd->pipes[0]);
+	}
+	if (cmd->pipes[1] > 2)
+	{
+		if (dup2(cmd->pipes[1], STDOUT_FILENO) == -1)
+			return (perror("dup2"), 1);
+		close(cmd->pipes[1]);
+	}
 	if (redirect_cmd(cmd) == ERROR)
 		return (REDIR_ERR);
 	if (!*(cmd->args[0]))
@@ -29,15 +41,23 @@ static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
 	return (exec_err(cmd->args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
 }
 
+static void close_pipes(t_command *cmd)
+{
+	if (cmd->pipes[0] > 2)
+		close(cmd->pipes[0]);
+	if (cmd->pipes[1] > 2)
+		close(cmd->pipes[1]);
+}
+
 /**
  * @brief Forks and executes a command in a child process.
  * @return Exit status of command, or error code
  */
-int	execute_cmd(t_command *cmd, t_minishell *ms)
+int	execute_cmd(t_command *cmd, t_minishell *ms, bool wait_child)
 {
-	pid_t		pid;
-	int			status;
-	t_uint8		exit_code;
+	pid_t	pid;
+	int		status;
+	t_uint8	exit_code;
 
 	exit_code = 1;
 	if (!cmd)
@@ -45,15 +65,20 @@ int	execute_cmd(t_command *cmd, t_minishell *ms)
 	pid = fork();
 	if (pid == -1)
 		return (ERROR);
-	if (pid == 0)
+	else if (pid == 0)
 	{
 		reset_signals();
 		exit_code = child_exec(cmd, ms);
 		printf("exit code : %i\n", exit_code);
 		exit(clear_minishell(ms, exit_code));
 	}
+	cmd->pid = pid;
 	g_sig_pid = pid;
-	waitpid(pid, &status, 0);
-	g_sig_pid = 0;
-	return (cmd_exit_status(status));
+	close_pipes(cmd);
+	if (wait_child)
+	{
+		waitpid(pid, &status, 0);
+		ms->last_exit_code = cmd_exit_status(status);
+	}
+	return (pid);
 }
