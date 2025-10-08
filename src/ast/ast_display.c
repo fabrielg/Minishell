@@ -55,6 +55,8 @@ static void	ast_display_cmd(t_command *cmd, int depth)
 
 static void	ast_display_aux(t_ast *node, int depth)
 {
+	int	i;
+
 	if (!node)
 		return ;
 	print_indent(depth);
@@ -63,8 +65,9 @@ static void	ast_display_aux(t_ast *node, int depth)
 	else if (node->type == TOKEN_PIPELINE)
 	{
 		printf("PIPELINE:\n");
-		ast_display_aux(node->pipeline.left, depth + 1);
-		ast_display_aux(node->pipeline.right, depth + 1);
+		i = -1;
+		while (++i < node->pipeline.count)
+			ast_display_aux(node->pipeline.cmds[i], depth + 1);
 	}
 	else if (node->type == TOKEN_LOGICAL_EXPRESSION)
 	{

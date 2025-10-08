@@ -25,7 +25,6 @@ int	process_line(t_minishell *ms)
 	if (DEBUG_MODE)
 		tokens_display(ms->tokens);
 	ms->ast_root = ast_build(ms->tokens);
-	assign_pipes(ms->ast_root);
 	if (DEBUG_MODE)
 		ast_display(ms->ast_root);
 	exec_ast(ms->ast_root, ms);

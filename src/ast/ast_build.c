@@ -33,29 +33,103 @@ static t_ast	*parse_logical_expr(t_list2 **tokens)
 	return (left);
 }
 
+static size_t count_pipelines(t_list2 *tokens)
+{
+	size_t	count;
+	t_token	*tok;
+	bool	seen_command;
+
+	count = 0;
+	seen_command = false;
+	while (tokens)
+	{
+		tok = (t_token *)tokens->content;
+		if (tok->type == TOKEN_COMMAND)
+		{
+			seen_command = true;
+			tokens = tokens->next;
+		}
+		else if (tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0)
+		{
+			int	depth = 0;
+
+			seen_command = true;
+			while (tokens)
+			{
+				t_token *t = (t_token *)tokens->content;
+				if (t->type == TOKEN_SUBSHELL)
+				{
+					if (ft_strcmp(t->data, "(") == 0)
+						depth++;
+					else if (ft_strcmp(t->data, ")") == 0)
+					{
+						depth--;
+						if (depth == 0)
+						{
+							tokens = tokens->next;
+							break ;
+						}
+					}
+				}
+				tokens = tokens->next;
+			}
+		}
+		else if (tok->type == TOKEN_PIPELINE)
+		{
+			if (seen_command)
+				count++;
+			seen_command = false;
+			tokens = tokens->next;
+		}
+		else
+			break ;
+	}
+	if (seen_command)
+		count++;
+	return (count);
+}
+
 static t_ast	*parse_pipeline(t_list2 **tokens)
 {
-	t_ast	*left;
-	t_ast	*right;
 	t_token	*tok;
+	t_ast	**cmds;
+	size_t	count;
+	size_t	i;
 
-	left = parse_simple_command_or_subshell(tokens);
+	count = count_pipelines(*tokens);
+	if (count == 0)
+		return (NULL);
+	else if (count == 1)
+	{
+		t_ast *single = parse_simple_command_or_subshell(tokens);
+		return (single);
+	}
+	cmds = ft_calloc(count + 1, sizeof(t_ast *));
+	if (!cmds)
+		return (NULL);
+
+	i = 0;
 	while (*tokens)
 	{
 		tok = (t_token *)(*tokens)->content;
-		if (tok->type != TOKEN_PIPELINE)
-			break ;
-		*tokens = (*tokens)->next;
-		right = parse_simple_command_or_subshell(tokens);
-		left = ast_new_pipeline(left, right);
+		if (tok->type == TOKEN_COMMAND ||
+			(tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0))
+		{
+			cmds[i++] = parse_simple_command_or_subshell(tokens);
+			continue;
+		}
+		else if (tok->type == TOKEN_PIPELINE)
+			*tokens = (*tokens)->next;
+		else
+			break;
 	}
-	return (left);
+	cmds[i] = NULL;
+	return (ast_new_pipeline(cmds, count));
 }
 
 static t_ast	*parse_subshell(t_list2 **tokens)
 {
 	t_ast	*sub;
-	t_token	*tok;
 
 	if (!*tokens)
 		return (NULL);
@@ -63,17 +137,6 @@ static t_ast	*parse_subshell(t_list2 **tokens)
 	sub = parse_logical_expr(tokens);
 	if (!sub)
 		return (NULL);
-	if (!*tokens)
-	{
-		printf("Syntax error: missing closing parenthesis\n");
-		return (NULL);
-	}
-	tok = (t_token *)(*tokens)->content;
-	if (tok->type != TOKEN_SUBSHELL || ft_strcmp(tok->data, ")") != 0)
-	{
-		printf("Syntax error: missing closing parenthesis\n");
-		return (NULL);
-	}
 	*tokens = (*tokens)->next;
 	return (ast_new_subshell(sub));
 }
