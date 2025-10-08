@@ -66,7 +66,7 @@ void	ast_clear(t_ast **root)
 		i = 0;
 		while (i < node->pipeline.count)
 		{
-			free(node->pipeline.cmds[i]);
+			ast_clear(&node->pipeline.cmds[i]);
 			i++;
 		}
 		free(node->pipeline.cmds);
