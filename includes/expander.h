@@ -19,6 +19,7 @@ void	append_segment(char **new_arg, char *arg, int start, int end);
 void	expand_checker(char *args[2], int *i, int exit_code, t_mst *env);
 void	expand_redirs(t_list2 *redirs, t_mst *env, int exit_code, bool unquote);
 void	expand_arg(char **arg_ptr, t_mst *env, int exit_code);
+void	expand_command(t_command *cmd, t_mst *env, int exit_code);
 int		expand_heredoc(t_redirect *redir, t_mst *env, int exit_code);
 
 #endif
