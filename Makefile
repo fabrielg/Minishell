@@ -46,6 +46,8 @@ FILES		=	env/env_insert \
 				ast/ast_build \
 				ast/ast_display \
 				ast/ast_utils \
+				ast/ast_build_pipeline \
+				ast/ast_count_args_pipeline \
 				builtins/cd \
 				builtins/echo \
 				builtins/env \

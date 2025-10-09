@@ -38,6 +38,9 @@ struct s_ast
 };
 
 t_ast	*ast_build(t_list2 *tokens);
+t_ast	*parse_pipeline(t_list2 **tokens);
+t_ast	*parse_simple_command_or_subshell(t_list2 **tokens);
+size_t	ast_count_args_pipeline(t_list2 *tokens);
 t_ast	*ast_new_command(t_command *cmd);
 t_ast	*ast_new_pipeline(t_ast **cmds, size_t count);
 t_ast	*ast_new_logical(t_logical_op op, t_ast *left, t_ast *right);
