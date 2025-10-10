@@ -9,8 +9,8 @@ static void	parse_commands(t_list2 **tokens, t_ast **cmds)
 	while (*tokens)
 	{
 		tok = (t_token *)(*tokens)->content;
-		if (tok->type == TOKEN_COMMAND ||
-			(tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0))
+		if (tok->type == TOKEN_COMMAND
+			|| (tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0))
 		{
 			cmds[i++] = parse_simple_command_or_subshell(tokens);
 			continue ;
@@ -18,7 +18,7 @@ static void	parse_commands(t_list2 **tokens, t_ast **cmds)
 		else if (tok->type == TOKEN_PIPELINE)
 			*tokens = (*tokens)->next;
 		else
-			break;
+			break ;
 	}
 	cmds[i] = NULL;
 }
