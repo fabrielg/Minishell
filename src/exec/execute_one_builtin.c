@@ -1,14 +1,6 @@
 #include "exec.h"
 #include "minishell.h"
 
-static void close_pipes(t_command *cmd)
-{
-	if (cmd->pipes[0] > 2)
-		close(cmd->pipes[0]);
-	if (cmd->pipes[1] > 2)
-		close(cmd->pipes[1]);
-}
-
 /**
  * @brief Executes a builtin command in the current process.
  * @return Exit code of the builtin

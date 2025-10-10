@@ -61,4 +61,10 @@ t_uint8		is_abs_rltv_path(char **args, t_mst *env, t_uint8 *exit_code);
 t_uint8		no_shebang_case(char *arg, char **env_cpy, t_uint8 *exit_code);
 t_uint8		is_in_path(char **args, t_mst *m_path, t_mst *env, t_uint8 *ext_cd);
 
+//[PIPE_UTILS]________________________________________
+
+int			pipe_cmd(t_command *cmd);
+void		close_pipes(t_command *cmd);
+int			exec_pipeline(t_ast *node, t_minishell *ms);
+
 #endif
