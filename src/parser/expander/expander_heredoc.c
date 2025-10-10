@@ -34,7 +34,8 @@ static char	*read_file_content(const char *path)
 		return (NULL);
 	content = NULL;
 	size = 0;
-	while ((n = read(fd, buf, sizeof(buf))) > 0)
+	n = read(fd, buf, sizeof(buf));
+	while (n > 0)
 	{
 		content = append_buffer(content, size, buf, n);
 		if (!content)
