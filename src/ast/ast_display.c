@@ -53,7 +53,7 @@ static void	ast_display_cmd(t_command *cmd, int depth)
 	printf("pipes[0] = %d pipes[1] = %d\n", cmd->pipes[0], cmd->pipes[1]);
 }
 
-static void	ast_display_aux(t_ast *node, int depth)
+static void	ast_display_aux(t_ast *node, int depth, const char logicals[2][2])
 {
 	int	i;
 
@@ -67,28 +67,26 @@ static void	ast_display_aux(t_ast *node, int depth)
 		printf("PIPELINE:\n");
 		i = -1;
 		while (++i < node->pipeline.count)
-			ast_display_aux(node->pipeline.cmds[i], depth + 1);
+			ast_display_aux(node->pipeline.cmds[i], depth + 1, logicals);
 	}
 	else if (node->type == TOKEN_LOGICAL_EXPRESSION)
 	{
-		if (node->logical.op == LOGICAL_AND)
-			printf("LOGICAL: &&\n");
-		else
-			printf("LOGICAL: ||\n");
-		ast_display_aux(node->logical.left, depth + 1);
-		ast_display_aux(node->logical.right, depth + 1);
+		printf("LOGICAL: %.2s\n", logicals[node->logical.op == LOGICAL_AND]);
+		ast_display_aux(node->logical.left, depth + 1, logicals);
+		ast_display_aux(node->logical.right, depth + 1, logicals);
 	}
 	else if (node->type == TOKEN_SUBSHELL)
 	{
 		printf("SUBSHELL:\n");
-		ast_display_aux(node->subshell, depth + 1);
+		ast_display_aux(node->subshell, depth + 1, logicals);
 	}
 }
 
 void	ast_display(t_ast *node)
 {
-	t_ast	*tmp;
+	const char	logicals[2][2] = {"||", "&&"};
+	t_ast		*tmp;
 
 	tmp = node;
-	ast_display_aux(tmp, 0);
+	ast_display_aux(tmp, 0, logicals);
 }

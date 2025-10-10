@@ -19,11 +19,9 @@ t_ast	*ast_new_pipeline(t_ast **cmds, size_t count)
 	node = malloc(sizeof(t_ast));
 	if (!node)
 		return (NULL);
-
 	node->type = TOKEN_PIPELINE;
 	node->pipeline.count = count;
 	node->pipeline.cmds = cmds;
-
 	return (node);
 }
 
