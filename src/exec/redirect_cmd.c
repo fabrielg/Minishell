@@ -76,6 +76,8 @@ int	redirect_cmd(t_command *cmd)
 			ret = redirect_out(rdr, O_WRONLY | O_CREAT | O_APPEND);
 		else if (rdr->type == REDIRECT_HEREDOC)
 			ret = redirect_heredoc(rdr);
+		else if (rdr->type == REDIRECT_AMBIGUOUS)
+			ret = exec_err(rdr->file, "ambiguous redirect\n", ERROR);
 		if (ret == ERROR)
 			return (ERROR);
 		curr = curr->next;
