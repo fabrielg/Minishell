@@ -2,6 +2,10 @@
 #include "lexer.h"
 #include "parser.h"
 
+/**
+ * @brief Parse the input line into a list of commands and tokens.
+ * @return Linked list of tokens or NULL on error.
+ */
 t_list2	*parser(t_minishell *ms)
 {
 	char	**contents;
@@ -27,7 +31,5 @@ t_list2	*parser(t_minishell *ms)
 		return (NULL);
 	if (handle_heredocs(tokens, ms))
 		return (ft_lstclear2(&tokens, token_destroy), NULL);
-	if (!tokens)
-		return (NULL);
 	return (tokens);
 }

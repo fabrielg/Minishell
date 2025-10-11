@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include "lexer.h"
 
+/**
+ * @brief Ensures the token array has enough capacity and reallocates if needed.
+ * @return 1 on success, 0 on allocation failure
+ */
 static int	ensure_capacity(t_split_ctx *ctx)
 {
 	char	**new_tokens;
@@ -24,6 +28,9 @@ static int	ensure_capacity(t_split_ctx *ctx)
 	return (1);
 }
 
+/**
+ * @brief Flushes the current token from start to end into the tokens array.
+ */
 void	flush_token(t_split_ctx *ctx, int end)
 {
 	if (ctx->start == -1)
@@ -33,6 +40,9 @@ void	flush_token(t_split_ctx *ctx, int end)
 	ensure_capacity(ctx);
 }
 
+/**
+ * @brief Flushes an operator token into the tokens array and updates index.
+ */
 void	flush_operator(t_split_ctx *ctx, int *i)
 {
 	int	oplen;

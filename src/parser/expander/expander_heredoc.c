@@ -3,6 +3,11 @@
 #include "fcntl.h"
 #include "expander.h"
 
+/**
+ * @brief Appends n bytes from buf to the existing content buffer.
+ * @return Newly allocated buffer containing the concatenated content,
+ *         or NULL on allocation failure
+ */
 static char	*append_buffer(char *content, size_t size,
 		const char *buf, ssize_t n)
 {
@@ -21,6 +26,10 @@ static char	*append_buffer(char *content, size_t size,
 	return (tmp);
 }
 
+/**
+ * @brief Reads the entire content of a file into a string.
+ * @return Allocated string with file content, or NULL on error
+ */
 static char	*read_file_content(const char *path)
 {
 	int		fd;
@@ -34,7 +43,8 @@ static char	*read_file_content(const char *path)
 		return (NULL);
 	content = NULL;
 	size = 0;
-	while ((n = read(fd, buf, sizeof(buf))) > 0)
+	n = read(fd, buf, sizeof(buf));
+	while (n > 0)
 	{
 		content = append_buffer(content, size, buf, n);
 		if (!content)
@@ -45,6 +55,10 @@ static char	*read_file_content(const char *path)
 	return (content);
 }
 
+/**
+ * @brief Overwrites a file with the given content.
+ * @return 0 on success, 1 on error
+ */
 static int	write_file_content(const char *path, const char *content)
 {
 	int	fd;
@@ -61,6 +75,10 @@ static int	write_file_content(const char *path, const char *content)
 	return (0);
 }
 
+/**
+ * @brief Expands variables in a heredoc file content.
+ * @return 0 on success, 1 on error
+ */
 int	expand_heredoc(t_redirect *redir, t_mst *env, int exit_code)
 {
 	char	*content;

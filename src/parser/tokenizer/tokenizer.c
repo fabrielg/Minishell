@@ -1,5 +1,9 @@
 #include "tokens.h"
 
+/**
+ * @brief Adds a token to the list if it's not NULL.
+ * @return 1 on success, 0 if token is NULL (and frees the list).
+ */
 static int	add_token_safe(t_list2 **tokens, t_token *token)
 {
 	if (!token)
@@ -8,6 +12,10 @@ static int	add_token_safe(t_list2 **tokens, t_token *token)
 	return (1);
 }
 
+/**
+ * @brief Creates a redirect token and adds it to the list.
+ * @return 1 on success, 0 on failure.
+ */
 static int	handle_redirect(t_list2 **tokens, char **contents, int *i)
 {
 	t_token	*token;
@@ -16,6 +24,10 @@ static int	handle_redirect(t_list2 **tokens, char **contents, int *i)
 	return (add_token_safe(tokens, token));
 }
 
+/**
+ * @brief Creates an operator token and adds it to the list.
+ * @return 1 on success, 0 on failure.
+ */
 static int	handle_operator(t_list2 **tokens, char *content, t_token_type type)
 {
 	t_token	*token;
@@ -24,6 +36,10 @@ static int	handle_operator(t_list2 **tokens, char *content, t_token_type type)
 	return (add_token_safe(tokens, token));
 }
 
+/**
+ * @brief Converts an array of strings into a list of tokens.
+ * @return Pointer to the token list, or NULL on failure.
+ */
 t_list2	*tokenize(char **contents)
 {
 	t_list2			*tokens;

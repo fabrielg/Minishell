@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 00:31:16 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/08/16 17:03:08 by fabrielg         ###   ########.fr       */
+/*   Updated: 2025/10/11 02:39:52 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define WILDCARD_H
 
 # include "tokens.h"
+
+//[WILDCARDS]_________________________________________
 
 int		glob_redirects_list(t_list2 *redirects);
 void	glob_one_command(t_command *cmd);

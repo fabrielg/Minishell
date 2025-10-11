@@ -1,19 +1,11 @@
 #include "exec.h"
 #include "minishell.h"
 
-static void close_pipes(t_command *cmd)
-{
-	if (cmd->pipes[0] > 2)
-		close(cmd->pipes[0]);
-	if (cmd->pipes[1] > 2)
-		close(cmd->pipes[1]);
-}
-
 /**
  * @brief Executes a builtin command in the current process.
  * @return Exit code of the builtin
  */
-int	execute_one_builtin(t_command *cmd, t_minishell *ms)
+int	run_one_builtin(t_command *cmd, t_minishell *ms)
 {
 	t_builtin		f;
 	unsigned char	flag;
@@ -28,7 +20,7 @@ int	execute_one_builtin(t_command *cmd, t_minishell *ms)
 	f = get_builtin(cmd->args[0], &flag);
 	if (f)
 		exit_code = f(cmd->args, &ms->exports);
-	close_pipes(cmd);
+	close_opened_pipes(cmd);
 	if ((flag & F_EXIT))
 		ms->shell_exit_code = handle_exit(cmd, ms, &exit_code);
 	dup2(ms->stdin_backup, STDIN_FILENO);

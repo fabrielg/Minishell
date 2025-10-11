@@ -1,5 +1,9 @@
 #include "tokens.h"
 
+/**
+ * @brief Create a TOKEN_COMMAND token from a command structure.
+ * @return Pointer to the new token or NULL on allocation failure.
+ */
 t_token	*token_create_command(t_command *cmd)
 {
 	t_token		*token;
@@ -12,6 +16,10 @@ t_token	*token_create_command(t_command *cmd)
 	return (token);
 }
 
+/**
+ * @brief Allocate and initialize a new command structure.
+ * @return Pointer to the new command or NULL on allocation failure.
+ */
 t_command	*command_create(void)
 {
 	t_command	*cmd;
@@ -24,6 +32,9 @@ t_command	*command_create(void)
 	return (cmd);
 }
 
+/**
+ * @brief Display the details of a command (arguments, redirects, pipes).
+ */
 void	token_display_command(t_command *cmd)
 {
 	t_list2	*tmp;
@@ -52,6 +63,9 @@ void	token_display_command(t_command *cmd)
 	printf("====================\n");
 }
 
+/**
+ * @brief Free a command structure and its contents.
+ */
 void	token_destroy_command(void *data)
 {
 	t_command	*command;
@@ -64,6 +78,10 @@ void	token_destroy_command(void *data)
 	free(command);
 }
 
+/**
+ * @brief Retrieve the command from token data.
+ * @return Pointer to the command.
+ */
 t_command	*get_command(void *data)
 {
 	t_command	*cmd;

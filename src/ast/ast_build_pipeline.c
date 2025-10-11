@@ -1,5 +1,8 @@
 #include "ast.h"
 
+/**
+ * @brief Parses commands from a token list into an array of AST nodes.
+ */
 static void	parse_commands(t_list2 **tokens, t_ast **cmds)
 {
 	size_t	i;
@@ -9,8 +12,8 @@ static void	parse_commands(t_list2 **tokens, t_ast **cmds)
 	while (*tokens)
 	{
 		tok = (t_token *)(*tokens)->content;
-		if (tok->type == TOKEN_COMMAND ||
-			(tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0))
+		if (tok->type == TOKEN_COMMAND
+			|| (tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0))
 		{
 			cmds[i++] = parse_simple_command_or_subshell(tokens);
 			continue ;
@@ -18,11 +21,15 @@ static void	parse_commands(t_list2 **tokens, t_ast **cmds)
 		else if (tok->type == TOKEN_PIPELINE)
 			*tokens = (*tokens)->next;
 		else
-			break;
+			break ;
 	}
 	cmds[i] = NULL;
 }
 
+/**
+ * @brief Parses a pipeline of commands from a token list.
+ * @return AST node representing the pipeline, or NULL on failure/empty
+ */
 t_ast	*parse_pipeline(t_list2 **tokens)
 {
 	t_ast	**cmds;

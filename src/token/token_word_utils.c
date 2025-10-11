@@ -1,5 +1,8 @@
 #include "tokens.h"
 
+/**
+ * @brief Free a word token.
+ */
 void	token_destroy_word(void *data)
 {
 	char	*word;
@@ -9,6 +12,10 @@ void	token_destroy_word(void *data)
 		free(word);
 }
 
+/**
+ * @brief Check if a word contains expandable variables.
+ * @return true if expandable, false otherwise.
+ */
 bool	is_expandable_word(char *word)
 {
 	int		i;
@@ -31,6 +38,9 @@ bool	is_expandable_word(char *word)
 	return (false);
 }
 
+/**
+ * @brief Display a word token.
+ */
 void	token_display_word(char *word)
 {
 	if (!word)

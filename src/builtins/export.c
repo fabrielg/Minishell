@@ -1,5 +1,9 @@
 #include "exec.h"
 
+/**
+ * @brief Checks if a string is a valid environment variable identifier.
+ * @return 1 if valid, 0 otherwise
+ */
 static int	is_valid_identifier(char *arg)
 {
 	int	i;
@@ -18,6 +22,9 @@ static int	is_valid_identifier(char *arg)
 	return (1);
 }
 
+/**
+ * @brief Prints an error message for an invalid export identifier.
+ */
 static void	print_export_err(char *arg)
 {
 	write(STDERR_FILENO, "export: `", 9);

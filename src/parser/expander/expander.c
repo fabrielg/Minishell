@@ -4,6 +4,9 @@
 #include "expander.h"
 #include "smart_split.h"
 
+/**
+ * @brief Expands all variables and special symbols in a single argument.
+ */
 void	expand_arg(char **arg_ptr, t_mst *env, int exit_code)
 {
 	char	*args[2];
@@ -32,6 +35,10 @@ void	expand_arg(char **arg_ptr, t_mst *env, int exit_code)
 	*arg_ptr = args[1];
 }
 
+/**
+ * @brief Expands variables in a list of redirections.
+ * Also optionally removes quotes if unquote is true.
+ */
 void	expand_redirs(t_list2 *redirs, t_mst *env, int exit_code, bool unquote)
 {
 	t_list2		*tmp;
@@ -49,6 +56,10 @@ void	expand_redirs(t_list2 *redirs, t_mst *env, int exit_code, bool unquote)
 	}
 }
 
+/**
+ * @brief Expands all arguments and redirections of a command.
+ * Performs both variable expansion and quote removal.
+ */
 void	expand_command(t_command *cmd, t_mst *env, int exit_code)
 {
 	int	i;
@@ -64,6 +75,10 @@ void	expand_command(t_command *cmd, t_mst *env, int exit_code)
 	expand_redirs(cmd->redirects, env, exit_code, true);
 }
 
+/**
+ * @brief Expands all commands in a list of tokens.
+ * Iterates over tokens and applies expansions to commands only.
+ */
 void	expander(t_list2 *tokens, t_mst *env, int exit_code)
 {
 	t_list2	*tmp;

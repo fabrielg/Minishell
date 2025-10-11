@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 00:31:16 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/08 16:35:52 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/10/11 02:43:53 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,34 @@ struct s_ast
 		{
 			int				count;
 			struct s_ast	**cmds;
-		}	pipeline;
+		}	s_pipeline;
 		struct
 		{
 			t_logical_op	op;
 			struct s_ast	*left;
 			struct s_ast	*right;
-		}	logical;
+		}	s_logical;
 		t_ast	*subshell;
 	};
 };
 
+//[AST-UTILS]_________________________________________
+
 t_ast	*ast_build(t_list2 *tokens);
+void	ast_display(t_ast *node);
+void	ast_clear(t_ast **root);
+
+//[AST-PARSING]_______________________________________
+
 t_ast	*parse_pipeline(t_list2 **tokens);
 t_ast	*parse_simple_command_or_subshell(t_list2 **tokens);
 size_t	ast_count_args_pipeline(t_list2 *tokens);
+
+//[AST-NEW]____________________________________________
+
 t_ast	*ast_new_command(t_command *cmd);
 t_ast	*ast_new_pipeline(t_ast **cmds, size_t count);
 t_ast	*ast_new_logical(t_logical_op op, t_ast *left, t_ast *right);
 t_ast	*ast_new_subshell(t_ast *sub);
-void	ast_display(t_ast *node);
-void	ast_clear(t_ast **root);
 
 #endif

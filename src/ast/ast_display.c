@@ -1,5 +1,8 @@
 #include "ast.h"
 
+/**
+ * @brief Prints indentation for AST display.
+ */
 static void	print_indent(int depth)
 {
 	int	i;
@@ -12,6 +15,10 @@ static void	print_indent(int depth)
 	}
 }
 
+/**
+ * @brief Returns a string representation of a redirection type.
+ * @return String describing the redirection type
+ */
 static char	*get_redir_type(t_redirect_type type)
 {
 	char	*type_str;
@@ -30,6 +37,9 @@ static char	*get_redir_type(t_redirect_type type)
 	return (type_str);
 }
 
+/**
+ * @brief Displays a single command node, its arguments, redirections, and pipes.
+ */
 static void	ast_display_cmd(t_command *cmd, int depth)
 {
 	t_list2		*redirs;
@@ -53,7 +63,10 @@ static void	ast_display_cmd(t_command *cmd, int depth)
 	printf("pipes[0] = %d pipes[1] = %d\n", cmd->pipes[0], cmd->pipes[1]);
 }
 
-static void	ast_display_aux(t_ast *node, int depth)
+/**
+ * @brief Recursively displays an AST node and its children.
+ */
+static void	ast_display_aux(t_ast *node, int depth, const char logicals[2][2])
 {
 	int	i;
 
@@ -66,29 +79,30 @@ static void	ast_display_aux(t_ast *node, int depth)
 	{
 		printf("PIPELINE:\n");
 		i = -1;
-		while (++i < node->pipeline.count)
-			ast_display_aux(node->pipeline.cmds[i], depth + 1);
+		while (++i < node->s_pipeline.count)
+			ast_display_aux(node->s_pipeline.cmds[i], depth + 1, logicals);
 	}
 	else if (node->type == TOKEN_LOGICAL_EXPRESSION)
 	{
-		if (node->logical.op == LOGICAL_AND)
-			printf("LOGICAL: &&\n");
-		else
-			printf("LOGICAL: ||\n");
-		ast_display_aux(node->logical.left, depth + 1);
-		ast_display_aux(node->logical.right, depth + 1);
+		printf("LOGICAL: %.2s\n", logicals[node->s_logical.op == LOGICAL_AND]);
+		ast_display_aux(node->s_logical.left, depth + 1, logicals);
+		ast_display_aux(node->s_logical.right, depth + 1, logicals);
 	}
 	else if (node->type == TOKEN_SUBSHELL)
 	{
 		printf("SUBSHELL:\n");
-		ast_display_aux(node->subshell, depth + 1);
+		ast_display_aux(node->subshell, depth + 1, logicals);
 	}
 }
 
+/**
+ * @brief Displays the entire AST starting from the given node.
+ */
 void	ast_display(t_ast *node)
 {
-	t_ast	*tmp;
+	const char	logicals[2][2] = {"||", "&&"};
+	t_ast		*tmp;
 
 	tmp = node;
-	ast_display_aux(tmp, 0);
+	ast_display_aux(tmp, 0, logicals);
 }

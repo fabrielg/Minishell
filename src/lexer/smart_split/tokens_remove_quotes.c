@@ -2,6 +2,10 @@
 #include "lexer.h"
 #include "smart_split.h"
 
+/**
+ * @brief Removes paired single/double quotes from a string.
+ * @return Newly allocated string without paired quotes, NULL on error
+ */
 static char	*remove_paired_quotes(const char *str)
 {
 	char			*res;
@@ -31,6 +35,9 @@ static char	*remove_paired_quotes(const char *str)
 	return (res);
 }
 
+/**
+ * @brief Removes paired quotes from a single token in place.
+ */
 void	token_unquote(char **str_ptr)
 {
 	char	*clean;
@@ -40,6 +47,9 @@ void	token_unquote(char **str_ptr)
 	*str_ptr = clean;
 }
 
+/**
+ * @brief Removes paired quotes from an array of tokens.
+ */
 void	tokens_remove_quotes(char **tokens, int count)
 {
 	int	i;

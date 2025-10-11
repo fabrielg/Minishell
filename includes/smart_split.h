@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   smart_split.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabrielg <fabrielg@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 00:31:16 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/08/16 17:03:08 by fabrielg         ###   ########.fr       */
+/*   Updated: 2025/10/11 02:42:26 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,13 @@ typedef struct s_split_ctx
 	bool		can_flush;
 }	t_split_ctx;
 
+//[FLUSH]_________________________________________
+
 void	flush_token(t_split_ctx *ctx, int end);
 void	flush_operator(t_split_ctx *ctx, int *i);
+
+//[QUOTES_UTILS]_________________________________________
+
 void	token_unquote(char **str_ptr);
 void	tokens_remove_quotes(char **tokens, int count);
 
