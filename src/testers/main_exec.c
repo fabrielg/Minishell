@@ -6,41 +6,41 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 22:15:10 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/17 21:21:05 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/10/11 01:01:27 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "minishell.h"
+// #include <readline/readline.h>
+// #include <readline/history.h>
+// #include "minishell.h"
 
-int	main(int argc, char *argv[], char **envp)
-{
-	t_mst		*env;
-	t_list2		*tokens;
-	t_command	*cmd;
-	t_token		*token;
-	char		*line;
+// int	main(int argc, char *argv[], char **envp)
+// {
+// 	t_mst		*env;
+// 	t_list2		*tokens;
+// 	t_command	*cmd;
+// 	t_token		*token;
+// 	char		*line;
 
-	(void)argc;
-	(void)argv;
-	env = mst_alloc_env(envp);
-	cmd = NULL;
-	while (1)
-	{
-		line = readline("minichaise> ");
-		if (*line)
-			add_history(line);
-		tokens = parser(line);
-		token = (t_token *) tokens->content;
-		cmd = get_command(token->data);
-		exec(cmd, &env);
-		free(line);
-	}
-	rl_clear_history();
-	mst_clear(&env);
-	return (0);
-}
+// 	(void)argc;
+// 	(void)argv;
+// 	env = mst_alloc_env(envp);
+// 	cmd = NULL;
+// 	while (1)
+// 	{
+// 		line = readline("minichaise> ");
+// 		if (*line)
+// 			add_history(line);
+// 		tokens = parser(line);
+// 		token = (t_token *) tokens->content;
+// 		cmd = get_command(token->data);
+// 		exec(cmd, &env);
+// 		free(line);
+// 	}
+// 	rl_clear_history();
+// 	mst_clear(&env);
+// 	return (0);
+// }
 	// char *arr[] = {"25", "20", "22", "10", "12", "15", "05", "01",
 	// 	"08", "36", "30", "28", "40", "38", "48", "45", "50", NULL};
 

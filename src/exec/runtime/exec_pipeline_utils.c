@@ -2,7 +2,16 @@
 #include "minishell.h"
 #include <wait.h>
 
-static int	wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds)
+int	pipe_clear(int (**pipes)[2], pid_t **pids)
+{
+	if (*pipes)
+		free(*pipes);
+	if (*pids)
+		free(*pids);
+	return (1);
+}
+
+int	wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds)
 {
 	int	i;
 	int	status;
@@ -17,20 +26,18 @@ static int	wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds)
 	return (ms->last_exit_code);
 }
 
-static int	init_pipes(int (*pipes)[2], int nb_cmd)
+int	exec_init_pipes(int (*pipes)[2], int nb_cmd)
 {
 	int	i;
 
 	i = -1;
-	while (++i < nb_cmd)
-	{
+	while (++i < nb_cmd - 1)
 		if (pipe(pipes[i]) == -1)
 			return (1);
-	}
 	return (0);
 }
 
-static void	close_all_pipes(int (*pipes)[2], int nb_cmds)
+void	exec_close_pipes(int (*pipes)[2], int nb_cmds)
 {
 	int	i;
 
@@ -42,14 +49,14 @@ static void	close_all_pipes(int (*pipes)[2], int nb_cmds)
 	}
 }
 
-static int	app_pipes(int (*pipes)[2], pid_t *pids, t_ast *node , t_minishell *ms)
+int	ap_pipes(int (*pipes)[2], pid_t *pids, t_ast *node, t_minishell *ms)
 {
 	int	i;
 	int	nb_cmds;
 	int	code;
 
 	i = -1;
-	nb_cmds = node->pipeline.count;
+	nb_cmds = node->s_pipeline.count;
 	while (++i < nb_cmds)
 	{
 		pids[i] = fork();
@@ -61,24 +68,10 @@ static int	app_pipes(int (*pipes)[2], pid_t *pids, t_ast *node , t_minishell *ms
 				dup2(pipes[i - 1][0], STDIN_FILENO);
 			if (i < nb_cmds - 1)
 				dup2(pipes[i][1], STDOUT_FILENO);
-			close_all_pipes(pipes, nb_cmds);
-			code = exec_ast(node->pipeline.cmds[i], ms);
+			exec_close_pipes(pipes, nb_cmds);
+			code = exec_ast(node->s_pipeline.cmds[i], ms);
 			exit(clear_minishell(ms, code));
 		}
 	}
 	return (0);
-}
-
-int	exec_pipeline(t_ast *node, t_minishell *ms)
-{
-	int		nb_cmds = node->pipeline.count;
-	pid_t	pids[nb_cmds];
-	int		pipes[nb_cmds - 1][2];
-
-	if (init_pipes(pipes, nb_cmds) == 1)
-		return (1);
-	if (app_pipes(pipes, pids, node, ms) == 1)
-		return (1);
-	close_all_pipes(pipes, nb_cmds);
-	return (wait_forked_pipes(ms, pids, nb_cmds));
 }

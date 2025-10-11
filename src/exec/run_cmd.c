@@ -35,7 +35,7 @@ static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
  * @brief Forks and executes a command in a child process.
  * @return Exit status of command, or error code
  */
-int	execute_cmd(t_command *cmd, t_minishell *ms, bool wait_child)
+int	run_cmd(t_command *cmd, t_minishell *ms, bool wait_child)
 {
 	pid_t	pid;
 	int		status;
@@ -55,7 +55,7 @@ int	execute_cmd(t_command *cmd, t_minishell *ms, bool wait_child)
 	}
 	cmd->pid = pid;
 	g_sig_pid = pid;
-	close_pipes(cmd);
+	close_opened_pipes(cmd);
 	if (wait_child)
 	{
 		waitpid(pid, &status, 0);

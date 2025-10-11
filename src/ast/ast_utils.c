@@ -20,8 +20,8 @@ t_ast	*ast_new_pipeline(t_ast **cmds, size_t count)
 	if (!node)
 		return (NULL);
 	node->type = TOKEN_PIPELINE;
-	node->pipeline.count = count;
-	node->pipeline.cmds = cmds;
+	node->s_pipeline.count = count;
+	node->s_pipeline.cmds = cmds;
 	return (node);
 }
 
@@ -33,9 +33,9 @@ t_ast	*ast_new_logical(t_logical_op op, t_ast *left, t_ast *right)
 	if (!node)
 		return (NULL);
 	node->type = TOKEN_LOGICAL_EXPRESSION;
-	node->logical.op = op;
-	node->logical.left = left;
-	node->logical.right = right;
+	node->s_logical.op = op;
+	node->s_logical.left = left;
+	node->s_logical.right = right;
 	return (node);
 }
 
@@ -62,17 +62,17 @@ void	ast_clear(t_ast **root)
 	if (node->type == TOKEN_PIPELINE)
 	{
 		i = 0;
-		while (i < node->pipeline.count)
+		while (i < node->s_pipeline.count)
 		{
-			ast_clear(&node->pipeline.cmds[i]);
+			ast_clear(&node->s_pipeline.cmds[i]);
 			i++;
 		}
-		free(node->pipeline.cmds);
+		free(node->s_pipeline.cmds);
 	}
 	else if (node->type == TOKEN_LOGICAL_EXPRESSION)
 	{
-		ast_clear(&node->logical.left);
-		ast_clear(&node->logical.right);
+		ast_clear(&node->s_logical.left);
+		ast_clear(&node->s_logical.right);
 	}
 	else if (node->type == TOKEN_SUBSHELL)
 		ast_clear(&node->subshell);

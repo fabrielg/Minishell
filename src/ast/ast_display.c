@@ -66,14 +66,14 @@ static void	ast_display_aux(t_ast *node, int depth, const char logicals[2][2])
 	{
 		printf("PIPELINE:\n");
 		i = -1;
-		while (++i < node->pipeline.count)
-			ast_display_aux(node->pipeline.cmds[i], depth + 1, logicals);
+		while (++i < node->s_pipeline.count)
+			ast_display_aux(node->s_pipeline.cmds[i], depth + 1, logicals);
 	}
 	else if (node->type == TOKEN_LOGICAL_EXPRESSION)
 	{
-		printf("LOGICAL: %.2s\n", logicals[node->logical.op == LOGICAL_AND]);
-		ast_display_aux(node->logical.left, depth + 1, logicals);
-		ast_display_aux(node->logical.right, depth + 1, logicals);
+		printf("LOGICAL: %.2s\n", logicals[node->s_logical.op == LOGICAL_AND]);
+		ast_display_aux(node->s_logical.left, depth + 1, logicals);
+		ast_display_aux(node->s_logical.right, depth + 1, logicals);
 	}
 	else if (node->type == TOKEN_SUBSHELL)
 	{

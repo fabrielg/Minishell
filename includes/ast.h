@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 00:31:16 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/08 16:35:52 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/10/11 02:01:24 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ struct s_ast
 		{
 			int				count;
 			struct s_ast	**cmds;
-		}	pipeline;
+		}	s_pipeline;
 		struct
 		{
 			t_logical_op	op;
 			struct s_ast	*left;
 			struct s_ast	*right;
-		}	logical;
+		}	s_logical;
 		t_ast	*subshell;
 	};
 };

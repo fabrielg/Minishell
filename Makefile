@@ -6,7 +6,7 @@
 #    By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/15 22:24:21 by gfrancoi          #+#    #+#              #
-#    Updated: 2025/09/27 18:17:46 by alde-abr         ###   ########.fr        #
+#    Updated: 2025/10/11 01:53:55 by alde-abr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,15 +36,19 @@ FILES		=	env/env_insert \
 				env/env_debug \
 				env/env_get_node \
 				env/env_modif \
-				exec/exec \
-				exec/execute_cmd \
-				exec/execute_one_builtin \
+				exec/runtime/exec \
+				exec/runtime/exec_command \
+				exec/runtime/exec_pipeline_utils \
+				exec/runtime/exec_pipeline \
+				exec/runtime/exec_logical \
+				exec/runtime/exec_subshell \
+				exec/run_cmd \
+				exec/run_one_builtin \
 				exec/redirect_cmd \
-				exec/execute_utils \
+				exec/run_utils \
 				exec/builtin_utils \
 				exec/shebang_utils \
-				exec/cmd_pipes_utils \
-				exec/exec_pipe \
+				exec/pipes_utils \
 				ast/ast_build \
 				ast/ast_display \
 				ast/ast_utils \

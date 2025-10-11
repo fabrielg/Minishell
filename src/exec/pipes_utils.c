@@ -1,7 +1,7 @@
 #include "exec.h"
 #include "minishell.h"
 
-void	close_pipes(t_command *cmd)
+void	close_opened_pipes(t_command *cmd)
 {
 	if (cmd->pipes[0] > 2)
 		close(cmd->pipes[0]);
