@@ -14,6 +14,7 @@
 # define EXPANDER_H
 
 # include "envp.h"
+# include "minishell.h"
 
 //[EXPAND]_________________________________________
 
@@ -23,5 +24,6 @@ void	expand_redirs(t_list2 *redirs, t_mst *env, int exit_code, bool unquote);
 void	expand_arg(char **arg_ptr, t_mst *env, int exit_code);
 void	expand_command(t_command *cmd, t_mst *env, int exit_code);
 int		expand_heredoc(t_redirect *redir, t_mst *env, int exit_code);
+int		expand_heredocs(t_list2 *rdr_lst, t_minishell *ms);
 
 #endif
