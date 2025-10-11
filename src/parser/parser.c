@@ -27,6 +27,7 @@ t_list2	*parser(t_minishell *ms)
 	if (!tokens)
 		return (NULL);
 	tokens = group_commands(tokens);
+	tokens_display(tokens);
 	if (!tokens)
 		return (NULL);
 	if (handle_heredocs(tokens, ms))

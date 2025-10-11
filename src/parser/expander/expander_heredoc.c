@@ -50,6 +50,7 @@ static char	*read_file_content(const char *path)
 		if (!content)
 			return (close(fd), NULL);
 		size += n;
+		n = read(fd, buf, sizeof(buf));
 	}
 	close(fd);
 	return (content);
