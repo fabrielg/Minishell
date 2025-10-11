@@ -1,6 +1,9 @@
 #include "tokens.h"
 #include "parser.h"
 
+/**
+ * @brief Adds the current command to the result list and resets it.
+ */
 void	flush_command(t_list2 **result, t_command **current)
 {
 	if (*current)

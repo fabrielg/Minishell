@@ -1,6 +1,9 @@
 #include "exec.h"
 #include "minishell.h"
 
+/**
+ * @brief Closes the pipe file descriptors of a command if they are open.
+ */
 void	close_opened_pipes(t_command *cmd)
 {
 	if (cmd->pipes[0] > 2)
@@ -9,6 +12,10 @@ void	close_opened_pipes(t_command *cmd)
 		close(cmd->pipes[1]);
 }
 
+/**
+ * @brief Duplicates the pipe FDs to stdin/stdout and closes the originals.
+ * @return 0 on success, 1 on dup2 failure
+ */
 int	pipe_cmd(t_command *cmd)
 {
 	int	i;

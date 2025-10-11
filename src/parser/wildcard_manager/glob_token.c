@@ -1,11 +1,18 @@
 #include "libft.h"
 #include "wildcard.h"
 
+/**
+ * @brief Check if a token contains a wildcard '*'.
+ * @return 1 if wildcard found, 0 otherwise.
+ */
 static int	has_wildcard(const char *token)
 {
 	return (!!ft_strchr(token, '*'));
 }
 
+/**
+ * @brief Split a path into directory and pattern parts.
+ */
 static void	split_path(const char *token, char *dir, char *pattern)
 {
 	int	i;
@@ -31,6 +38,10 @@ static void	split_path(const char *token, char *dir, char *pattern)
 	}
 }
 
+/**
+ * @brief Return a single token as an array.
+ * @return Newly allocated array with the token.
+ */
 static char	**get_raw_token(const char *token, int *out_count)
 {
 	char	**res;
@@ -49,6 +60,10 @@ static char	**get_raw_token(const char *token, int *out_count)
 	return (res);
 }
 
+/**
+ * @brief Expand a token with wildcards using globbing.
+ * @return Array of expanded tokens (malloc'ed).
+ */
 char	**glob_token(const char *token, int *out_count)
 {
 	char	dir[1024];

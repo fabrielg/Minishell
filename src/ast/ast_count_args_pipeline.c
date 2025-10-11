@@ -1,11 +1,17 @@
 #include "ast.h"
 
+/**
+ * @brief Marks a command token as seen and advances the token pointer.
+ */
 static void	read_command(bool *seen_ptr, t_list2 **tokens)
 {
 	*seen_ptr = true;
 	*tokens = (*tokens)->next;
 }
 
+/**
+ * @brief Skips over a subshell, updating seen status and advancing tokens.
+ */
 static void	read_subshell(bool *seen_ptr, t_list2 **tokens)
 {
 	int		depth;
@@ -34,6 +40,9 @@ static void	read_subshell(bool *seen_ptr, t_list2 **tokens)
 	}
 }
 
+/**
+ * @brief Handles a pipeline token, updating count if a command was seen.
+ */
 static void	read_pipeline(bool *seen_ptr, size_t *count_ptr, t_list2 **tokens)
 {
 	if (*seen_ptr)
@@ -42,6 +51,10 @@ static void	read_pipeline(bool *seen_ptr, size_t *count_ptr, t_list2 **tokens)
 	*tokens = (*tokens)->next;
 }
 
+/**
+ * @brief Counts the number of commands or subshells in a pipeline.
+ * @return Number of arguments in the pipeline
+ */
 size_t	ast_count_args_pipeline(t_list2 *tokens)
 {
 	size_t	count;

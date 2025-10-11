@@ -1,6 +1,11 @@
 #include "exec.h"
 #include "minishell.h"
 
+/**
+ * @brief Determines and executes the right-hand side of a logical
+ *        expression based on the left status.
+ * @return Exit status after evaluating the right-hand side
+ */
 static int	set_right_status(t_ast *node, t_minishell *ms, int left_status)
 {
 	if (node->s_logical.op == LOGICAL_AND && left_status == 0)
@@ -12,6 +17,10 @@ static int	set_right_status(t_ast *node, t_minishell *ms, int left_status)
 	return (0);
 }
 
+/**
+ * @brief Executes a logical AST node (&& or ||) and updates the last exit code.
+ * @return Exit status of the logical expression
+ */
 int	exec_logical(t_ast *node, t_minishell *ms)
 {
 	int	left_status;

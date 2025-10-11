@@ -2,6 +2,9 @@
 #include "tokens.h"
 #include "wildcard.h"
 
+/**
+ * @brief Expands glob patterns in all commands of a token list.
+ */
 void	glob_commands(t_list2 *tokens)
 {
 	t_list2		*curr;

@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 00:31:16 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/09/08 16:35:52 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/10/11 02:39:39 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,26 @@ struct s_token
 	void			*data;
 };
 
-/* Functions utils for tokens */
+//[TOKEN-UTILS]_________________________________________
 t_token			*token_new_op(const char *s, t_token_type type);
 void			token_destroy(void *content);
 t_token_type	detect_type(char *s);
 void			token_display(t_token *token);
 void			tokens_display(t_list2 *tokens);
 
-/* Functions utils for TOKEN_WORD */
+//[TOKEN-WORD]_________________________________________
 void			token_destroy_word(void *data);
 bool			is_expandable_word(char *word);
 void			token_display_word(char *word);
 
-/* Functions utils for TOKEN_REDIRECT */
+//[TOKEN-REDIRECT]_____________________________________
 t_redirect		*parse_redir(char **contents, int *i);
 t_token			*token_new_redir(char **contents, int *i);
 void			token_destroy_redir(void *data);
 void			token_display_redirect(t_redirect *redir);
 t_redirect		*get_redir(void *data);
 
-/* Functions utils for TOKEN_COMMAND */
+//[TOKEN-COMMAND]_______________________________________
 t_command		*command_create(void);
 t_token			*token_create_command(t_command *cmd);
 void			token_display_command(t_command *cmd);

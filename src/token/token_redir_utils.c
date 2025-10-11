@@ -1,5 +1,9 @@
 #include "tokens.h"
 
+/**
+ * @brief Create a redirection structure from token contents.
+ * @return Pointer to the new redirection or NULL on failure.
+ */
 t_redirect	*parse_redir(char **contents, int *i)
 {
 	t_redirect	*r;
@@ -23,6 +27,10 @@ t_redirect	*parse_redir(char **contents, int *i)
 	return (r);
 }
 
+/**
+ * @brief Create a redirection token from contents.
+ * @return Pointer to the new token or NULL on failure.
+ */
 t_token	*token_new_redir(char **contents, int *i)
 {
 	t_token		*token;
@@ -42,6 +50,9 @@ t_token	*token_new_redir(char **contents, int *i)
 	return (token);
 }
 
+/**
+ * @brief Free a redirection structure.
+ */
 void	token_destroy_redir(void *data)
 {
 	t_redirect	*redir;
@@ -54,6 +65,10 @@ void	token_destroy_redir(void *data)
 	free(redir);
 }
 
+/**
+ * @brief Retrieve a redirection structure from a token's data.
+ * @return Pointer to the redirection.
+ */
 t_redirect	*get_redir(void *data)
 {
 	t_redirect	*r;
@@ -62,6 +77,9 @@ t_redirect	*get_redir(void *data)
 	return (r);
 }
 
+/**
+ * @brief Display a redirection's information.
+ */
 void	token_display_redirect(t_redirect *redir)
 {
 	const char	*type_str;

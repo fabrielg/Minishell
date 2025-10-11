@@ -1,6 +1,11 @@
 #include "minishell.h"
 #include "exec.h"
 
+/**
+ * @brief Executes an AST node based on its type and updates the last exit
+ *        code in the minishell structure.
+ * @return Exit status of the executed node
+ */
 int	exec_ast(t_ast *node, t_minishell *ms)
 {
 	if (!node)

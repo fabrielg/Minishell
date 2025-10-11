@@ -35,13 +35,6 @@ t_uint8		cmd_unset(char **args, t_mst **env);
 t_uint8		cmd_env(char **args, t_mst **env);
 t_uint8		cmd_exit(char **args, t_mst **env);
 
-//[MAIN_EXEC]_________________________________________
-
-int			run_cmd(t_command *cmd, t_minishell *ms, bool wait_child);
-int			run_one_builtin(t_command *cmd, t_minishell *ms);
-int			exec_command(t_command *cmd, t_minishell *ms);
-int			exec_ast(t_ast *node, t_minishell *ms);
-
 //[BUILTIN_UTILS]_____________________________________
 
 t_builtin	get_builtin(char *name, t_uint8 *flag_out);
@@ -65,17 +58,24 @@ t_uint8		is_in_path(char **args, t_mst *m_path, t_mst *env, t_uint8 *ext_cd);
 
 int			pipe_cmd(t_command *cmd);
 void		close_opened_pipes(t_command *cmd);
-
-//[RUNTIME]___________________________________________
-
-int			exec_pipeline(t_ast *node, t_minishell *ms);
-int			exec_logical(t_ast *node, t_minishell *ms);
-int			exec_subshell(t_ast *node, t_minishell *ms);
-
 int			pipe_clear(int (**pipes)[2], pid_t **pids);
 int			wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds);
 int			exec_init_pipes(int (*pipes)[2], int nb_cmd);
 void		exec_close_pipes(int (*pipes)[2], int nb_cmds);
 int			ap_pipes(int (*pipes)[2], pid_t *pid, t_ast *node, t_minishell *ms);
+
+//[RUNTIME]___________________________________________
+
+int			exec_ast(t_ast *node, t_minishell *ms);
+int			exec_command(t_command *cmd, t_minishell *ms);
+int			exec_pipeline(t_ast *node, t_minishell *ms);
+int			exec_logical(t_ast *node, t_minishell *ms);
+int			exec_subshell(t_ast *node, t_minishell *ms);
+
+//[RUNTIME_UTILS]_____________________________________
+
+
+int			run_cmd(t_command *cmd, t_minishell *ms, bool wait_child);
+int			run_one_builtin(t_command *cmd, t_minishell *ms);
 
 #endif

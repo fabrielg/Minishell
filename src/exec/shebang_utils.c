@@ -5,6 +5,10 @@
 
 #define BASH_DIR "/bin/bash"
 
+/**
+ * @brief Executes a script without a shebang using /bin/bash and handles errors.
+ * @return Exit code of the attempted execution
+ */
 t_uint8	no_shebang_case(char *arg, char **env_cpy, t_uint8 *exit_code)
 {
 	char	*tab[3];

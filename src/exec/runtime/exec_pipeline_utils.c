@@ -2,6 +2,10 @@
 #include "minishell.h"
 #include <wait.h>
 
+/**
+ * @brief Frees allocated pipes and PIDs arrays.
+ * @return Always returns 1
+ */
 int	pipe_clear(int (**pipes)[2], pid_t **pids)
 {
 	if (*pipes)
@@ -11,6 +15,10 @@ int	pipe_clear(int (**pipes)[2], pid_t **pids)
 	return (1);
 }
 
+/**
+ * @brief Waits for all forked pipeline processes and sets the last exit code.
+ * @return Exit code of the last process
+ */
 int	wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds)
 {
 	int	i;
@@ -26,6 +34,10 @@ int	wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds)
 	return (ms->last_exit_code);
 }
 
+/**
+ * @brief Initializes the required number of pipes for a pipeline.
+ * @return 0 on success, 1 on failure
+ */
 int	exec_init_pipes(int (*pipes)[2], int nb_cmd)
 {
 	int	i;
@@ -37,6 +49,9 @@ int	exec_init_pipes(int (*pipes)[2], int nb_cmd)
 	return (0);
 }
 
+/**
+ * @brief Closes all pipe file descriptors in the pipeline.
+ */
 void	exec_close_pipes(int (*pipes)[2], int nb_cmds)
 {
 	int	i;
@@ -49,6 +64,11 @@ void	exec_close_pipes(int (*pipes)[2], int nb_cmds)
 	}
 }
 
+/**
+ * @brief Forks and executes each command in a pipeline,
+ *        setting up pipes between them.
+ * @return 0 on success, 1 on fork failure
+ */
 int	ap_pipes(int (*pipes)[2], pid_t *pids, t_ast *node, t_minishell *ms)
 {
 	int	i;

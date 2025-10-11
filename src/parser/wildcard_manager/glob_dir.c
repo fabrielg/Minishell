@@ -4,6 +4,10 @@
 #include "libft.h"
 #include "wildcard.h"
 
+/**
+ * @brief Count how many filenames in a directory match a pattern.
+ * @return Number of matches found.
+ */
 static int	count_matches(const char *dir, const char *pattern)
 {
 	DIR				*d;
@@ -32,6 +36,9 @@ static int	count_matches(const char *dir, const char *pattern)
 	return (count);
 }
 
+/**
+ * @brief Sort an array of strings in ascending order.
+ */
 static void	bubble_sort(char **arr, int n)
 {
 	int		i;
@@ -56,6 +63,9 @@ static void	bubble_sort(char **arr, int n)
 	}
 }
 
+/**
+ * @brief Fill an array with filenames from a directory that match a pattern.
+ */
 static void	fill_matches(const char *dir, const char *pattern, char **res)
 {
 	DIR				*d;
@@ -82,6 +92,10 @@ static void	fill_matches(const char *dir, const char *pattern, char **res)
 	closedir(d);
 }
 
+/**
+ * @brief Return an array of filenames in a directory matching a pattern.
+ * @return Array of matching filenames (NULL if none or on error).
+ */
 char	**glob_dir(const char *dir, const char *pattern, int *out_count)
 {
 	int		count;

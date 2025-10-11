@@ -1,6 +1,10 @@
 #include "tokens.h"
 #include "parser.h"
 
+/**
+ * @brief Counts consecutive word tokens in a token list.
+ * @return Number of word tokens.
+ */
 static int	count_args(t_list2 *tmp)
 {
 	int		count;
@@ -19,6 +23,10 @@ static int	count_args(t_list2 *tmp)
 	return (count);
 }
 
+/**
+ * @brief Allocates a new command struct with space for arguments.
+ * @return Pointer to the new command, or NULL on allocation failure.
+ */
 static t_command	*command_create_with_args(int argc)
 {
 	t_command	*cmd;
@@ -40,6 +48,9 @@ static t_command	*command_create_with_args(int argc)
 	return (cmd);
 }
 
+/**
+ * @brief Adds a word to args or a redirect to the redirects list.
+ */
 static void	handle_word_or_redir(t_command *cmd, t_token *tok)
 {
 	if (tok->type == TOKEN_WORD)
@@ -55,6 +66,10 @@ static void	handle_word_or_redir(t_command *cmd, t_token *tok)
 	}
 }
 
+/**
+ * @brief Processes a token, updating current command or flushing it.
+ * @return 0 on success, 1 on failure.
+ */
 static int	process_token(t_list2 **res, t_command **cur, t_list2 *tmp)
 {
 	t_token	*tok;
@@ -81,6 +96,10 @@ static int	process_token(t_list2 **res, t_command **cur, t_list2 *tmp)
 	return (0);
 }
 
+/**
+ * @brief Groups tokens into commands with arguments and redirects.
+ * @return Pointer to the list of grouped commands, or NULL on failure.
+ */
 t_list2	*group_commands(t_list2 *tokens)
 {
 	t_list2		*result;

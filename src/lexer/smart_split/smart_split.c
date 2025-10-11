@@ -2,12 +2,18 @@
 #include <string.h>
 #include "smart_split.h"
 
+/**
+ * @brief Handles a character inside a quote, closing it if matched.
+ */
 static void	handle_inside_quote(t_split_ctx *ctx, char c)
 {
 	if (c == ctx->quote)
 		ctx->quote = 0;
 }
 
+/**
+ * @brief Handles a character outside quotes, manages tokens and operators.
+ */
 static void	handle_outside_quote(t_split_ctx *ctx, char c, int *i)
 {
 	if (c == '\'' || c == '"')
@@ -27,6 +33,9 @@ static void	handle_outside_quote(t_split_ctx *ctx, char c, int *i)
 		ctx->start = *i;
 }
 
+/**
+ * @brief Processes a character, delegating based on quote state.
+ */
 static void	process_char(t_split_ctx *ctx, int *i)
 {
 	char	c;
@@ -38,6 +47,10 @@ static void	process_char(t_split_ctx *ctx, int *i)
 		handle_outside_quote(ctx, c, i);
 }
 
+/**
+ * @brief Splits a command line into tokens, respecting quotes and operators.
+ * @return Array of strings (tokens), NULL on allocation failure
+ */
 char	**smart_split(const char *line)
 {
 	t_split_ctx		ctx;

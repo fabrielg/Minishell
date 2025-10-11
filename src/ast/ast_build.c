@@ -3,11 +3,19 @@
 static t_ast	*parse_logical_expr(t_list2 **tokens);
 static t_ast	*parse_subshell(t_list2 **tokens);
 
+/**
+ * @brief Builds an AST from a token list.
+ * @return Root AST node
+ */
 t_ast	*ast_build(t_list2 *tokens)
 {
 	return (parse_logical_expr(&tokens));
 }
 
+/**
+ * @brief Parses logical expressions (&&, ||) from tokens.
+ * @return AST node representing the logical expression
+ */
 static t_ast	*parse_logical_expr(t_list2 **tokens)
 {
 	t_ast			*left;
@@ -31,6 +39,10 @@ static t_ast	*parse_logical_expr(t_list2 **tokens)
 	return (left);
 }
 
+/**
+ * @brief Parses a subshell expression enclosed in parentheses.
+ * @return AST node representing the subshell, or NULL on failure
+ */
 static t_ast	*parse_subshell(t_list2 **tokens)
 {
 	t_ast	*sub;
@@ -45,6 +57,10 @@ static t_ast	*parse_subshell(t_list2 **tokens)
 	return (ast_new_subshell(sub));
 }
 
+/**
+ * @brief Parses either a simple command or a subshell from tokens.
+ * @return AST node for command or subshell, or NULL on unexpected token
+ */
 t_ast	*parse_simple_command_or_subshell(t_list2 **tokens)
 {
 	t_token		*tok;

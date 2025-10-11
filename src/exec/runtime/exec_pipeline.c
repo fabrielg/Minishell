@@ -2,6 +2,11 @@
 #include "minishell.h"
 #include <wait.h>
 
+/**
+ * @brief Executes a pipeline AST node, handling pipe creation,
+ *        forking, and cleanup.
+ * @return Exit status of the last command in the pipeline
+ */
 int	exec_pipeline(t_ast *node, t_minishell *ms)
 {
 	int		nb_cmds;

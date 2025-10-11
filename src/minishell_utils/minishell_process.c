@@ -6,6 +6,10 @@
 
 pid_t	g_sig_pid = 0;
 
+/**
+ * @brief Checks if the input line signals EOF (Ctrl-D).
+ * @return 1 if EOF, 0 otherwise
+ */
 int	is_end_of_file(char *input_line)
 {
 	if (input_line)
@@ -14,6 +18,10 @@ int	is_end_of_file(char *input_line)
 	return (1);
 }
 
+/**
+ * @brief Processes a single input line in the minishell.
+ * @return 0 on success, error code on failure
+ */
 int	process_line(t_minishell *ms)
 {
 	if (!*ms->input_line)
@@ -33,6 +41,9 @@ int	process_line(t_minishell *ms)
 	return (0);
 }
 
+/**
+ * @brief Handles signals received while waiting at the prompt.
+ */
 void	handle_prompt_signal(t_uint8 *exit_code)
 {
 	if (g_sig_pid != -1)

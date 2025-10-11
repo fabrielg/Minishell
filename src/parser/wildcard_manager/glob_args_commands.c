@@ -2,6 +2,10 @@
 #include "tokens.h"
 #include "wildcard.h"
 
+/**
+ * @brief Counts the total number of tokens after glob expansion.
+ * @return Total number of expanded tokens.
+ */
 static int	count_expanded_tokens(char **args, int arg_count)
 {
 	int		total;
@@ -22,6 +26,9 @@ static int	count_expanded_tokens(char **args, int arg_count)
 	return (total);
 }
 
+/**
+ * @brief Copies an array of strings into a new argument array.
+ */
 static void	cpy_new_args(char **res, char **new_args, int *k, int n)
 {
 	int	i;
@@ -31,6 +38,10 @@ static void	cpy_new_args(char **res, char **new_args, int *k, int n)
 		new_args[(*k)++] = ft_strdup(res[i]);
 }
 
+/**
+ * @brief Creates a new argument array with all glob expansions applied.
+ * @return Pointer to the new argument array, or NULL on allocation failure.
+ */
 static char	**fill_expanded_tokens(char **args, int arg_count, int new_count)
 {
 	char	**new_args;
@@ -55,6 +66,9 @@ static char	**fill_expanded_tokens(char **args, int arg_count, int new_count)
 	return (new_args);
 }
 
+/**
+ * @brief Expands all glob patterns in a command's arguments.
+ */
 void	glob_one_command(t_command *cmd)
 {
 	char	**old_args;

@@ -4,8 +4,9 @@
 #include "expander.h"
 
 /**
- * @brief Executes a command (builtin or external) and updates last exit code.
- * @return last exit code
+ * @brief Expands, globs, and executes a single command.
+ *        Runs builtins directly or external commands via fork/exec.
+ * @return Last exit code of the executed command
  */
 int	exec_command(t_command *cmd, t_minishell *ms)
 {

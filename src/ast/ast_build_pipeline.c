@@ -1,5 +1,8 @@
 #include "ast.h"
 
+/**
+ * @brief Parses commands from a token list into an array of AST nodes.
+ */
 static void	parse_commands(t_list2 **tokens, t_ast **cmds)
 {
 	size_t	i;
@@ -23,6 +26,10 @@ static void	parse_commands(t_list2 **tokens, t_ast **cmds)
 	cmds[i] = NULL;
 }
 
+/**
+ * @brief Parses a pipeline of commands from a token list.
+ * @return AST node representing the pipeline, or NULL on failure/empty
+ */
 t_ast	*parse_pipeline(t_list2 **tokens)
 {
 	t_ast	**cmds;

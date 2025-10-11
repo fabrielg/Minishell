@@ -1,6 +1,10 @@
 #include "tokens.h"
 #include "wildcard.h"
 
+/**
+ * @brief Expand wildcards in a single redirect filename.
+ * @return 1 if expanded successfully, 0 on error, -1 if ambiguous.
+ */
 static int	glob_one_redir(t_redirect *redir)
 {
 	int		count;
@@ -22,6 +26,10 @@ static int	glob_one_redir(t_redirect *redir)
 	return (1);
 }
 
+/**
+ * @brief Expand wildcards for all redirects in a list.
+ * @return 1 if all successful, -1 if any ambiguous.
+ */
 int	glob_redirects_list(t_list2 *redirects)
 {
 	t_list2		*curr;

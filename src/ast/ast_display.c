@@ -1,5 +1,8 @@
 #include "ast.h"
 
+/**
+ * @brief Prints indentation for AST display.
+ */
 static void	print_indent(int depth)
 {
 	int	i;
@@ -12,6 +15,10 @@ static void	print_indent(int depth)
 	}
 }
 
+/**
+ * @brief Returns a string representation of a redirection type.
+ * @return String describing the redirection type
+ */
 static char	*get_redir_type(t_redirect_type type)
 {
 	char	*type_str;
@@ -30,6 +37,9 @@ static char	*get_redir_type(t_redirect_type type)
 	return (type_str);
 }
 
+/**
+ * @brief Displays a single command node, its arguments, redirections, and pipes.
+ */
 static void	ast_display_cmd(t_command *cmd, int depth)
 {
 	t_list2		*redirs;
@@ -53,6 +63,9 @@ static void	ast_display_cmd(t_command *cmd, int depth)
 	printf("pipes[0] = %d pipes[1] = %d\n", cmd->pipes[0], cmd->pipes[1]);
 }
 
+/**
+ * @brief Recursively displays an AST node and its children.
+ */
 static void	ast_display_aux(t_ast *node, int depth, const char logicals[2][2])
 {
 	int	i;
@@ -82,6 +95,9 @@ static void	ast_display_aux(t_ast *node, int depth, const char logicals[2][2])
 	}
 }
 
+/**
+ * @brief Displays the entire AST starting from the given node.
+ */
 void	ast_display(t_ast *node)
 {
 	const char	logicals[2][2] = {"||", "&&"};
