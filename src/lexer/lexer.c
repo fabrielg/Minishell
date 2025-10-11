@@ -33,8 +33,8 @@ int	lex_line(char *cmd_line)
 		if (cmd_line[i] != ' ')
 		{
 			toggle_quotes(cmd_line[i], &byte);
-			if (!check_parenthesis(cmd_line[i], &par_count, byte)
-				|| !check_operators(cmd_line, &i, &byte))
+			if (!check_operators(cmd_line, &i, &byte)
+				|| !check_parenthesis(cmd_line[i], &par_count, byte))
 				return (STX_ERROR);
 		}
 	}

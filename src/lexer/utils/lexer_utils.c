@@ -43,7 +43,7 @@ int	check_operators(char *cmd_line, int *i, unsigned char	*byte)
 			return (print_stx_error(0, &(cmd_line[*i]), 1));
 		*byte = RDR_READ;
 	}
-	else
+	else if (cmd_line[*i] != '(' && cmd_line[*i] != ')')
 		*byte = WRD_READ;
 	return (1);
 }
@@ -63,6 +63,8 @@ int	check_parenthesis(char c, int *par_count, unsigned char byte)
 		if (!(*par_count))
 			return (print_stx_error(0, &c, 1));
 		(*par_count)--;
+		if (!(byte & WRD_READ) && *par_count == 0)
+			return (print_stx_error(0, &c, 1));
 	}
 	return (1);
 }
