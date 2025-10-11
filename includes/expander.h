@@ -14,6 +14,7 @@
 # define EXPANDER_H
 
 # include "envp.h"
+# include "minishell.h"
 
 //[EXPAND]_________________________________________
 
