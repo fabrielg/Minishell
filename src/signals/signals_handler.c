@@ -14,13 +14,20 @@ void	handle_sigint(int sig)
 	if (g_sig_pid > 0)
 	{
 		kill(g_sig_pid, sig);
-		return ;
+		return;
 	}
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 	g_sig_pid = -1;
+}
+
+void	handle_sigint_pipeline(int sig)
+{
+	(void)sig;
+	if (g_sig_pid > 0)
+		kill(g_sig_pid, sig);
 }
 
 /**

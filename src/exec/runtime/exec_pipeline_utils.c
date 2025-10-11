@@ -1,6 +1,7 @@
 #include "exec.h"
 #include "minishell.h"
 #include <wait.h>
+#include "sig.h"
 
 /**
  * @brief Frees allocated pipes and PIDs arrays.
@@ -31,6 +32,7 @@ int	wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds)
 		ms->last_exit_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		ms->last_exit_code = 128 + WTERMSIG(status);
+	g_sig_pid = 0;
 	return (ms->last_exit_code);
 }
 

@@ -18,6 +18,6 @@ int	exec_command(t_command *cmd, t_minishell *ms)
 		ms->last_exit_code = run_one_builtin(cmd, ms);
 		return (ms->last_exit_code);
 	}
-	run_cmd(cmd, ms, true);
+	run_cmd(cmd, ms);
 	return (ms->last_exit_code);
 }

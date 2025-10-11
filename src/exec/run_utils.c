@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <sys/wait.h>
+#include "sig.h"
 
 /**
  * @brief Converts a process wait status to a shell exit code.
@@ -14,7 +15,8 @@ int	cmd_exit_status(int status)
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 	{
-		write(STDOUT_FILENO, "\n", 1);
+		if (WTERMSIG(status) == SIGINT)
+			write(STDOUT_FILENO, "\n", 1);
 		return (128 + WTERMSIG(status));
 	}
 	return (1);

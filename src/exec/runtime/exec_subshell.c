@@ -1,4 +1,5 @@
 #include "exec.h"
+#include "sig.h"
 #include "minishell.h"
 #include <wait.h>
 
@@ -13,6 +14,8 @@ int	exec_subshell(t_ast *node, t_minishell *ms)
 	int		status;
 	int		exit_code;
 
+	ms->last_exit_code = 0;
+	signal(SIGINT, &handle_sigint_pipeline);
 	pid = fork();
 	if (pid == -1)
 		return (ERROR);
@@ -23,5 +26,6 @@ int	exec_subshell(t_ast *node, t_minishell *ms)
 	}
 	waitpid(pid, &status, 0);
 	ms->last_exit_code = cmd_exit_status(status);
+	signal(SIGINT, &handle_sigint);
 	return (ms->last_exit_code);
 }

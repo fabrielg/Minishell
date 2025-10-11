@@ -75,7 +75,7 @@ int			exec_subshell(t_ast *node, t_minishell *ms);
 //[RUNTIME_UTILS]_____________________________________
 
 
-int			run_cmd(t_command *cmd, t_minishell *ms, bool wait_child);
+int			run_cmd(t_command *cmd, t_minishell *ms);
 int			run_one_builtin(t_command *cmd, t_minishell *ms);
 
 #endif
