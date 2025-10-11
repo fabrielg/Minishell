@@ -21,8 +21,6 @@ static int	fill_heredocs(t_list2 *rdr_lst, t_minishell *ms)
 		{
 			if (create_heredoc(rdr, ms))
 				return (1);
-			if (expand_heredoc(rdr, ms->exports, ms->last_exit_code))
-				return (1);
 		}
 		tmp = tmp->next;
 	}
