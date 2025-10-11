@@ -12,5 +12,6 @@ void	init_signals(void);
 void	reset_signals(void);
 void	handle_sigint(int sig);
 void	handle_sigint_pipeline(int sig);
+void	handle_sigquit(int sig);
 
 #endif

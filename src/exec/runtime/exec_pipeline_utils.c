@@ -89,7 +89,7 @@ int	ap_pipes(int (*pipes)[2], pid_t *pids, t_ast *node, t_minishell *ms)
 			if (i > 0)
 				dup2(pipes[i - 1][0], STDIN_FILENO);
 			if (i < nb_cmds - 1)
-				dup2(pipes[i][1], STDOUT_FILENO);
+				dup2(pipes[i][1], STDOUT_FILENO); 
 			exec_close_pipes(pipes, nb_cmds);
 			code = exec_ast(node->s_pipeline.cmds[i], ms);
 			exit(clear_minishell(ms, code));
