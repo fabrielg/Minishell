@@ -95,3 +95,28 @@ int	expand_heredoc(t_redirect *redir, t_mst *env, int exit_code)
 	free(content);
 	return (0);
 }
+
+/**
+ * @brief Expands all heredocs in the rdr_list.
+ * @return 0 on success, 1 on error
+ */
+int	expand_heredocs(t_list2 *rdr_lst, t_minishell *ms)
+{
+	t_list2		*tmp;
+	t_redirect	*rdr;
+
+	if (!rdr_lst)
+		return (0);
+	tmp = rdr_lst;
+	while (tmp)
+	{
+		rdr = (t_redirect *)tmp->content;
+		if (rdr->type == REDIRECT_HEREDOC)
+		{
+			if (expand_heredoc(rdr, ms->exports, ms->last_exit_code))
+				return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
