@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 00:31:16 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/10/11 02:40:52 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/10/11 02:43:53 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ struct s_ast
 };
 
 //[AST-UTILS]_________________________________________
+
 t_ast	*ast_build(t_list2 *tokens);
 void	ast_display(t_ast *node);
 void	ast_clear(t_ast **root);
