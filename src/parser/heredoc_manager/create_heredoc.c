@@ -12,9 +12,9 @@ static void	read_heredoc(char *limiter, t_redirect *rdr, t_minishell *ms)
 {
 	int		fd;
 
+	reset_signals();
 	if (!rdr->file)
 		exit(clear_minishell(ms, 1));
-	reset_signals();
 	fd = open(rdr->file, O_CREAT | O_RDWR | O_TRUNC, 0600);
 	if (fd == -1)
 		exit(clear_minishell(ms, 1));

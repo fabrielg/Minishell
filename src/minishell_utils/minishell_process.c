@@ -29,13 +29,13 @@ int	process_line(t_minishell *ms)
 	add_history(ms->input_line);
 	ms->tokens = parser(ms);
 	if (!ms->tokens)
-	return (set_err(&ms->last_exit_code, 1));
+		return (ms->last_exit_code);
 	if (DEBUG_MODE)
-	tokens_display(ms->tokens);
+		tokens_display(ms->tokens);
 	ms->ast_root = ast_build(ms->tokens);
 	if (DEBUG_MODE)
-	ast_display(ms->ast_root);
-	ms->signal_received =
+		ast_display(ms->ast_root);
+	ms->signal_received = false;
 	exec_ast(ms->ast_root, ms);
 	ast_clear(&ms->ast_root);
 	ft_lstclear2(&ms->tokens, token_destroy);
