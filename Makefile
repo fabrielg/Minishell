@@ -104,7 +104,7 @@ all : $(NAME)
 	@echo "\e[1;92m$(CUSTOM_NAME) compiled successfully!\e[0m"
 
 $(NAME) : $(LIBFT) $(OBJ_DIR) $(OBJ)
-	cc $(CFLAGS) $(INCLUDES) $(OBJ) -L$(LIBFT_DIR) -lft -lreadline -lncurses -o $(NAME)
+	cc $(CFLAGS) $(INCLUDES) $(OBJ) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
 
 $(LIBFT) :
 	make -C $(LIBFT_DIR)

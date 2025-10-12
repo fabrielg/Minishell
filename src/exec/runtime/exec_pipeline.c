@@ -1,5 +1,6 @@
 #include "exec.h"
 #include "minishell.h"
+#include "sig.h"
 #include <wait.h>
 
 /**
@@ -14,6 +15,7 @@ int	exec_pipeline(t_ast *node, t_minishell *ms)
 	int		(*pipes)[2];
 	int		status;
 
+	signal(SIGINT, &handle_sigint_pipeline);
 	nb_cmds = node->s_pipeline.count;
 	pids = ft_calloc(nb_cmds, sizeof(pid_t));
 	pipes = ft_calloc(nb_cmds - 1, sizeof(int [2]));
@@ -23,6 +25,7 @@ int	exec_pipeline(t_ast *node, t_minishell *ms)
 		return (pipe_clear(&pipes, &pids));
 	exec_close_pipes(pipes, nb_cmds);
 	status = wait_forked_pipes(ms, pids, nb_cmds);
+	signal(SIGINT, &handle_sigint);
 	pipe_clear(&pipes, &pids);
 	return (status);
 }

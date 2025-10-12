@@ -2,6 +2,7 @@
 #include "minishell.h"
 #include "sig.h"
 #include <sys/wait.h>
+#include <errno.h>
 
 /**
  * @brief Executes a command in the child process.
@@ -35,7 +36,7 @@ static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
  * @brief Forks and executes a command in a child process.
  * @return Exit status of command, or error code
  */
-int	run_cmd(t_command *cmd, t_minishell *ms, bool wait_child)
+int	run_cmd(t_command *cmd, t_minishell *ms)
 {
 	pid_t	pid;
 	int		status;
@@ -56,10 +57,8 @@ int	run_cmd(t_command *cmd, t_minishell *ms, bool wait_child)
 	cmd->pid = pid;
 	g_sig_pid = pid;
 	close_opened_pipes(cmd);
-	if (wait_child)
-	{
-		waitpid(pid, &status, 0);
-		ms->last_exit_code = cmd_exit_status(status);
-	}
+	waitpid(pid, &status, 0);
+	g_sig_pid = 0;
+	ms->last_exit_code = cmd_exit_status(status, ms);
 	return (pid);
 }

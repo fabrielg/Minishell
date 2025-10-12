@@ -40,6 +40,7 @@ int	process_line(t_minishell *ms)
 	ms->ast_root = ast_build(ms->tokens);
 	if (DEBUG_MODE)
 		ast_display(ms->ast_root);
+	ms->signal_received = false;
 	exec_ast(ms->ast_root, ms);
 	ast_clear(&ms->ast_root);
 	ft_lstclear2(&ms->tokens, token_destroy);

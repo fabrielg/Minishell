@@ -13,6 +13,8 @@ void	init_minishell(t_minishell *ms, char **envp)
 	ms->stdin_backup = dup(STDIN_FILENO);
 	ms->stdout_backup = dup(STDOUT_FILENO);
 	ms->shell_exit_code = -1;
+	ms->in_pipe = false;
+	ms->signal_received = false;
 	if (DEBUG_MODE)
 		ms->shell_name = BLUE_B"Minichaise (debug) 🪑: "RESET;
 	else
