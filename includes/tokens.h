@@ -52,6 +52,7 @@ typedef struct s_redirect
 {
 	t_redirect_type	type;
 	char			*file;
+	char			*options;
 	int				fd;
 }	t_redirect;
 

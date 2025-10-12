@@ -1,6 +1,7 @@
 #include "tokens.h"
 #include "lexer.h"
 #include "parser.h"
+#include "expander.h"
 
 /**
  * @brief Parse the input line into a list of commands and tokens.
