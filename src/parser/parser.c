@@ -17,6 +17,8 @@ t_list2	*parser(t_minishell *ms)
 		return (NULL);
 	free(ms->input_line);
 	ms->input_line = line_trim;
+	if (!line_trim[0])
+		return (NULL);
 	if (lex_line(ms->input_line) == 2)
 		return (set_err(&ms->last_exit_code, 2), NULL);
 	contents = smart_split(ms->input_line);

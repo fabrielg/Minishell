@@ -26,9 +26,10 @@ int	process_line(t_minishell *ms)
 {
 	if (!*ms->input_line)
 		return (set_err(&ms->last_exit_code, NOT_FOUND_ERR));
-	add_history(ms->input_line);
 	ms->tokens = parser(ms);
-	if (!ms->tokens)
+	if (ms->input_line && ms->input_line[0])
+		add_history(ms->input_line);
+	if (!ms->tokens && ms->input_line && ms->input_line[0])
 	{
 		if (ms->last_exit_code != 2)
 			set_err(&ms->last_exit_code, 1);
