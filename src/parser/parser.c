@@ -2,9 +2,7 @@
 #include "tokens.h"
 #include "lexer.h"
 #include "parser.h"
-<<<<<<< HEAD
 #include "expander.h"
-=======
 #include "sig.h"
 
 static t_list2	*set_pr_exit_code(int value, t_minishell *ms)
@@ -12,7 +10,6 @@ static t_list2	*set_pr_exit_code(int value, t_minishell *ms)
 	ms->shell_exit_code = value;
 	return (NULL);
 }
->>>>>>> origin/main
 
 /**
  * @brief Parse the input line into a list of commands and tokens.
