@@ -31,7 +31,16 @@ int	wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds)
 	if (WIFEXITED(status))
 		ms->last_exit_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			ms->signal_received = true;
+		}
+		if (WTERMSIG(status) == SIGQUIT)
+			write(STDERR_FILENO, "Quit (core dumped)\n", 20);
 		ms->last_exit_code = 128 + WTERMSIG(status);
+	}
 	g_sig_pid = 0;
 	return (ms->last_exit_code);
 }
@@ -86,6 +95,8 @@ int	ap_pipes(int (*pipes)[2], pid_t *pids, t_ast *node, t_minishell *ms)
 			return (1);
 		if (pids[i] == 0)
 		{
+			ms->in_pipe = true;
+			reset_signals();
 			if (i > 0)
 				dup2(pipes[i - 1][0], STDIN_FILENO);
 			if (i < nb_cmds - 1)

@@ -34,7 +34,7 @@ typedef struct s_minishell
 	unsigned char	last_exit_code;
 	int				shell_exit_code;
 	bool			signal_received;
-	bool			in_child_process;
+	bool			in_pipe;
 	pid_t			*child_pids;
 	int				pipe_fds[2];
 	int				stdin_backup;

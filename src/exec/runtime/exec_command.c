@@ -12,7 +12,6 @@
  */
 int	exec_command(t_command *cmd, t_minishell *ms)
 {
-	signal(SIGQUIT, &handle_sigquit);
 	expand_command(cmd, ms->exports, ms->last_exit_code);
 	glob_one_command(cmd);
 	glob_redirects_list(cmd->redirects);
@@ -23,6 +22,5 @@ int	exec_command(t_command *cmd, t_minishell *ms)
 		return (ms->last_exit_code);
 	}
 	run_cmd(cmd, ms);
-	signal(SIGQUIT, SIG_IGN);
 	return (ms->last_exit_code);
 }

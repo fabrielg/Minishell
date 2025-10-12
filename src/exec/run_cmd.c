@@ -59,6 +59,6 @@ int	run_cmd(t_command *cmd, t_minishell *ms)
 	close_opened_pipes(cmd);
 	waitpid(pid, &status, 0);
 	g_sig_pid = 0;
-	ms->last_exit_code = cmd_exit_status(status);
+	ms->last_exit_code = cmd_exit_status(status, ms);
 	return (pid);
 }

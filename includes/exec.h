@@ -47,7 +47,7 @@ char		*research_path(char *cmd, char *env_path);
 
 //[FORK_UTILS]________________________________________
 
-int			cmd_exit_status(int status);
+int			cmd_exit_status(int status, t_minishell *ms);
 int			redirect_cmd(t_command *cmd);
 t_uint8		is_builtin(char **args, t_mst **env, t_uint8 *exit_code);
 t_uint8		is_abs_rltv_path(char **args, t_mst *env, t_uint8 *exit_code);

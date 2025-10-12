@@ -9,14 +9,19 @@
  * @brief Converts a process wait status to a shell exit code.
  * @return Exit code corresponding to process termination
  */
-int	cmd_exit_status(int status)
+int	cmd_exit_status(int status, t_minishell *ms)
 {
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 	{
-		if (WTERMSIG(status) == SIGINT)
-			write(STDOUT_FILENO, "\n", 1);
+		if (WTERMSIG(status) == SIGINT && !ms->in_pipe)
+		{
+			write(STDERR_FILENO, "\n", 1);
+			ms->signal_received = true;
+		}
+		if (WTERMSIG(status) == SIGQUIT)
+			write(STDERR_FILENO, "Quit (core dumped)\n", 20);
 		return (128 + WTERMSIG(status));
 	}
 	return (1);

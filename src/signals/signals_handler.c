@@ -28,6 +28,7 @@ void	handle_sigint_pipeline(int sig)
 	(void)sig;
 	if (g_sig_pid > 0)
 		kill(g_sig_pid, sig);
+	g_sig_pid = -1;
 }
 
 void	handle_sigquit(int sig)
@@ -35,7 +36,6 @@ void	handle_sigquit(int sig)
 	(void)sig;
 	if (g_sig_pid > 0)
 		kill(g_sig_pid, sig);
-	write(STDERR_FILENO, "Quit (core dumped)\n", 20);
 	g_sig_pid = -1;
 }
 

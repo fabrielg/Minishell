@@ -25,7 +25,7 @@ int	exec_subshell(t_ast *node, t_minishell *ms)
 		exit(clear_minishell(ms, exit_code));
 	}
 	waitpid(pid, &status, 0);
-	ms->last_exit_code = cmd_exit_status(status);
+	ms->last_exit_code = cmd_exit_status(status, ms);
 	signal(SIGINT, &handle_sigint);
 	return (ms->last_exit_code);
 }
