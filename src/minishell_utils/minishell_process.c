@@ -25,7 +25,7 @@ int	is_end_of_file(char *input_line)
 int	process_line(t_minishell *ms)
 {
 	if (!*ms->input_line)
-		return (set_err(&ms->last_exit_code, NOT_FOUND_ERR));
+		return (0);
 	ms->tokens = parser(ms);
 	if (ms->input_line && ms->input_line[0])
 		add_history(ms->input_line);
