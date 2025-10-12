@@ -20,8 +20,8 @@ static int	fill_heredocs(t_list2 *rdr_lst, t_minishell *ms)
 		rdr = (t_redirect *)tmp->content;
 		if (rdr->type == REDIRECT_HEREDOC)
 		{
-			token_unquote(&rdr->file);
 			rdr->options = ft_strdup(rdr->file);
+			token_unquote(&rdr->file);
 			if (!rdr->options)
 				return (1);
 			if (create_heredoc(rdr, ms))
