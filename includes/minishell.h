@@ -33,8 +33,8 @@ typedef struct s_minishell
 	t_list2			*tokens;
 	unsigned char	last_exit_code;
 	int				shell_exit_code;
-	int				signal_received;
-	bool			in_child_process;
+	bool			signal_received;
+	bool			in_pipe;
 	pid_t			*child_pids;
 	int				pipe_fds[2];
 	int				stdin_backup;

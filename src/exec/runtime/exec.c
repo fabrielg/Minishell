@@ -10,6 +10,11 @@ int	exec_ast(t_ast *node, t_minishell *ms)
 {
 	if (!node)
 		return (0);
+	if (ms->signal_received)
+	{
+		ms->signal_received = false;
+		return (ms->last_exit_code);
+	}
 	if (node->type == TOKEN_COMMAND)
 		return (exec_command(node->cmd, ms));
 	else if (node->type == TOKEN_PIPELINE)
