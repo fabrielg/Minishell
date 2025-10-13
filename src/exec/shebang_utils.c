@@ -9,7 +9,7 @@
  * @brief Executes a script without a shebang using /bin/bash and handles errors.
  * @return Exit code of the attempted execution
  */
-t_uint8	no_shebang_case(char *arg, char **env_cpy, t_uint8 *exit_code)
+t_uint8	no_shebang_case(char *arg, char **env_cpy, t_uint8 *exit_code, t_minishell *ms)
 {
 	char	*tab[3];
 
@@ -18,6 +18,7 @@ t_uint8	no_shebang_case(char *arg, char **env_cpy, t_uint8 *exit_code)
 	tab[2] = NULL;
 	execve(BASH_DIR, tab, env_cpy);
 	free(env_cpy);
+	pipe_clear(ms->pipes, ms->child_pids);
 	if (errno == EACCES)
 		return (cmd_err(exit_code, arg, NO_PERM_MSG, PERM_ERR));
 	return (cmd_err(exit_code, arg, NOT_FOUND_MSG, NOT_FOUND_ERR));

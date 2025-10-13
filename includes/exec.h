@@ -42,7 +42,6 @@ int			handle_exit(t_command *cmd, t_minishell *ms, t_uint8 *exit_code);
 
 //[ENV_UTILS]_________________________________________
 
-char		**list2_to_tab(t_list2 *lst);
 char		*research_path(char *cmd, char *env_path);
 
 //[FORK_UTILS]________________________________________
@@ -50,15 +49,15 @@ char		*research_path(char *cmd, char *env_path);
 int			cmd_exit_status(int status, t_minishell *ms);
 int			redirect_cmd(t_command *cmd);
 t_uint8		is_builtin(char **args, t_mst **env, t_uint8 *exit_code);
-t_uint8		is_abs_rltv_path(char **args, t_mst *env, t_uint8 *exit_code);
-t_uint8		no_shebang_case(char *arg, char **env_cpy, t_uint8 *exit_code);
-t_uint8		is_in_path(char **args, t_mst *m_path, t_mst *env, t_uint8 *ext_cd);
+t_uint8		is_abs_rltv_path(char **args, t_minishell *ms, t_uint8 *exit_code);
+t_uint8		no_shebang_case(char *arg, char **env_cpy, t_uint8 *exit_code, t_minishell *ms);
+t_uint8		is_in_path(char **args, t_mst *m_path, t_minishell *ms, t_uint8 *exit_code);
 
 //[PIPE_UTILS]________________________________________
 
 int			pipe_cmd(t_command *cmd);
 void		close_opened_pipes(t_command *cmd);
-int			pipe_clear(int (**pipes)[2], pid_t **pids);
+int			pipe_clear(int (*pipes)[2], pid_t *pids);
 int			wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds);
 int			exec_init_pipes(int (*pipes)[2], int nb_cmd);
 void		exec_close_pipes(int (*pipes)[2], int nb_cmds);

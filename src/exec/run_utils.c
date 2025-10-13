@@ -51,7 +51,7 @@ t_uint8	is_builtin(char **args, t_mst **env, t_uint8 *exit_code)
  * @note Set exit_code to the adapted error (0, 1, 126 or 127)
  * @return 1 if executed or error handled, 0 otherwise
  */
-t_uint8	is_abs_rltv_path(char **args, t_mst *env, t_uint8 *exit_code)
+t_uint8	is_abs_rltv_path(char **args, t_minishell *ms, t_uint8 *exit_code)
 {
 	struct stat		st;
 	char			**env_cpy;
@@ -64,13 +64,14 @@ t_uint8	is_abs_rltv_path(char **args, t_mst *env, t_uint8 *exit_code)
 		return (cmd_err(exit_code, args[0], IS_DIR_MSG, PERM_ERR));
 	if (access(args[0], X_OK) == -1)
 		return (cmd_err(exit_code, args[0], NO_PERM_MSG, PERM_ERR));
-	env_cpy = env_newtab(env);
+	env_cpy = env_newtab(ms->exports);
 	if (!env_cpy)
 		return (cmd_err(exit_code, NULL, NULL, 1));
 	execve(args[0], args, env_cpy);
 	if (errno == ENOEXEC)
-		return (no_shebang_case(args[0], env_cpy, exit_code));
+		return (no_shebang_case(args[0], env_cpy, exit_code, ms));
 	free(env_cpy);
+	pipe_clear(ms->pipes, ms->child_pids);
 	if (errno == EACCES)
 		return (cmd_err(exit_code, args[0], NO_PERM_MSG, PERM_ERR));
 	return (cmd_err(exit_code, args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
@@ -81,7 +82,7 @@ t_uint8	is_abs_rltv_path(char **args, t_mst *env, t_uint8 *exit_code)
  * @note Set exit_code to the adapted error (0, 1, 126 or 127)
  * @return 1 if executed or error handled, 0 otherwise
  */
-t_uint8	is_in_path(char **args, t_mst *m_path, t_mst *env, t_uint8 *exit_code)
+t_uint8	is_in_path(char **args, t_mst *m_path, t_minishell *ms, t_uint8 *exit_code)
 {
 	char	**env_cpy;
 	char	*path;
@@ -94,12 +95,13 @@ t_uint8	is_in_path(char **args, t_mst *m_path, t_mst *env, t_uint8 *exit_code)
 		free(path);
 		return (cmd_err(exit_code, args[0], NO_PERM_MSG, PERM_ERR));
 	}
-	env_cpy = env_newtab(env);
+	env_cpy = env_newtab(ms->exports);
 	if (!env_cpy)
 		return (free(path), cmd_err(exit_code, NULL, NULL, 1));
 	execve(path, args, env_cpy);
 	free(path);
 	free(env_cpy);
+	pipe_clear(ms->pipes, ms->child_pids);
 	if (errno == EACCES)
 		return (cmd_err(exit_code, args[0], NO_PERM_MSG, PERM_ERR));
 	return (cmd_err(exit_code, args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
