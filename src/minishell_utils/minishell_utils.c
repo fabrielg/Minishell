@@ -15,6 +15,8 @@ void	init_minishell(t_minishell *ms, char **envp)
 	ms->shell_exit_code = -1;
 	ms->in_pipe = false;
 	ms->signal_received = false;
+	ms->child_pids = NULL;
+	ms->pipes = NULL;
 	if (DEBUG_MODE)
 		ms->shell_name = BLUE_B"Minichaise (debug) 🪑: "RESET;
 	else

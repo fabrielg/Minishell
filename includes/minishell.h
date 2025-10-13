@@ -6,7 +6,7 @@
 /*   By: alde-abr <alde-abr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 02:06:44 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/10/11 02:38:01 by alde-abr         ###   ########.fr       */
+/*   Updated: 2025/10/13 22:01:36 by alde-abr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_minishell
 	bool			signal_received;
 	bool			in_pipe;
 	pid_t			*child_pids;
-	int				pipe_fds[2];
+	int				(*pipes)[2];
 	int				stdin_backup;
 	int				stdout_backup;
 }	t_minishell;
