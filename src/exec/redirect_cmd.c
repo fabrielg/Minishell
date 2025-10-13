@@ -13,6 +13,8 @@ static int	redirect_out(t_redirect *rdr, int flags)
 	int	fd;
 
 	fd = open(rdr->file, flags, 0644);
+	if (access(rdr->file, W_OK) == -1)
+		exec_err(rdr->file, NO_PERM_MSG, ERROR);
 	if (fd == -1)
 		return (ERROR);
 	if (dup2(fd, STDOUT_FILENO) == -1)
