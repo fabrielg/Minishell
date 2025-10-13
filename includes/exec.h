@@ -58,7 +58,7 @@ t_uint8		is_in_path(char **args, t_mst *m_path, t_mst *env, t_uint8 *ext_cd);
 
 int			pipe_cmd(t_command *cmd);
 void		close_opened_pipes(t_command *cmd);
-int			pipe_clear(int (**pipes)[2], pid_t **pids);
+int			pipe_clear(int (*pipes)[2], pid_t *pids);
 int			wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds);
 int			exec_init_pipes(int (*pipes)[2], int nb_cmd);
 void		exec_close_pipes(int (*pipes)[2], int nb_cmds);
