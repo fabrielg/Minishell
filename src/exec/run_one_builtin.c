@@ -16,7 +16,12 @@ int	run_one_builtin(t_command *cmd, t_minishell *ms)
 	dup2(cmd->pipes[0], STDIN_FILENO);
 	dup2(cmd->pipes[1], STDOUT_FILENO);
 	if (redirect_cmd(cmd) == ERROR)
+	{
+		dup2(ms->stdin_backup, STDIN_FILENO);
+		dup2(ms->stdout_backup, STDOUT_FILENO);
+		close_opened_pipes(cmd);
 		return (REDIR_ERR);
+	}
 	f = get_builtin(cmd->args[0], &flag);
 	if (f)
 		exit_code = f(cmd->args, &ms->exports);
