@@ -53,6 +53,12 @@ static int	redirect_heredoc(t_redirect *rdr)
 	return (close(fd), SUCCESS);
 }
 
+static int	redirect_ambiguous(t_redirect *rdr)
+{
+	exec_err(rdr->file, "ambiguous redirect\n", ERROR);
+	return (ERROR);
+}
+
 /**
  * @brief Applies all redirections attached to a command.
  * @return SUCCESS if all redirections succeed, otherwise ERROR
@@ -76,6 +82,8 @@ int	redirect_cmd(t_command *cmd)
 			ret = redirect_out(rdr, O_WRONLY | O_CREAT | O_APPEND);
 		else if (rdr->type == REDIRECT_HEREDOC)
 			ret = redirect_heredoc(rdr);
+		else if (rdr->type == REDIRECT_AMBIGUOUS)
+			ret = redirect_ambiguous(rdr);
 		if (ret == ERROR)
 			return (ERROR);
 		curr = curr->next;

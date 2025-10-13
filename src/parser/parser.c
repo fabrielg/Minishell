@@ -2,6 +2,7 @@
 #include "tokens.h"
 #include "lexer.h"
 #include "parser.h"
+#include "expander.h"
 #include "sig.h"
 
 static t_list2	*set_pr_exit_code(int value, t_minishell *ms)
@@ -25,8 +26,10 @@ t_list2	*parser(t_minishell *ms)
 		return (set_pr_exit_code(1, ms));
 	free(ms->input_line);
 	ms->input_line = line_trim;
+	if (!line_trim[0])
+		return (NULL);
 	if (lex_line(ms->input_line) == 2)
-		return (set_pr_exit_code(1, ms));
+		return (set_err(&ms->last_exit_code, 2), NULL);
 	contents = smart_split(ms->input_line);
 	if (!contents)
 		return (set_pr_exit_code(1, ms));

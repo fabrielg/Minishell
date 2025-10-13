@@ -11,7 +11,7 @@ static t_uint8	get_flag(char *arg, int len, int *id_out)
 	int	i;
 
 	i = 0;
-	if (arg[i] != '-')
+	if (arg[i] != '-' || len < 2)
 		return (0);
 	while (++i < len)
 		if (arg[i] != 'n')
@@ -32,13 +32,15 @@ t_uint8	cmd_echo(char **args, t_mst **env)
 	i = 1;
 	flag = 0b0;
 	(void)env;
-	if (args[1] && args[2])
-		flag = get_flag(args[1], ft_strlen(args[1]), &i);
-	if (args[1])
+	while (args[i] && get_flag(args[i], ft_strlen(args[i]), &i))
+		flag = N_FLAG;
+	if (args[i])
 		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
-	while (args[1] && args[++i])
+	while (args[i] && args[i + 1])
 	{
-		write(STDOUT_FILENO, " ", 1);
+		if (args[i][0])
+			write(STDOUT_FILENO, " ", 1);
+		i++;
 		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
 	}
 	if (!(flag & N_FLAG))

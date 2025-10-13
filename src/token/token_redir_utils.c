@@ -8,7 +8,7 @@ t_redirect	*parse_redir(char **contents, int *i)
 {
 	t_redirect	*r;
 
-	r = malloc(sizeof(t_redirect));
+	r = ft_calloc(1, sizeof(t_redirect));
 	if (!r)
 		return (NULL);
 	r->fd = -1;
@@ -62,6 +62,8 @@ void	token_destroy_redir(void *data)
 		return ;
 	if (redir->file)
 		free(redir->file);
+	if (redir->options)
+		free(redir->options);
 	free(redir);
 }
 
@@ -97,7 +99,8 @@ void	token_display_redirect(t_redirect *redir)
 		type_str = "APPEND >>";
 	else if (redir->type == REDIRECT_AMBIGUOUS)
 		type_str = "ambigous redirect";
-	printf("Redirect: %s, fd=%d, file=", type_str, redir->fd);
+	printf("Redirect: %s, options: %s,", type_str, redir->options);
+	printf(" fd=%d, file=", redir->fd);
 	token_display_word(redir->file);
 	printf("\n");
 }

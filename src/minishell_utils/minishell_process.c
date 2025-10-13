@@ -25,11 +25,16 @@ int	is_end_of_file(char *input_line)
 int	process_line(t_minishell *ms)
 {
 	if (!*ms->input_line)
-		return (set_err(&ms->last_exit_code, NOT_FOUND_ERR));
-	add_history(ms->input_line);
+		return (0);
 	ms->tokens = parser(ms);
-	if (!ms->tokens)
-		return (ms->last_exit_code);
+	if (ms->input_line && ms->input_line[0])
+		add_history(ms->input_line);
+	if (!ms->tokens && ms->input_line && ms->input_line[0])
+	{
+		if (ms->last_exit_code != 2)
+			set_err(&ms->last_exit_code, 1);
+		return (1);
+	}
 	if (DEBUG_MODE)
 		tokens_display(ms->tokens);
 	ms->ast_root = ast_build(ms->tokens);

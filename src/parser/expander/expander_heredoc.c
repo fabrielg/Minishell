@@ -2,6 +2,7 @@
 #include "parser.h"
 #include "fcntl.h"
 #include "expander.h"
+#include "smart_split.h"
 
 /**
  * @brief Appends n bytes from buf to the existing content buffer.
@@ -85,6 +86,8 @@ int	expand_heredoc(t_redirect *redir, t_mst *env, int exit_code)
 	char	*content;
 
 	if (!redir || redir->type != REDIRECT_HEREDOC)
+		return (0);
+	if (ft_strchrset(redir->options, "'\""))
 		return (0);
 	content = read_file_content(redir->file);
 	if (!content)
