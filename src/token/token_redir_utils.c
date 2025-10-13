@@ -8,7 +8,7 @@ t_redirect	*parse_redir(char **contents, int *i)
 {
 	t_redirect	*r;
 
-	r = malloc(sizeof(t_redirect));
+	r = ft_calloc(1, sizeof(t_redirect));
 	if (!r)
 		return (NULL);
 	r->fd = -1;
