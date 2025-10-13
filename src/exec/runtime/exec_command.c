@@ -16,6 +16,7 @@ int	exec_command(t_command *cmd, t_minishell *ms)
 	glob_one_command(cmd);
 	glob_redirects_list(cmd->redirects);
 	expand_heredocs(cmd->redirects, ms);
+	token_display_command(cmd);
 	if (cmd->args[0] != 0 && get_builtin(cmd->args[0], NULL))
 	{
 		ms->last_exit_code = run_one_builtin(cmd, ms);

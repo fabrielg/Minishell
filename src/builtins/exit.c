@@ -32,13 +32,12 @@ t_uint8	cmd_exit(char **args, t_mst **env)
 
 	(void)env;
 	status = 0;
-	write(STDERR_FILENO, "exit\n", 5);
 	if (!args[1])
 		return (0);
 	if (!is_numeric(args[1]))
 	{
 		write(STDERR_FILENO, "exit: numeric argument required\n", 32);
-		return (255);
+		return (2);
 	}
 	if (args[2])
 	{
