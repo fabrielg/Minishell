@@ -24,6 +24,8 @@ t_mst	*new_mst(t_dic dic)
 {
 	t_mst	*new;
 
+	if (!dic.key || !dic.value)
+		return (NULL);
 	new = (t_mst *) ft_calloc(1, sizeof(t_mst));
 	if (!new)
 		return (NULL);
