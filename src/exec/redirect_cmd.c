@@ -14,7 +14,7 @@ static int	redirect_out(t_redirect *rdr, int flags)
 
 	fd = open(rdr->file, flags, 0644);
 	if (access(rdr->file, W_OK) == -1)
-		exec_err(rdr->file, NO_PERM_MSG, ERROR);
+		exec_err(rdr->file, NO_PERM_MSG, 1);
 	if (fd == -1)
 		return (ERROR);
 	if (dup2(fd, STDOUT_FILENO) == -1)
@@ -33,7 +33,10 @@ static int	redirect_in(t_redirect *rdr)
 
 	fd = open(rdr->file, O_RDONLY);
 	if (fd == -1)
-		return (exec_err(rdr->file, NO_PATH_MSG, 1));
+	{
+		exec_err(rdr->file, NO_PATH_MSG, 1);
+		return (ERROR);
+	}
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return (close(fd), ERROR);
 	return (close(fd), SUCCESS);
