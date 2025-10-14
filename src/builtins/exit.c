@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 21:08:29 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/10/14 21:08:30 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:38:20 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,12 @@ t_uint8	cmd_exit(char **args, t_mst **env)
 	t_uint8	status;
 
 	(void)env;
-	write(STDERR_FILENO, "exit\n", 5);
 	if (!args[1])
 		return (0);
 	if (!is_numeric(args[1]))
 	{
 		write(STDERR_FILENO, "exit: numeric argument required\n", 32);
-		return (255);
+		return (2);
 	}
 	if (args[2])
 	{

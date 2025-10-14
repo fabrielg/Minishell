@@ -6,11 +6,12 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 21:08:23 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/10/14 21:08:23 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:39:04 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "minishell.h"
 
 /**
  * @brief Updates the PWD variable in the environment to current directory.
@@ -49,6 +50,16 @@ static char	*get_cd_path(char *arg, t_mst *env)
 	return (arg);
 }
 
+static int	ft_tablen(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
 /**
  * @brief Executes the cd builtin, updating PWD and OLDPWD.
  * @return 0 on success, 1 on failure
@@ -58,8 +69,9 @@ t_uint8	cmd_cd(char **args, t_mst **env)
 	char		*path;
 	t_mst		*pwd;
 	char		*err_msg;
-	t_uint8		err_code;
 
+	if (ft_tablen(args) > 2)
+		return (exec_err("cd", "too many arguments\n", 1));
 	path = get_cd_path(args[1], *env);
 	if (!path)
 		return (1);
@@ -67,13 +79,12 @@ t_uint8	cmd_cd(char **args, t_mst **env)
 	if (pwd)
 		if (mst_modif_value(env, "OLDPWD", pwd->dic.value))
 			return (1);
-	err_code = chdir(path);
-	if (err_code)
+	if (chdir(path) == -1)
 	{
 		err_msg = ft_strjoin("cd: ", path);
 		perror(err_msg);
 		free(err_msg);
-		return (err_code);
+		return (1);
 	}
 	if (assign_new_pwd(env, pwd))
 		return (1);

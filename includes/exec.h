@@ -29,7 +29,7 @@
 # define PATH_MAX_LEN 4096
 
 # define NO_PATH_MSG   "No such file or directory\n"
-# define NOT_FOUND_MSG "Command not found\n"
+# define NOT_FOUND_MSG "command not found\n"
 # define NO_PERM_MSG   "Permission denied\n"
 # define IS_DIR_MSG    ": Is a directory\n"
 
