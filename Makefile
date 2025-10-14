@@ -21,6 +21,8 @@ LIBFT		= $(LIBFT_DIR)libft.a
 
 INCLUDES	= -I ./includes/ -I $(LIBFT_DIR)
 
+CC = cc
+
 MAIN_FILE	= main
 
 # All files in src/
@@ -104,14 +106,14 @@ all : $(NAME)
 	@echo "\e[1;92m$(CUSTOM_NAME) compiled successfully!\e[0m"
 
 $(NAME) : $(LIBFT) $(OBJ_DIR) $(OBJ)
-	cc $(CFLAGS) $(INCLUDES) $(OBJ) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) -L$(LIBFT_DIR) -lft -lreadline -o $(NAME)
 
 $(LIBFT) :
 	make -C $(LIBFT_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)
-	cc $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR) :
 	mkdir -p $(OBJ_DIR)
