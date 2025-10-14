@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 21:08:23 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/10/14 21:08:23 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:39:04 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*get_cd_path(char *arg, t_mst *env)
 	return (arg);
 }
 
-static int ft_tablen(char **tab)
+static int	ft_tablen(char **tab)
 {
 	int	i;
 
