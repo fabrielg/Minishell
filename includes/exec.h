@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 21:25:34 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/10/14 21:26:42 by gfrancoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXEC_H
 # define EXEC_H
 
@@ -50,8 +62,8 @@ int			cmd_exit_status(int status, t_minishell *ms);
 int			redirect_cmd(t_command *cmd);
 t_uint8		is_builtin(char **args, t_mst **env, t_uint8 *exit_code);
 t_uint8		is_abs_rltv_path(char **args, t_minishell *ms, t_uint8 *exit_code);
-t_uint8		no_shebang_case(char *arg, char **env_cpy, t_uint8 *exit_code, t_minishell *ms);
-t_uint8		is_in_path(char **args, t_mst *m_path, t_minishell *ms, t_uint8 *exit_code);
+t_uint8		no_shebang_case(char *ag, char **e, t_uint8 *code, t_minishell *ms);
+t_uint8		is_in_path(char **ag, t_mst *path, t_minishell *ms, t_uint8 *code);
 
 //[PIPE_UTILS]________________________________________
 
@@ -72,7 +84,6 @@ int			exec_logical(t_ast *node, t_minishell *ms);
 int			exec_subshell(t_ast *node, t_minishell *ms);
 
 //[RUNTIME_UTILS]_____________________________________
-
 
 int			run_cmd(t_command *cmd, t_minishell *ms);
 int			run_one_builtin(t_command *cmd, t_minishell *ms);

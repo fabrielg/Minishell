@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_one_builtin.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 21:12:09 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/10/14 21:12:09 by gfrancoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
 #include "minishell.h"
 
@@ -11,6 +23,7 @@ int	run_one_builtin(t_command *cmd, t_minishell *ms)
 	unsigned char	flag;
 	unsigned char	exit_code;
 
+	exit_code = 0;
 	flag = 0b0;
 	f = NULL;
 	dup2(cmd->pipes[0], STDIN_FILENO);

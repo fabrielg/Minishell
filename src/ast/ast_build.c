@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_build.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 21:08:01 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/10/14 21:08:01 by gfrancoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ast.h"
 
 static t_ast	*parse_logical_expr(t_list2 **tokens);
@@ -9,6 +21,8 @@ static t_ast	*parse_subshell(t_list2 **tokens);
  */
 t_ast	*ast_build(t_list2 *tokens)
 {
+	if (!tokens)
+		return (NULL);
 	return (parse_logical_expr(&tokens));
 }
 
@@ -51,7 +65,7 @@ static t_ast	*parse_subshell(t_list2 **tokens)
 		return (NULL);
 	*tokens = (*tokens)->next;
 	sub = parse_logical_expr(tokens);
-	if (!sub)
+	if (!sub || !*tokens)
 		return (NULL);
 	*tokens = (*tokens)->next;
 	return (ast_new_subshell(sub));
@@ -66,7 +80,7 @@ t_ast	*parse_simple_command_or_subshell(t_list2 **tokens)
 	t_token		*tok;
 	t_command	*cmd;
 
-	if (!*tokens)
+	if (!tokens || !*tokens)
 		return (NULL);
 	tok = (t_token *)(*tokens)->content;
 	if (tok->type == TOKEN_SUBSHELL && ft_strcmp(tok->data, "(") == 0)

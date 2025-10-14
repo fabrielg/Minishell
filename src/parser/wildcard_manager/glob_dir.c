@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   glob_dir.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 21:21:54 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/10/14 21:21:54 by gfrancoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <dirent.h>
 #include <sys/types.h>
@@ -105,7 +117,7 @@ char	**glob_dir(const char *dir, const char *pattern, int *out_count)
 	*out_count = count;
 	if (count == 0)
 		return (NULL);
-	res = malloc(sizeof(char *) * (count + 1));
+	res = ft_calloc((count + 1), sizeof(char *));
 	if (!res)
 		return (NULL);
 	fill_matches(dir, pattern, res);

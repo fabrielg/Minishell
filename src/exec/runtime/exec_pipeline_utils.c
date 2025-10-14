@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_pipeline_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 21:11:49 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/10/14 21:17:32 by gfrancoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
 #include "minishell.h"
 #include <wait.h>
@@ -24,6 +36,7 @@ int	wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds)
 	int	i;
 	int	status;
 
+	status = 0;
 	i = -1;
 	while (++i < nb_cmds)
 		waitpid(pids[i], &status, 0);
@@ -102,8 +115,7 @@ int	ap_pipes(int (*pipes)[2], pid_t *pids, t_ast *node, t_minishell *ms)
 				dup2(pipes[i][1], STDOUT_FILENO);
 			exec_close_pipes(pipes, nb_cmds);
 			code = exec_ast(node->s_pipeline.cmds[i], ms);
-			pipe_clear(pipes, pids);
-			exit(clear_minishell(ms, code));
+			(pipe_clear(pipes, pids), exit(clear_minishell(ms, code)));
 		}
 	}
 	return (0);

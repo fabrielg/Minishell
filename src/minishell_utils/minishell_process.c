@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_process.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 21:18:15 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/10/14 21:18:16 by gfrancoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "parser.h"
 #include "exec.h"
@@ -24,7 +36,7 @@ int	is_end_of_file(char *input_line)
  */
 int	process_line(t_minishell *ms)
 {
-	if (!*ms->input_line)
+	if (!ms->input_line)
 		return (0);
 	ms->tokens = parser(ms);
 	if (ms->input_line && ms->input_line[0])

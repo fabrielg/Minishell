@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_node_init.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 21:09:20 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/10/14 21:09:20 by gfrancoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "envp.h"
 
 /**
@@ -24,6 +36,8 @@ t_mst	*new_mst(t_dic dic)
 {
 	t_mst	*new;
 
+	if (!dic.key || !dic.value)
+		return (NULL);
 	new = (t_mst *) ft_calloc(1, sizeof(t_mst));
 	if (!new)
 		return (NULL);
