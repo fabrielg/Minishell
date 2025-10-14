@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 21:21:16 by gfrancoi          #+#    #+#             */
-/*   Updated: 2025/10/14 21:21:17 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:30:57 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 #include "expander.h"
 #include "sig.h"
 
-static int	set_pr_exit_code(int value, t_minishell *ms)
+static t_list2	*set_pr_exit_code(int value, t_minishell *ms)
 {
 	ms->shell_exit_code = value;
-	return (0);
+	return (NULL);
 }
 
 static int	trim_input_line(t_minishell *ms)
@@ -29,11 +29,15 @@ static int	trim_input_line(t_minishell *ms)
 
 	line_trim = ft_strtrim(ms->input_line, " \a\b\t\n\v\f\r");
 	if (!line_trim)
-		return (set_pr_exit_code(1, ms));
+	{
+		set_pr_exit_code(1, ms);
+		return (0);
+	}
 	free(ms->input_line);
 	ms->input_line = line_trim;
 	if (!line_trim[0])
 		return (0);
+	return (1);
 }
 
 /**
