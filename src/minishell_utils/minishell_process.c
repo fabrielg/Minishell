@@ -24,7 +24,7 @@ int	is_end_of_file(char *input_line)
  */
 int	process_line(t_minishell *ms)
 {
-	if (!*ms->input_line)
+	if (!ms->input_line)
 		return (0);
 	ms->tokens = parser(ms);
 	if (ms->input_line && ms->input_line[0])

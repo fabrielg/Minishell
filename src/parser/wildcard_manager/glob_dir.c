@@ -105,7 +105,7 @@ char	**glob_dir(const char *dir, const char *pattern, int *out_count)
 	*out_count = count;
 	if (count == 0)
 		return (NULL);
-	res = malloc(sizeof(char *) * (count + 1));
+	res = ft_calloc((count + 1), sizeof(char *));
 	if (!res)
 		return (NULL);
 	fill_matches(dir, pattern, res);

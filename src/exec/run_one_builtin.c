@@ -11,6 +11,7 @@ int	run_one_builtin(t_command *cmd, t_minishell *ms)
 	unsigned char	flag;
 	unsigned char	exit_code;
 
+	exit_code = 0;
 	flag = 0b0;
 	f = NULL;
 	dup2(cmd->pipes[0], STDIN_FILENO);

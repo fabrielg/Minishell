@@ -18,7 +18,7 @@ static t_uint8	child_exec(t_command *cmd, t_minishell *ms)
 		return (1);
 	if (redirect_cmd(cmd) == ERROR)
 		return (REDIR_ERR);
-	if (!*(cmd->args[0]))
+	if (cmd->args && cmd->args[0] && !*(cmd->args[0]))
 		return (exec_err(cmd->args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
 	if (is_builtin(cmd->args, &ms->exports, &exit_code))
 		return (exit_code);
@@ -42,7 +42,6 @@ int	run_cmd(t_command *cmd, t_minishell *ms)
 	int		status;
 	t_uint8	exit_code;
 
-	exit_code = 1;
 	if (!cmd)
 		return (NOT_FOUND_ERR);
 	pid = fork();

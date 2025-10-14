@@ -34,7 +34,8 @@ int	main(int argc, char *argv[], char **envp)
 		process_line(&ms);
 		if (ms.shell_exit_code != -1)
 			return (clear_minishell(&ms, ms.shell_exit_code));
-		free(ms.input_line);
+		if (ms.input_line)
+			free(ms.input_line);
 	}
 	rl_clear_history();
 	return (clear_minishell(&ms, 0));
