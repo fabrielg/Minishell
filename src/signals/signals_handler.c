@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals_handler.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 21:22:05 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/10/14 21:23:04 by gfrancoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "sig.h"
 #include <readline/readline.h>
@@ -14,7 +26,7 @@ void	handle_sigint(int sig)
 	if (g_sig_pid > 0)
 	{
 		kill(g_sig_pid, sig);
-		return;
+		return ;
 	}
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
@@ -22,7 +34,7 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 	g_sig_pid = -1;
 }
- 
+
 void	handle_sigint_pipeline(int sig)
 {
 	(void)sig;
