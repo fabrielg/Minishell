@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 21:12:11 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/10/14 21:13:29 by gfrancoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "exec.h"
 #include "minishell.h"
 #include <sys/stat.h>
@@ -48,7 +60,6 @@ t_uint8	is_builtin(char **args, t_mst **env, t_uint8 *exit_code)
 	return (0);
 }
 
-#include "ast.h"
 /**
  * @brief Executes command if path is absolute or relative.
  * @note Set exit_code to the adapted error (0, 1, 126 or 127)
@@ -85,32 +96,29 @@ t_uint8	is_abs_rltv_path(char **args, t_minishell *ms, t_uint8 *exit_code)
  * @note Set exit_code to the adapted error (0, 1, 126 or 127)
  * @return 1 if executed or error handled, 0 otherwise
  */
-t_uint8	is_in_path(char **args, t_mst *m_path, t_minishell *ms, t_uint8 *exit_code)
+t_uint8	is_in_path(char **args, t_mst *m_path, t_minishell *ms, t_uint8 *code)
 {
 	char	**env_cpy;
 	char	*path;
 
 	if (args && !args[0])
 	{
-		*exit_code = 0;
+		*code = 0;
 		return (1);
 	}
 	path = research_path(args[0], m_path->dic.value);
 	if (!path)
-		return (cmd_err(exit_code, args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
+		return (cmd_err(code, args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
 	if (access(path, X_OK))
-	{
-		free(path);
-		return (cmd_err(exit_code, args[0], NO_PERM_MSG, PERM_ERR));
-	}
+		return (free(path), cmd_err(code, args[0], NO_PERM_MSG, PERM_ERR));
 	env_cpy = env_newtab(ms->exports);
 	if (!env_cpy)
-		return (free(path), cmd_err(exit_code, NULL, NULL, 1));
+		return (free(path), cmd_err(code, NULL, NULL, 1));
 	execve(path, args, env_cpy);
 	free(path);
 	free(env_cpy);
 	pipe_clear(ms->pipes, ms->child_pids);
 	if (errno == EACCES)
-		return (cmd_err(exit_code, args[0], NO_PERM_MSG, PERM_ERR));
-	return (cmd_err(exit_code, args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
+		return (cmd_err(code, args[0], NO_PERM_MSG, PERM_ERR));
+	return (cmd_err(code, args[0], NOT_FOUND_MSG, NOT_FOUND_ERR));
 }

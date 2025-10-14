@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/14 21:21:16 by gfrancoi          #+#    #+#             */
+/*   Updated: 2025/10/14 21:21:17 by gfrancoi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokens.h"
 #include "lexer.h"
@@ -5,10 +17,23 @@
 #include "expander.h"
 #include "sig.h"
 
-static t_list2	*set_pr_exit_code(int value, t_minishell *ms)
+static int	set_pr_exit_code(int value, t_minishell *ms)
 {
 	ms->shell_exit_code = value;
-	return (NULL);
+	return (0);
+}
+
+static int	trim_input_line(t_minishell *ms)
+{
+	char	*line_trim;
+
+	line_trim = ft_strtrim(ms->input_line, " \a\b\t\n\v\f\r");
+	if (!line_trim)
+		return (set_pr_exit_code(1, ms));
+	free(ms->input_line);
+	ms->input_line = line_trim;
+	if (!line_trim[0])
+		return (0);
 }
 
 /**
@@ -19,14 +44,8 @@ t_list2	*parser(t_minishell *ms)
 {
 	char	**contents;
 	t_list2	*tokens;
-	char	*line_trim;
 
-	line_trim = ft_strtrim(ms->input_line, " \a\b\t\n\v\f\r");
-	if (!line_trim)
-		return (set_pr_exit_code(1, ms));
-	free(ms->input_line);
-	ms->input_line = line_trim;
-	if (!line_trim[0])
+	if (!trim_input_line(ms))
 		return (NULL);
 	if (lex_line(ms->input_line) == 2)
 		return (set_err(&ms->last_exit_code, 2), NULL);
