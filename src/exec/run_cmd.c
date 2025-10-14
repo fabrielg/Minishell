@@ -42,7 +42,6 @@ int	run_cmd(t_command *cmd, t_minishell *ms)
 	int		status;
 	t_uint8	exit_code;
 
-	exit_code = 1;
 	if (!cmd)
 		return (NOT_FOUND_ERR);
 	pid = fork();

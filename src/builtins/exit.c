@@ -31,7 +31,6 @@ t_uint8	cmd_exit(char **args, t_mst **env)
 	t_uint8	status;
 
 	(void)env;
-	status = 0;
 	write(STDERR_FILENO, "exit\n", 5);
 	if (!args[1])
 		return (0);

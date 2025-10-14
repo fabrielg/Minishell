@@ -24,6 +24,7 @@ int	wait_forked_pipes(t_minishell *ms, pid_t *pids, int nb_cmds)
 	int	i;
 	int	status;
 
+	status = 0;
 	i = -1;
 	while (++i < nb_cmds)
 		waitpid(pids[i], &status, 0);
